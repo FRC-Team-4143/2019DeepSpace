@@ -9,10 +9,14 @@
 
 #include <frc/commands/Subsystem.h>
 
-class ExampleSubsystem : public frc::Subsystem {
+class Elevator : public frc::Subsystem {
  public:
-  ExampleSubsystem();
+  Elevator();
   void InitDefaultCommand() override;
+
+  void ElevatorUp(float speed);
+  void ElevatorDown(float speed);
+
 
  private:
   // It's desirable that everything possible under private except

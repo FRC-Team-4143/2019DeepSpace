@@ -5,16 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/ExampleSubsystem.h"
+#include "subsystems/Elevator.h"
+#include "commands/ElevatorCommand.h"
+#include "Robot.h"
 
-#include "RobotMap.h"
+Elevator::Elevator() : frc::Subsystem("Elevator") {}
 
-ExampleSubsystem::ExampleSubsystem() : frc::Subsystem("ExampleSubsystem") {}
-
-void ExampleSubsystem::InitDefaultCommand() {
+void Elevator::InitDefaultCommand() {
+  SetDefaultCommand(new ElevatorCommand());
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }
 
+void Elevator::ElevatorUp(float speed){
+  Robot::elevatorMotor->Set(speed);
+}
+void Elevator::ElevatorDown(float speed){
+  Robot::elevatorMotor->Set(-speed);
+}
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
