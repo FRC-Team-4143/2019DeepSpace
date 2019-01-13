@@ -10,6 +10,8 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <rev/CANSparkMax.h>
+
 
 #include "OI.h"
 #include "commands/ExampleCommand.h"
@@ -20,6 +22,9 @@ class Robot : public frc::TimedRobot {
  public:
   static ExampleSubsystem exampleSubsystem;
   static OI oi;
+  static Elevator* elevator;
+
+  static CANSparkMax* elevatorMotor;
 
   void RobotInit() override;
   void RobotPeriodic() override;

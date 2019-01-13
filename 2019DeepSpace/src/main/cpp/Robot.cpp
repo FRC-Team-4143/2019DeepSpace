@@ -12,9 +12,14 @@
 
 ExampleSubsystem Robot::exampleSubsystem;
 OI Robot::oi;
+Elevator* Robot::elevator = nullptr;
+
+CANSparkMax* Robot::elevatorMotor;
 
 void Robot::RobotInit() {
- 
+ elevatorMotor = new CANSparkMax(3);
+
+ elevator = new Elevator();
 }
 
 /**
