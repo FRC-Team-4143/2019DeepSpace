@@ -1,16 +1,10 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 #pragma once
 
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <rev/CANSparkMax.h>
+#include <ctre/Phoneix.h>
 
 
 #include "OI.h"
@@ -18,10 +12,33 @@
 
 class Robot : public frc::TimedRobot {
  public:
+
+//======= System Declaration =======//
+
   static OI oi;
   static Elevator* elevator;
 
+//======= Drive Train =======//
+
+  static rev::CANSparkMax* driveTrainFrontLeftDrive;
+  static rev::CANSparkMax* driveTrainFrontLeftSteer;
+
+  static rev::CANSparkMax* driveTrainFrontRightDrive;
+  static rev::CANSparkMax* driveTrainFrontRightSteer;
+
+  static rev::CANSparkMax* driveTrainRearLeftDrive;
+  static rev::CANSparkMax* driveTrainRearLeftSteer;
+
+  static rev::CANSparkMax* driveTrainRearRightDrive;
+  static rev::CANSparkMax* driveTrainRearRightSteer;
+
+
+//======= Susystem Motors and Sensors =======//
+
+  static rev::CANSparkMax* decoyMotor; // Motor to allow tests on incomplete frames
   static rev::CANSparkMax* elevatorMotor;
+
+//===========================================//
 
   void RobotInit() override;
   void RobotPeriodic() override;
