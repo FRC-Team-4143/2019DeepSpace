@@ -8,7 +8,7 @@
 
 //======= System Definition =======//
 
-OI Robot::oi;
+OI* Robot::oi = nullptr;
 Elevator* Robot::elevator = nullptr;
 
 //======= Motor Definition =======//
@@ -20,10 +20,11 @@ rev::CANSparkMax* Robot::elevatorMotor;
 
 void Robot::RobotInit() {
  //======= Motor Initialization =======//
-    elevatorMotor = new rev::CANSparkMax(ELEVATOR,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   elevatorMotor = new rev::CANSparkMax(ELEVATOR,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
 
  //======= System Initialization =======//
-    elevator = new Elevator();
+   oi = new OI();
+   elevator = new Elevator();
 }
 
 void Robot::RobotPeriodic() {}

@@ -4,7 +4,7 @@
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <rev/CANSparkMax.h>
-#include <ctre/Phoneix.h>
+#include <ctre/Phoenix.h>
 
 
 #include "OI.h"
@@ -15,12 +15,12 @@ class Robot : public frc::TimedRobot {
 
 //======= System Declaration =======//
 
-  static OI oi;
+  static OI* oi;
   static Elevator* elevator;
 
 //======= Drive Train =======//
 
-  static rev::CANSparkMax* driveTrainFrontLeftDrive;
+  static WPI_TalonSRX driveTrainFrontLeftDrive;
   static rev::CANSparkMax* driveTrainFrontLeftSteer;
 
   static rev::CANSparkMax* driveTrainFrontRightDrive;

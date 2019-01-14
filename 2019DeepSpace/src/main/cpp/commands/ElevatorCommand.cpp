@@ -10,10 +10,10 @@ ElevatorCommand::ElevatorCommand() {
 void ElevatorCommand::Initialize() {}
 
 void ElevatorCommand::Execute() {
-  if(Robot::oi.RightTrigger() > 0){
-    Robot::elevator->ElevatorUp(Robot::oi.RightTrigger());
+  if(Robot::oi->GetRightTrigger() > 0){
+    Robot::elevator->ElevatorUp(Robot::oi->GetRightTrigger());
   } else{
-    Robot::elevator->ElevatorDown(Robot::oi.LeftTrigger());
+    Robot::elevator->ElevatorDown(Robot::oi->GetLeftTrigger());
   }
   
 }
@@ -21,8 +21,7 @@ void ElevatorCommand::Execute() {
 bool ElevatorCommand::IsFinished() { return false; }
 
 void ElevatorCommand::End() {
-  Robot::elevator->ElevatorUp(0);
-  Robot::elevator->ElevatorDown(0);
+  Robot::elevator->ElevatorStop();
 }
 
 void ElevatorCommand::Interrupted() {
