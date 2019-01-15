@@ -14,12 +14,10 @@ class Robot : public frc::TimedRobot {
  public:
 
 //======= System Declaration =======//
-
   static OI* oi;
   static Elevator* elevator;
 
 //======= Drive Train =======//
-
   static WPI_TalonSRX* driveTrainFrontLeftDrive;
   static WPI_TalonSRX* driveTrainFrontLeftSteer;
 
@@ -34,7 +32,6 @@ class Robot : public frc::TimedRobot {
 
 
 //======= Susystem Motors and Sensors =======//
-
   static rev::CANSparkMax* elevatorMotor;
 
 //===========================================//

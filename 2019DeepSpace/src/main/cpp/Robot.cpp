@@ -6,22 +6,68 @@
 
 #define ELEVATOR 3
 
-//======= System Definition =======//
+#define FLD 1
+#define FLS 5
 
+#define FRD 2
+#define FRS 6
+
+#define RLD 3
+#define RLS 7
+
+#define RRD 4
+#define RRS 8
+
+//======= System Definition =======//
 OI* Robot::oi = nullptr;
 Elevator* Robot::elevator = nullptr;
 
 //======= Motor Definition =======//
+WPI_TalonSRX* Robot::driveTrainFrontLeftDrive;
+WPI_TalonSRX* Robot::driveTrainFrontLeftSteer;
+
+WPI_TalonSRX* Robot::driveTrainFrontRightDrive;
+WPI_TalonSRX* Robot::driveTrainFrontRightSteer;
+
+WPI_TalonSRX* Robot::driveTrainRearLeftDrive;
+WPI_TalonSRX* Robot::driveTrainRearLeftSteer;
+
+WPI_TalonSRX* Robot::driveTrainRearRightDrive;
+WPI_TalonSRX* Robot::driveTrainRearRightSteer;
 
 rev::CANSparkMax* Robot::elevatorMotor;
 
-//================================//
-
 void Robot::RobotInit() {
- //======= Motor Initialization =======//
+//======= Front Left Drive =======//
+   driveTrainFrontLeftDrive = new WPI_TalonSRX(FLD);
+
+//======= Front Left Steer =======//
+   driveTrainFrontLeftSteer = new WPI_TalonSRX(FLS);
+
+//======= Front Rigth Drive =======//
+   driveTrainFrontRightDrive = new WPI_TalonSRX(FRD);
+
+//======= Front Right Steer =======//
+   driveTrainFrontLeftSteer = new WPI_TalonSRX(FRS);
+
+//======= Rear Left Drive =======//
+   driveTrainRearLeftDrive = new WPI_TalonSRX(RLD);
+
+//======= Rear Left Steer =======//
+   driveTrainRearLeftSteer = new WPI_TalonSRX(RLS);
+
+//======= Rear Right Drive =======//
+   driveTrainRearRightDrive = new WPI_TalonSRX(RRD);
+
+//======= Rear Right Steer =======//
+   driveTrainRearRightSteer = new WPI_TalonSRX(RRS);
+
+
+
+//======= Subsystem Motor Initialization =======//
    elevatorMotor = new rev::CANSparkMax(ELEVATOR,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
 
- //======= System Initialization =======//
+//======= System Initialization =======//
    oi = new OI();
    elevator = new Elevator();
 }
