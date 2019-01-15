@@ -13,7 +13,6 @@ Elevator* Robot::elevator = nullptr;
 
 //======= Motor Definition =======//
 
-rev::CANSparkMax* Robot::decoyMotor;
 rev::CANSparkMax* Robot::elevatorMotor;
 
 //================================//

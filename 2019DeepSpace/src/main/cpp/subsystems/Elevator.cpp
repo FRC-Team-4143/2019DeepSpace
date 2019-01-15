@@ -10,28 +10,21 @@ void Elevator::InitDefaultCommand() {
 
 //======= Method to Control Elevator Lift =======//
 void Elevator::ElevatorUp(float speed){
-  #if elevatorMotor == nullptr
-    Robot::decoyMotor->Set(0);
-  #else
+  if (elevatorMotor != nullptr){
     Robot::elevatorMotor->Set(speed);
-  #endif
-
+  }
 }
 
 //======= Method to Control Elevator Lower =======//
 void Elevator::ElevatorDown(float speed){
-  #if elevatorMotor == nullptr
-    Robot::decoyMotor->Set(0);
-  #else
+  if (elevatorMotor != nullptr){
     Robot::elevatorMotor->Set(-speed);
-  #endif
+  }
 }
 
 //======= Metod to Stop Elevator Movement =======//
 void Elevator::ElevatorStop(){
-  #if elevatorMotor == nullptr
-    Robot::decoyMotor->Set(0);
-  #else
+  if (elevatorMotor != nullptr)
     Robot::elevatorMotor->Set(0);
-  #endif
+  }
 }

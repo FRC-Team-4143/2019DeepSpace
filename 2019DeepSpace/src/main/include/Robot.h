@@ -20,22 +20,21 @@ class Robot : public frc::TimedRobot {
 
 //======= Drive Train =======//
 
-  static WPI_TalonSRX driveTrainFrontLeftDrive;
-  static rev::CANSparkMax* driveTrainFrontLeftSteer;
+  static WPI_TalonSRX* driveTrainFrontLeftDrive;
+  static WPI_TalonSRX* driveTrainFrontLeftSteer;
 
-  static rev::CANSparkMax* driveTrainFrontRightDrive;
-  static rev::CANSparkMax* driveTrainFrontRightSteer;
+  static WPI_TalonSRX* driveTrainFrontRightDrive;
+  static WPI_TalonSRX* driveTrainFrontRightSteer;
 
-  static rev::CANSparkMax* driveTrainRearLeftDrive;
-  static rev::CANSparkMax* driveTrainRearLeftSteer;
+  static WPI_TalonSRX* driveTrainRearLeftDrive;
+  static WPI_TalonSRX* driveTrainRearLeftSteer;
 
-  static rev::CANSparkMax* driveTrainRearRightDrive;
-  static rev::CANSparkMax* driveTrainRearRightSteer;
+  static WPI_TalonSRX* driveTrainRearRightDrive;
+  static WPI_TalonSRX* driveTrainRearRightSteer;
 
 
 //======= Susystem Motors and Sensors =======//
 
-  static rev::CANSparkMax* decoyMotor; // Motor to allow tests on incomplete frames
   static rev::CANSparkMax* elevatorMotor;
 
 //===========================================//
