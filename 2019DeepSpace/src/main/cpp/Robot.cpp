@@ -16,6 +16,13 @@ Elevator* Robot::elevator = nullptr;
 rev::CANSparkMax* Robot::decoyMotor;
 rev::CANSparkMax* Robot::elevatorMotor;
 
+//======= Variables =======//
+
+float speed = 1;
+float firstPos=1;
+float secondPos=10; 
+float thirdPos=20;
+
 //================================//
 
 void Robot::RobotInit() {
