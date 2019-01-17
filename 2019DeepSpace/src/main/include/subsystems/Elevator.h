@@ -7,8 +7,8 @@ class Elevator : public frc::Subsystem {
   Elevator();
   void InitDefaultCommand() override;
 
-  void ElevatorUp(float speed);
-  void ElevatorDown(float speed);
+  void ElevatorUp(float _speed);
+  void ElevatorDown(float _speed);
   void ElevatorStop();
 
  private:

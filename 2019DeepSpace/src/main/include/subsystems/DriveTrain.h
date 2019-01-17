@@ -10,6 +10,10 @@ class DriveTrain : public frc::Subsystem {
 
   DriveTrain();
   void InitDefaultCommand() override;
+  void SetWheelbase(double width, double length);
+  void SetWheelOffsets();
+  void LoadWheelOffsets();
+
 
  private:
     SwerveModule* frontLeftModule;

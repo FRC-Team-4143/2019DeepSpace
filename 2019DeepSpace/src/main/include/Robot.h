@@ -4,6 +4,7 @@
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <rev/CANSparkMax.h>
+#include <rev/SparkMax.h>
 #include <ctre/Phoenix.h>
 
 
@@ -33,9 +34,11 @@ class Robot : public frc::TimedRobot {
 
 //======= Susystem Motors and Sensors =======//
   static rev::CANSparkMax* elevatorMotor;
+  static Servo* servo1;
 
 //===========================================//
 
+  void DeviceInitialization();
   void RobotInit() override;
   void RobotPeriodic() override;
   void DisabledInit() override;

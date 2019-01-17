@@ -9,16 +9,16 @@ void Elevator::InitDefaultCommand() {
 }
 
 //======= Method to Control Elevator Lift =======//
-void Elevator::ElevatorUp(float speed){
+void Elevator::ElevatorUp(float _speed){
   if (Robot::elevatorMotor != nullptr){
-    Robot::elevatorMotor->Set(speed);
+    Robot::elevatorMotor->Set(_speed);
   }
 }
 
 //======= Method to Control Elevator Lower =======//
-void Elevator::ElevatorDown(float speed){
+void Elevator::ElevatorDown(float _speed){
   if (Robot::elevatorMotor != nullptr){
-    Robot::elevatorMotor->Set(-speed);
+    Robot::elevatorMotor->Set(-_speed);
   }
 }
 

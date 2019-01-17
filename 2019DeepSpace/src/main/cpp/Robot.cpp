@@ -4,7 +4,7 @@
 
 #include <subsystems/Elevator.h>
 
-#define ELEVATOR 3
+#define ELEVATOR 11
 
 #define FLD 1
 #define FLS 5
@@ -37,7 +37,9 @@ WPI_TalonSRX* Robot::driveTrainRearRightSteer;
 
 rev::CANSparkMax* Robot::elevatorMotor;
 
-void Robot::RobotInit() {
+Servo* Robot::servo1;
+
+void Robot::DeviceInitialization(){
 //======= Front Left Drive =======//
    driveTrainFrontLeftDrive = new WPI_TalonSRX(FLD);
 
@@ -63,13 +65,17 @@ void Robot::RobotInit() {
    driveTrainRearRightSteer = new WPI_TalonSRX(RRS);
 
 
-
 //======= Subsystem Motor Initialization =======//
    elevatorMotor = new rev::CANSparkMax(ELEVATOR,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   servo1 = new Servo(4);
 
 //======= System Initialization =======//
    oi = new OI();
    elevator = new Elevator();
+}
+
+void Robot::RobotInit() {
+   DeviceInitialization();
 }
 
 void Robot::RobotPeriodic() {}
@@ -78,11 +84,15 @@ void Robot::DisabledInit() {}
 
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
-void Robot::AutonomousInit() {}
+void Robot::AutonomousInit() {
+   servo1->SetAngle(0);
+}
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+   servo1->SetAngle(15);
+}
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
