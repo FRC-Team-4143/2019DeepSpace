@@ -35,6 +35,8 @@ WPI_TalonSRX* Robot::driveTrainRearLeftSteer;
 WPI_TalonSRX* Robot::driveTrainRearRightDrive;
 WPI_TalonSRX* Robot::driveTrainRearRightSteer;
 
+rev::CANSparkMax* Robot::elevatorMotor;
+
 //================================//
 
 void Robot::RobotInit() {

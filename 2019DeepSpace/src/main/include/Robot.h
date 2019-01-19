@@ -17,12 +17,6 @@ class Robot : public frc::TimedRobot {
   static OI* oi;
   static Elevator* elevator;
 
-  //======= Variables =======//
-
-float speed;
-float firstPos;
-float secondPos; 
-float thirdPos;
 
 //======= Drive Train =======//
   static WPI_TalonSRX* driveTrainFrontLeftDrive;
