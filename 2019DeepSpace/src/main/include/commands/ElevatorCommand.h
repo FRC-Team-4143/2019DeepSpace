@@ -4,6 +4,11 @@
 
 class ElevatorCommand : public frc::Command {
  public:
+
+float wantedPos;
+
+float motorSpeed;
+
   ElevatorCommand();
   void Initialize() override;
   void Execute() override;

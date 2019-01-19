@@ -6,8 +6,13 @@ ElevatorCommand::ElevatorCommand() {
   // Use Requires() here to declare subsystem dependencies
   Requires(Robot::elevator);
 }
+float wantedPos;
 
-void ElevatorCommand::Initialize() {}
+float motorSpeed;
+
+void ElevatorCommand::Initialize() {
+
+}
 
 void ElevatorCommand::Execute() {
   if(Robot::oi->GetRightTrigger() > 0){
@@ -16,6 +21,15 @@ void ElevatorCommand::Execute() {
     Robot::elevator->ElevatorDown(Robot::oi->GetLeftTrigger());
   }
   
+  double pos = Robot::elevatorMotor->GetEncoder().GetPosition();
+  
+  if(pos < wantedPos)
+  {
+    Robot::elevator->ElevatorUp(motorSpeed);
+  } else if(pos > wantedPos)
+  {
+    Robot::elevator->ElevatorDown(motorSpeed);
+  }
 }
 
 bool ElevatorCommand::IsFinished() { return false; }
