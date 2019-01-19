@@ -32,21 +32,10 @@ WPI_TalonSRX* Robot::driveTrainFrontRightSteer;
 WPI_TalonSRX* Robot::driveTrainRearLeftDrive;
 WPI_TalonSRX* Robot::driveTrainRearLeftSteer;
 
-<<<<<<< HEAD
 WPI_TalonSRX* Robot::driveTrainRearRightDrive;
 WPI_TalonSRX* Robot::driveTrainRearRightSteer;
 
-rev::CANSparkMax* Robot::elevatorMotor;
-=======
-//======= Variables =======//
-
-float speed = 1;
-float firstPos=1;
-float secondPos=10; 
-float thirdPos=20;
-
 //================================//
->>>>>>> 4fe52a49260ffb5b69e6df87db9488eaaa806eb7
 
 void Robot::RobotInit() {
 //======= Front Left Drive =======//

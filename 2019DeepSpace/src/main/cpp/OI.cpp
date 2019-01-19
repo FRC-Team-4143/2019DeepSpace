@@ -21,24 +21,12 @@ const uint32_t JOYSTICK_BUTTON_LEFT = 9;
 const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
 const float JOYSTICK_DEAD_ZONE = 0.1;
 
-float elevatorPos1;
-float elevatorPos2;
-float elevatorPos3;
-
 ElevatorCommand* elevatorCommand;
 
-bool assignElevatorPos = false;
 OI::OI() {
   driverjoystick = new Joystick(0);
   elevatorCommand = new ElevatorCommand();
-  elevatorCommand->wantedPos = elevatorPos1;
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhileHeld(elevatorCommand);
-
-}
-
-void ButtonPressed()
-{
- // ElevatorCommand::wantedPos = elevatorPos2;
 }
 
 float OI::GetLeftTrigger(){

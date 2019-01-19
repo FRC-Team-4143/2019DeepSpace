@@ -9,11 +9,10 @@ class OI {
 
   Joystick* driverjoystick;
 
-  ElevatorCommand* elevatorMotor;
+  ElevatorCommand* elevatorCommand;
 
 //======= OI Methods =======//
   OI();
   float GetLeftTrigger();
   float GetRightTrigger();
-  void ButtonPressed();
 };

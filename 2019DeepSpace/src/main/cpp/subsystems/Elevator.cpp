@@ -20,6 +20,7 @@ void Elevator::ElevatorDown(float speed){
   if (Robot::elevatorMotor != nullptr){
     Robot::elevatorMotor->Set(-speed);
   }
+  
 }
 
 //======= Metod to Stop Elevator Movement =======//
@@ -28,3 +29,5 @@ void Elevator::ElevatorStop(){
     Robot::elevatorMotor->Set(0);
   }
 }
+
+//RobotMap::i2c->Write(5,0);

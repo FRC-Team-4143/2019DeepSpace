@@ -7,6 +7,12 @@ class ElevatorCommand : public frc::Command {
 
 float wantedPos;
 
+float pos1;
+float pos2;
+float pos3;
+
+int posNum;
+
 float motorSpeed;
 
   ElevatorCommand();

@@ -8,10 +8,40 @@ ElevatorCommand::ElevatorCommand() {
 }
 float wantedPos;
 
-float motorSpeed;
+float pos1=1;
+float pos2=2;
+float pos3=3;
+
+int posNum=0;
+
+float motorSpeed=1;
 
 void ElevatorCommand::Initialize() {
+  if(posNum==3)
+  {
+    posNum = 0;
+  }
 
+  posNum = posNum + 1;
+
+  switch(posNum)
+  {
+    case 1:
+    {
+      wantedPos = pos1;
+      break;
+    }
+    case 2:
+    {
+      wantedPos = pos2;
+      break;
+    }
+    case 3:
+    {
+      wantedPos = pos3;
+      break;
+    }
+  }
 }
 
 void ElevatorCommand::Execute() {
