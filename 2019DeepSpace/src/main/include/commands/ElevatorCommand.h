@@ -15,6 +15,12 @@ int posNum;
 
 float motorSpeed;
 
+float deadvalue;
+
+float decreaseDistance;
+
+double pos;
+
   ElevatorCommand();
   void Initialize() override;
   void Execute() override;

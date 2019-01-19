@@ -26,7 +26,7 @@ ElevatorCommand* elevatorCommand;
 OI::OI() {
   driverjoystick = new Joystick(0);
   elevatorCommand = new ElevatorCommand();
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhileHeld(elevatorCommand);
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(elevatorCommand);
 }
 
 float OI::GetLeftTrigger(){
@@ -36,4 +36,10 @@ float OI::GetLeftTrigger(){
 float OI::GetRightTrigger(){
   float value = driverjoystick->GetRawAxis(JOYSTICK_RTRIG_AXIS);
   return (fabs(value) > JOYSTICK_DEAD_ZONE) ? value :0;
+}
+
+bool OI::GetButtonA()
+{
+  auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_A);
+  return value;
 }

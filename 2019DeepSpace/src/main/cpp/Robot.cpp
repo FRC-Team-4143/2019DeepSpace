@@ -4,12 +4,12 @@
 
 #include <subsystems/Elevator.h>
 
-#define ELEVATOR 3
+#define ELEVATOR 2 // make three
 
 #define FLD 1
 #define FLS 5
 
-#define FRD 2
+#define FRD 20 //make two
 #define FRS 6
 
 #define RLD 3
@@ -74,7 +74,9 @@ void Robot::RobotInit() {
    elevator = new Elevator();
 }
 
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+   SmartDashboard::PutNumber("Elevator Encode Position", elevatorMotor->GetEncoder().GetPosition());
+}
 
 void Robot::DisabledInit() {}
 
