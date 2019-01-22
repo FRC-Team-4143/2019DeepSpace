@@ -2,7 +2,10 @@
 #include "commands/ElevatorCommand.h"
 #include "Robot.h"
 
-Elevator::Elevator() : frc::Subsystem("Elevator") {}
+Elevator::Elevator() : frc::Subsystem("Elevator") {
+  isCargoMode = false;
+}
+
 
 void Elevator::InitDefaultCommand() {
   SetDefaultCommand(new ElevatorCommand());
@@ -30,4 +33,11 @@ void Elevator::ElevatorStop(){
   }
 }
 
+void Elevator::ToggleMode(){
+  isCargoMode != isCargoMode;
+}
+
+bool IsCargoMode(){
+return isCargoMode
+}
 //RobotMap::i2c->Write(5,0);
