@@ -13,4 +13,5 @@ class OI {
   OI();
   float GetLeftTrigger();
   float GetRightTrigger();
+  bool GetJoystickButtonA();
 };

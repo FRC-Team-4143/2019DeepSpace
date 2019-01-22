@@ -32,3 +32,8 @@ float OI::GetRightTrigger(){
   float value = driverjoystick->GetRawAxis(JOYSTICK_RTRIG_AXIS);
   return (fabs(value) > JOYSTICK_DEAD_ZONE) ? value :0;
 }
+
+bool OI::GetJoystickButtonA(){
+  auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_A);
+  return value;
+}

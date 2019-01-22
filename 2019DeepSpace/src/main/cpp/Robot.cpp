@@ -78,7 +78,9 @@ void Robot::RobotInit() {
    DeviceInitialization();
 }
 
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+   
+}
 
 void Robot::DisabledInit() {}
 
