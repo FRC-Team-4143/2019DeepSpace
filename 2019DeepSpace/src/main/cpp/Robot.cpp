@@ -77,9 +77,9 @@ void Robot::DeviceInitialization(){
 void Robot::RobotInit() {
    DeviceInitialization();
 }
-
-void Robot::RobotPeriodic() {
    
+void Robot::RobotPeriodic() {
+   SmartDashboard::PutNumber("Elevator Encoder Position", elevatorMotor->GetEncoder().GetPosition());
 }
 
 void Robot::DisabledInit() {}

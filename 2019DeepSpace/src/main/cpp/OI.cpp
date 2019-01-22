@@ -1,4 +1,5 @@
 #include "OI.h"
+#include "commands/ElevatorCommand.h"
 #include <frc/WPILib.h>
 
 const uint32_t JOYSTICK_LX_AXIS = 0;
@@ -20,8 +21,12 @@ const uint32_t JOYSTICK_BUTTON_LEFT = 9;
 const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
 const float JOYSTICK_DEAD_ZONE = 0.1;
 
+ElevatorCommand* elevatorCommand;
+
 OI::OI() {
   driverjoystick = new Joystick(0);
+  elevatorCommand = new ElevatorCommand();
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(elevatorCommand);
 }
 
 float OI::GetLeftTrigger(){
@@ -33,7 +38,7 @@ float OI::GetRightTrigger(){
   return (fabs(value) > JOYSTICK_DEAD_ZONE) ? value :0;
 }
 
-bool OI::GetJoystickButtonA(){
-  auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_A);
+bool OI::GetButtonA(){
+  auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_A);
   return value;
 }
