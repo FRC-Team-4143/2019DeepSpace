@@ -10,6 +10,8 @@
 
 #include "OI.h"
 #include "subsystems/Elevator.h"
+#include <subsystems/Roller.h>
+#include <subsystems/Clamp.h>
 
 class Robot : public frc::TimedRobot {
  public:

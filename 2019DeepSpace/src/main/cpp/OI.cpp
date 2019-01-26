@@ -44,3 +44,9 @@ bool OI::GetButtonA(){
   auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_A);
   return value;
 }
+
+bool OI::GetButtonBack()
+{
+  auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_BACK);
+  return value;
+}

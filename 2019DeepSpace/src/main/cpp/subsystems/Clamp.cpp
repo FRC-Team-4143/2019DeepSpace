@@ -7,7 +7,7 @@ Clamp::Clamp() : frc::Subsystem("Clamp") {
 
 
 void Clamp::InitDefaultCommand() {
-  SetDefaultCommand(new ClampCommand());
+  //SetDefaultCommand(new ClampCommand());
 }
 
 //======= Method to Control Clamp Release =======//

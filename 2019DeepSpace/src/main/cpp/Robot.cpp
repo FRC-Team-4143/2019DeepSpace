@@ -25,8 +25,8 @@
 //======= System Definition =======//
 OI* Robot::oi = nullptr;
 Elevator* Robot::elevator = nullptr;
-OI* Robot::roller = nullptr;
-OI* Robot::clamp = nullptr;
+Roller* Robot::roller = nullptr;
+Clamp* Robot::clamp = nullptr;   
 
 //======= Motor Definition =======//
 WPI_TalonSRX* Robot::driveTrainFrontLeftDrive;
