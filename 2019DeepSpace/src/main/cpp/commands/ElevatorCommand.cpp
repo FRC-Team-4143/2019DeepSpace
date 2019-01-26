@@ -35,6 +35,7 @@ void ElevatorCommand::Initialize() {
 }
 
 void ElevatorCommand::Execute() {
+  
   if(Robot::oi->GetButtonA())
   {
     if(posNum==3)

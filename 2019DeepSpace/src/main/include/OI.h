@@ -1,7 +1,8 @@
 #pragma once
 #include "commands/ElevatorCommand.h"
 #include "frc/WPIlib.h"
-#include "commands/ElevatorMode.h"
+#include "commands/SetEndGame.h"
+#include "commands/ToggleGameMode.h"
 using namespace frc;
 
 
@@ -11,7 +12,8 @@ class OI {
   Joystick* driverjoystick;
 
   ElevatorCommand* elevatorCommand;
-  ElevatorMode* elevatorMode;
+  ToggleGameMode* toggleGameMode;
+  SetEndGame* setEndGame;
 
 //======= OI Methods =======//
   OI();
