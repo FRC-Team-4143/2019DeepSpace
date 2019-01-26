@@ -5,11 +5,19 @@
 class ElevatorCommand : public frc::Command {
  public:
 
-float wantedPos;
+float elevator_wantedPos;
 
-float pos1;
-float pos2;
-float pos3;
+float arm_wantedPos;
+
+float elevator_pos1;
+float elevator_pos2;
+float elevator_pos3;
+float elevator_pos4;
+
+float arm_pos1;
+float arm_pos2;
+float arm_pos3;
+float arm_pos4;
 
 int posNum;
 
@@ -19,7 +27,8 @@ float deadvalue;
 
 float decreaseDistance;
 
-double pos;
+double elevator_pos;
+double arm_pos;
 
   ElevatorCommand();
   void Initialize() override;
