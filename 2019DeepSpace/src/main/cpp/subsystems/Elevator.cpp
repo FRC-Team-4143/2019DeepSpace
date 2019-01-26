@@ -37,7 +37,7 @@ void Elevator::ToggleMode(){
   isCargoMode != isCargoMode;
 }
 
-bool IsCargoMode(){
-return isCargoMode
+bool Elevator::IsCargoMode(){
+return isCargoMode;
 }
 //RobotMap::i2c->Write(5,0);

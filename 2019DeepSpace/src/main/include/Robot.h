@@ -17,6 +17,8 @@ class Robot : public frc::TimedRobot {
 //======= System Declaration =======//
   static OI* oi;
   static Elevator* elevator;
+  static Roller* roller;
+  static Clamp* clamp;
 
 
 //======= Drive Train =======//
@@ -35,6 +37,8 @@ class Robot : public frc::TimedRobot {
 
 //======= Susystem Motors and Sensors =======//
   static rev::CANSparkMax* elevatorMotor;
+  static WPI_TalonSRX* rollerMotor;
+  static WPI_TalonSRX* clampMotor;
   static Servo* servo1;
 
 //===========================================//

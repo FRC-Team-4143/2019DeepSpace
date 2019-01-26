@@ -3,8 +3,12 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 #include <subsystems/Elevator.h>
+#include <subsystems/Roller.h>
+#include <subsystems/Clamp.h>
 
 #define ELEVATOR 11
+#define ROLLER 13
+#define CLAMP 12
 
 #define FLD 1
 #define FLS 5
@@ -21,6 +25,8 @@
 //======= System Definition =======//
 OI* Robot::oi = nullptr;
 Elevator* Robot::elevator = nullptr;
+OI* Robot::roller = nullptr;
+OI* Robot::clamp = nullptr;
 
 //======= Motor Definition =======//
 WPI_TalonSRX* Robot::driveTrainFrontLeftDrive;
@@ -36,6 +42,8 @@ WPI_TalonSRX* Robot::driveTrainRearRightDrive;
 WPI_TalonSRX* Robot::driveTrainRearRightSteer;
 
 rev::CANSparkMax* Robot::elevatorMotor;
+WPI_TalonSRX* Robot::rollerMotor;
+WPI_TalonSRX* Robot::clampMotor;
 
 Servo* Robot::servo1;
 
@@ -67,11 +75,16 @@ void Robot::DeviceInitialization(){
 
 //======= Subsystem Motor Initialization =======//
    elevatorMotor = new rev::CANSparkMax(ELEVATOR,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   rollerMotor = new WPI_TalonSRX(ROLLER);
+   clampMotor = new WPI_TalonSRX(CLAMP);
+
    servo1 = new Servo(4);
 
 //======= System Initialization =======//
    oi = new OI();
    elevator = new Elevator();
+   roller = new Roller();
+   clamp = new Clamp();
 }
 
 void Robot::RobotInit() {
