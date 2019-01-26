@@ -6,6 +6,7 @@
 // 2015-02-01 JKSalmon - Initial development
 // ==========================================================================
 #include "Modules/Mode.h"
+#include "Modules/Lights.h"
 
 // ==========================================================================
 
@@ -27,6 +28,7 @@ bool Mode::IsEndGame()
 void Mode::SetEndgame()
 {
     gameMode = GameMode::ENDGAME;
+    SetLED();
 }
 
 void Mode::ToggleInGameMode()
@@ -34,11 +36,27 @@ void Mode::ToggleInGameMode()
     if(gameMode == GameMode::HATCHMODE)
     {
         gameMode = GameMode::CARGOMODE;
+        SetLED();
     }
     else
     {
         gameMode = GameMode::HATCHMODE;
+        SetLED();
     }
+}
+
+void Mode::SetLED()
+{
+    if(gameMode = GameMode::HATCHMODE){
+        Lights::SetHatchLights();
+    }
+    else if(gameMode = GameMode::CARGOMODE){
+        Lights::SetCargoLights();
+    }
+    else if(gameMode = GameMode::ENDGAME){
+        Lights::SetEndGameLights();
+    }
+
 }
 
 // ==========================================================================
