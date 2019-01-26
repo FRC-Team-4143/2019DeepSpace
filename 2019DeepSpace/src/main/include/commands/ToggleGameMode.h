@@ -2,11 +2,11 @@
 
 #include <frc/commands/Command.h>
 
-class ElevatorMode : public frc::Command {
+class ToggleGameMode : public frc::Command {
  public:
 
 
-  ElevatorMode();
+  ToggleGameMode();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

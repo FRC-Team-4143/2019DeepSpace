@@ -21,14 +21,18 @@ const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
 const float JOYSTICK_DEAD_ZONE = 0.1;
 
 ElevatorCommand* elevatorCommand;
-ElevatorMode* elevatorMode;
+ToggleGameMode* toggleGameMode;
+SetEndGame* setEndGame;
 
 OI::OI() {
   driverjoystick = new Joystick(0);
   elevatorCommand = new ElevatorCommand();
-  elevatorMode = new ElevatorMode();
+  toggleGameMode = new ToggleGameMode();
+  setEndGame = new SetEndGame();
   
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(elevatorMode);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
+
 }
 
 float OI::GetLeftTrigger(){
