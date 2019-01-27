@@ -1,6 +1,8 @@
 #include "Robot.h"
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "Modules/Lights.h"
+#include "Modules/Mode.h"
 
 #include <subsystems/Elevator.h>
 #include <subsystems/Roller.h>
@@ -89,6 +91,8 @@ void Robot::DeviceInitialization(){
 
 void Robot::RobotInit() {
    DeviceInitialization();
+   Lights::Init();
+   ::Mode::SetLED();
 }
    
 void Robot::RobotPeriodic() {

@@ -6,22 +6,21 @@
 // 2015-02-01 JKSalmon - Initial development
 // ==========================================================================
 #pragma once
+#include <frc/I2C.h>
 // ==========================================================================
 
-class Mode {
+class Lights {
 public:
-	enum GameMode {HATCHMODE,CARGOMODE,ENDGAME};
+	static void SetCargoLights();
+	static void SetHatchLights();
+	static void SetEndGameLights();
+	static void Init();
 
-	static bool IsHatchMode();
-	static bool IsCargoMode();
-	static bool IsEndGame();
-
-	static void SetLED();
-	static void SetEndgame();
-	static void ToggleInGameMode();
 private:
-	Mode() = delete;
-	static GameMode gameMode;
+
+	static frc::I2C* i2c;
+
+
 };
 
 // ==========================================================================
