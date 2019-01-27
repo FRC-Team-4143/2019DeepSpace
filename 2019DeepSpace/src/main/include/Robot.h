@@ -9,10 +9,11 @@
 
 
 #include "OI.h"
-#include <subsystems/Elevator.h>
-#include <subsystems/Arm.h>
-#include <subsystems/Roller.h>
-#include <subsystems/Clamp.h>
+#include "subsystems/Elevator.h"
+#include "subsystems/Arm.h"
+#include "subsystems/Roller.h"
+#include "subsystems/Clamp.h"
+#include "subsystems/Climber.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -23,6 +24,7 @@ class Robot : public frc::TimedRobot {
   static Roller* roller;
   static Clamp* clamp;
   static Arm* arm;
+  static Climber* climber;
 
 
 
@@ -45,7 +47,10 @@ class Robot : public frc::TimedRobot {
   static rev::CANSparkMax* elevatorMotor;
   static WPI_TalonSRX* rollerMotor;
   static WPI_TalonSRX* clampMotor;
-  static Servo* servo1;
+  static rev::CANSparkMax* frontClimberMotor;
+  static rev::CANSparkMax* rearClimberMotor;
+  static Servo* frontServo;
+  static Servo* rearServo;
   static rev::CANSparkMax* armMotor;
 
 //===========================================//
