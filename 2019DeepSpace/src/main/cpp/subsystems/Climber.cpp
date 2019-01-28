@@ -4,6 +4,9 @@
 #define SERVOPASS 45
 #define SERVOLOCK 0
 
+char F;
+char R;
+
 Climber::Climber() : frc::Subsystem("Climber") {
 }
 
