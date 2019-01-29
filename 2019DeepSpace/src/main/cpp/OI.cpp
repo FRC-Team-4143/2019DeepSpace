@@ -30,8 +30,8 @@ OI::OI() {
   toggleGameMode = new ToggleGameMode();
   setEndGame = new SetEndGame();
   
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(toggleGameMode);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhileHeld(setEndGame);
 
 }
 
@@ -52,5 +52,11 @@ bool OI::GetButtonA(){
 bool OI::GetButtonBack()
 {
   auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_BACK);
+  return value;
+}
+
+bool OI::GetButtonStart()
+{
+  auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_START);
   return value;
 }

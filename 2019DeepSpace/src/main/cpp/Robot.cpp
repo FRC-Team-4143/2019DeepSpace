@@ -97,12 +97,12 @@ void Robot::DeviceInitialization(){
    rearServo = new Servo(1);
 
 //======= System Initialization =======//
-   oi = new OI();
    elevator = new Elevator();
    arm = new Arm();
    roller = new Roller();
    clamp = new Clamp();
    climber = new Climber();
+   oi = new OI();
 }
 
 void Robot::RobotInit() {

@@ -21,4 +21,5 @@ class OI {
   float GetRightTrigger();
   bool GetButtonA();
   bool GetButtonBack();
+  bool GetButtonStart();
 };

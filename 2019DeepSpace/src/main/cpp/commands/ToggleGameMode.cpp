@@ -1,5 +1,6 @@
 #include "commands/ToggleGameMode.h"
 #include "Modules/Mode.h"
+#include "OI.h"
 #include "Robot.h"
 
 ToggleGameMode::ToggleGameMode() {
@@ -9,12 +10,19 @@ ToggleGameMode::ToggleGameMode() {
 
 
 void ToggleGameMode::Initialize() {
-  Mode::ToggleInGameMode();
+ Mode::ToggleInGameMode();
   
 }
 
 void ToggleGameMode::Execute() {
-  
+ /* if(Robot::oi->GetButtonBack())
+  {
+    Mode::ToggleInGameMode();
+  }
+  else if(Robot::oi->GetButtonStart())
+  {
+    Mode::SetEndgame();
+  }*/
 }
 
 bool ToggleGameMode::IsFinished() { return true; }
