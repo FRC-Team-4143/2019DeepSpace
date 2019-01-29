@@ -4,15 +4,17 @@
 #include "Modules/Lights.h"
 #include "Modules/Mode.h"
 
-#include <subsystems/Arm.h>
-#include <subsystems/Elevator.h>
-#include <subsystems/Roller.h>
-#include <subsystems/Clamp.h>
+#include "subsystems/Arm.h"
+#include "subsystems/Elevator.h"
+#include "subsystems/Roller.h"
+#include "subsystems/Clamp.h"
 
 #define ELEVATOR 11
 #define ROLLER 13
 #define CLAMP 12
 #define ARM 14
+#define FRONTCLIMBER 15
+#define REARCLIMBER 16
 
 #define FLD 1
 #define FLS 5
@@ -32,6 +34,7 @@ Elevator* Robot::elevator = nullptr;
 Roller* Robot::roller = nullptr;
 Clamp* Robot::clamp = nullptr; 
 Arm* Robot::arm = nullptr;  
+Climber* Robot::climber = nullptr;
 
 //======= Motor Definition =======//
 WPI_TalonSRX* Robot::driveTrainFrontLeftDrive;
@@ -50,8 +53,11 @@ rev::CANSparkMax* Robot::elevatorMotor;
 WPI_TalonSRX* Robot::rollerMotor;
 WPI_TalonSRX* Robot::clampMotor;
 rev::CANSparkMax* Robot::armMotor;
+rev::CANSparkMax* Robot::frontClimberMotor;
+rev::CANSparkMax* Robot::rearClimberMotor;
 
-Servo* Robot::servo1;
+Servo* Robot::frontServo;
+Servo* Robot::rearServo;
 
 void Robot::DeviceInitialization(){
 //======= Front Left Drive =======//
@@ -84,8 +90,11 @@ void Robot::DeviceInitialization(){
    rollerMotor = new WPI_TalonSRX(ROLLER);
    clampMotor = new WPI_TalonSRX(CLAMP);
    armMotor = new rev::CANSparkMax(ARM,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   frontClimberMotor = new rev::CANSparkMax(FRONTCLIMBER,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   rearClimberMotor = new rev::CANSparkMax(REARCLIMBER,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
 
-   servo1 = new Servo(4);
+   frontServo = new Servo(0);
+   rearServo = new Servo(1);
 
 //======= System Initialization =======//
    oi = new OI();
@@ -93,6 +102,7 @@ void Robot::DeviceInitialization(){
    arm = new Arm();
    roller = new Roller();
    clamp = new Clamp();
+   climber = new Climber();
 }
 
 void Robot::RobotInit() {
@@ -110,13 +120,13 @@ void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::AutonomousInit() {
-   servo1->SetAngle(0);
+   
 }
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TeleopInit() {
-   servo1->SetAngle(15);
+   
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
