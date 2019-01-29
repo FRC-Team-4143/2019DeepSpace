@@ -9,15 +9,21 @@ float elevator_wantedPos;
 
 float arm_wantedPos;
 
-float elevator_pos1;
-float elevator_pos2;
-float elevator_pos3;
-float elevator_pos4;
+float hatch_elevator_pos1;
+float hatch_elevator_pos2;
+float hatch_elevator_pos3;
+float hatch_elevator_pos4;
+
+float cargo_elevator_pos1;
+float cargo_elevator_pos2;
+float cargo_elevator_pos3;
+float cargo_elevator_pos4;
 
 float arm_pos1;
 float arm_pos2;
 float arm_pos3;
 float arm_pos4;
+float hatch_arm_pos;
 
 int posNum;
 

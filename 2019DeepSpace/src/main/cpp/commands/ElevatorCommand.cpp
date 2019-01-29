@@ -23,10 +23,12 @@ float decreaseDistance;
 void ElevatorCommand::Initialize() {
   posNum = 0;
 
-  elevator_pos1=1000;
-  elevator_pos2=2000;
-  elevator_pos3=3000;
-  elevator_pos4=4000;
+  hatch_elevator_pos1=1000;
+  hatch_elevator_pos2=2000;
+  hatch_pos3=3000;
+  hatch_pos4=4000;
+
+  
 
   arm_pos1 = 100;
   arm_pos2 = 200;
@@ -59,7 +61,7 @@ void ElevatorCommand::Execute() {
   {
     case 1:
     {
-      elevator_wantedPos = elevator_pos1;
+      elevator_wantedPos = hatch_elevator_pos1;
       arm_wantedPos = arm_pos1;
       break;
     }
