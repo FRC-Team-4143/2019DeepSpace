@@ -3,6 +3,8 @@
 #include "frc/WPIlib.h"
 #include "commands/SetEndGame.h"
 #include "commands/ToggleGameMode.h"
+#include "commands/ExtendWheelsCommand.h"
+#include "commands/RetractWheelsCommand.h"
 using namespace frc;
 
 
@@ -14,6 +16,8 @@ class OI {
   ElevatorCommand* elevatorCommand;
   ToggleGameMode* toggleGameMode;
   SetEndGame* setEndGame;
+  ExtendWheelsCommand* extendWheelsCommand;
+  RetractWheelsCommand* retractWheelsCommand;
 
 //======= OI Methods =======//
   OI();
@@ -21,4 +25,6 @@ class OI {
   float GetRightTrigger();
   bool GetButtonA();
   bool GetButtonBack();
+  bool GetRightBumper();
+  bool GetLeftBumper();
 };

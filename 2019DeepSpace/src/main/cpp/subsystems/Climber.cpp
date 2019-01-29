@@ -4,12 +4,8 @@
 #define SERVOPASS 45
 #define SERVOLOCK 0
 
-char F;
-char R;
-
 Climber::Climber() : frc::Subsystem("Climber") {
 }
-
 
 void Climber::InitDefaultCommand() {
   //SetDefaultCommand(new Command());
@@ -17,26 +13,32 @@ void Climber::InitDefaultCommand() {
 
  void Climber::RetractWheels(char _side, float _speed){
    if(Robot::frontClimberMotor != nullptr && Robot::rearClimberMotor != nullptr){
-     if(_side == F){
+     if(_side == 'F'){
        Robot::frontServo->Set(SERVOPASS);
-       Robot::frontClimberMotor->Set(-_speed);
-     }else if(_side == R){
+       if(Robot::frontServo->GetAngle() == SERVOPASS){
+         Robot::frontClimberMotor->Set(-_speed);
+       }
+     }else if(_side == 'R'){
        Robot::rearServo->Set(SERVOPASS);
-       Robot::rearClimberMotor->Set(-_speed);
+       if(Robot::rearServo->GetAngle() == SERVOPASS){
+         Robot::rearClimberMotor->Set(-_speed);
+       }
      }else{
        Robot::frontServo->Set(SERVOPASS);
        Robot::rearServo->Set(SERVOPASS);
+       if(Robot::frontServo->GetAngle() == SERVOPASS && Robot::rearServo->GetAngle() == SERVOPASS){
        Robot::frontClimberMotor->Set(-_speed);
        Robot::rearClimberMotor->Set(-_speed);
+       }
      }
    }
  }
 
  void Climber::ExtendWheels(char _side, float _speed){
    if(Robot::frontClimberMotor != nullptr && Robot::rearClimberMotor != nullptr){
-    if(_side == F){
+    if(_side == 'F'){
       Robot::frontClimberMotor->Set(_speed);
-    }else if(_side == R){
+    }else if(_side == 'R'){
      Robot::rearClimberMotor->Set(_speed); 
     }else{
       Robot::frontClimberMotor->Set(_speed);
@@ -50,8 +52,7 @@ void Climber::InitDefaultCommand() {
      Robot::frontClimberMotor->Set(0);
      Robot::frontServo->Set(SERVOLOCK);
      Robot::rearClimberMotor->Set(0);
-     Robot::rearServo->Set(SERVOLOCK);
-   
+     Robot::rearServo->Set(SERVOLOCK);   
    }
  }
 
