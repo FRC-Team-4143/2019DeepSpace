@@ -25,6 +25,10 @@ ToggleGameMode* toggleGameMode;
 SetEndGame* setEndGame;
 ExtendWheelsCommand* extendWheelsCommand;
 RetractWheelsCommand* retractWheelsCommand;
+BallPickup* ballPickup;
+BallRelease* ballRelease;
+ClampGrab* clampGrab;
+ClampRelease* clampRelease;
 
 OI::OI() {
   driverjoystick = new Joystick(0);
@@ -33,11 +37,19 @@ OI::OI() {
   setEndGame = new SetEndGame();
   extendWheelsCommand = new ExtendWheelsCommand();
   retractWheelsCommand = new RetractWheelsCommand();
+  ballRelease = new BallRelease();
+  ballPickup = new BallPickup();
+  clampGrab = new ClampGrab();
+  clampRelease = new ClampRelease();
   
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhileHeld(extendWheelsCommand);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhileHeld(retractWheelsCommand);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ballRelease);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(ballPickup);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(clampRelease);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(clampGrab);
 
 }
 

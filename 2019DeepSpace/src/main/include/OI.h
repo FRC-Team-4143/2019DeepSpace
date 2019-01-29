@@ -5,6 +5,11 @@
 #include "commands/ToggleGameMode.h"
 #include "commands/ExtendWheelsCommand.h"
 #include "commands/RetractWheelsCommand.h"
+#include "commands/BallPickup.h"
+#include "commands/BallRelease.h"
+#include "commands/ClampGrab.h"
+#include "commands/ClampRelease.h"
+
 using namespace frc;
 
 
@@ -18,6 +23,10 @@ class OI {
   SetEndGame* setEndGame;
   ExtendWheelsCommand* extendWheelsCommand;
   RetractWheelsCommand* retractWheelsCommand;
+  BallPickup* ballPickup;
+  BallRelease* ballRelease;
+  ClampGrab* clampGrab;
+  ClampRelease* clampRelease;
 
 //======= OI Methods =======//
   OI();
