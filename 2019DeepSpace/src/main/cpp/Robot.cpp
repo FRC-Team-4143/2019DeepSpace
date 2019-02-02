@@ -116,6 +116,10 @@ void Robot::RobotPeriodic() {
    {
       SmartDashboard::PutNumber("Elevator Encoder Position", elevatorMotor->GetEncoder().GetPosition());
    }
+   if(armMotor == nullptr)
+   {
+      SmartDashboard::PutNumber("Arm Encoder Position", armMotor->GetEncoder().GetPosition());
+   }
 }
 
 void Robot::DisabledInit() {}

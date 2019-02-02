@@ -2,7 +2,7 @@
 #include "Robot.h"
 
 Clamp::Clamp() : frc::Subsystem("Clamp") {
-  isCargoMode = false;
+ 
 }
 
 
@@ -32,4 +32,4 @@ void Clamp::ClampStop(){
   }
 }
 
-//RobotMap::i2c->Write(5,0);
+

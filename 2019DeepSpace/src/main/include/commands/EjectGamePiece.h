@@ -2,11 +2,11 @@
 
 #include <frc/commands/Command.h>
 
-class ClampGrab : public frc::Command {
+class EjectGamePiece : public frc::Command {
  public:
 
 
-  ClampGrab();
+  EjectGamePiece();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

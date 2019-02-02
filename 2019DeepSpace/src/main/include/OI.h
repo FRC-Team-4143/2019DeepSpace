@@ -5,10 +5,9 @@
 #include "commands/ToggleGameMode.h"
 #include "commands/ExtendWheelsCommand.h"
 #include "commands/RetractWheelsCommand.h"
-#include "commands/BallPickup.h"
-#include "commands/BallRelease.h"
-#include "commands/ClampGrab.h"
-#include "commands/ClampRelease.h"
+#include "commands/AcquireGamePiece.h"
+#include "commands/EjectGamePiece.h"
+
 
 using namespace frc;
 
@@ -23,16 +22,16 @@ class OI {
   SetEndGame* setEndGame;
   ExtendWheelsCommand* extendWheelsCommand;
   RetractWheelsCommand* retractWheelsCommand;
-  BallPickup* ballPickup;
-  BallRelease* ballRelease;
-  ClampGrab* clampGrab;
-  ClampRelease* clampRelease;
+  AcquireGamePiece* acquireGamePiece;
+  EjectGamePiece* ejectGamePiece;
+
 
 //======= OI Methods =======//
   OI();
   float GetLeftTrigger();
   float GetRightTrigger();
   bool GetButtonA();
+  bool GetButtonY();
   bool GetButtonBack();
   bool GetButtonStart();
   bool GetRightBumper();

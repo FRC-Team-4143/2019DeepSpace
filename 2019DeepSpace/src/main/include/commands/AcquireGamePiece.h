@@ -2,11 +2,11 @@
 
 #include <frc/commands/Command.h>
 
-class BallPickup : public frc::Command {
+class AcquireGamePiece : public frc::Command {
  public:
 
 
-  BallPickup();
+  AcquireGamePiece();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

@@ -47,146 +47,126 @@ void ElevatorCommand::Initialize() {
 }
 
 void ElevatorCommand::Execute() {
-
-  if(Robot::elevatorMotor == nullptr)
-  {
+  if (Robot::elevatorMotor == nullptr) {
     return;
   }
-  if(Robot::armMotor == nullptr)
-  {
+  if (Robot::armMotor == nullptr) {
     return;
   }
-  
-  if(Robot::oi->GetButtonA())
-  {
-  if(posNum==4)
-  {
-    posNum = 0;
+
+  if (Robot::oi->GetButtonA()) {
+    if (posNum==4) {
+      posNum = 0;
+    }
+    posNum = posNum + 1;
   }
 
-  posNum = posNum + 1;
+  if (Robot::oi->GetButtonY()) {
+    if (posNum==0) {
+      posNum = 4;
+    }
+    posNum = posNum - 1;
+  }
 
   SmartDashboard::PutNumber("Position Number: ", posNum);
 
-  if(Mode::IsEndGame())
-  {
+  if(Mode::IsEndGame()) {
     arm_wantedPos = hatch_arm_pos;
   }
-  else
-  {
-  switch(posNum)
-  {
-    case 1:
-    {
-      if(Mode::IsCargoMode())
-      {
+  else {
+    switch(posNum) {
+    case 1: {
+      if(Mode::IsCargoMode()) {
         elevator_wantedPos = cargo_elevator_pos1;
         arm_wantedPos = arm_pos1;
       }
-      else if(Mode::IsHatchMode())
-      {
+      else if(Mode::IsHatchMode()) {
         elevator_wantedPos = hatch_elevator_pos1;
         arm_wantedPos = hatch_arm_pos;
       }
       break;
     }
-    case 2:
-    {
-      if(Mode::IsCargoMode())
-      {
+    case 2: {
+      if(Mode::IsCargoMode()) {
         elevator_wantedPos = cargo_elevator_pos2;
         arm_wantedPos = arm_pos2;
       }
-      else if(Mode::IsHatchMode)
-      {
+      else if(Mode::IsHatchMode) {
         elevator_wantedPos = hatch_elevator_pos2;
         arm_wantedPos = hatch_arm_pos;
       }
       break;
     }
-    case 3:
-    {
-      if(Mode::IsCargoMode())
-      {
+    case 3: {
+      if(Mode::IsCargoMode()) {
         elevator_wantedPos = cargo_elevator_pos3;
         arm_wantedPos = arm_pos3;
       }
-      else if(Mode::IsHatchMode)
-      {
+      else if(Mode::IsHatchMode) {
         elevator_wantedPos = hatch_elevator_pos3;
         arm_wantedPos = hatch_arm_pos;
       }
       break;
     }
-    case 4:
-    {
-      if(Mode::IsCargoMode())
-      {
+    case 4: {
+      if(Mode::IsCargoMode()) {
         elevator_wantedPos = cargo_elevator_pos4;
         arm_wantedPos = arm_pos4;
       }
-      else if(Mode::IsHatchMode())
-      {
+      else if(Mode::IsHatchMode()) {
         elevator_wantedPos = hatch_elevator_pos4;
         arm_wantedPos = hatch_arm_pos;
       }
       break;
     }
   }
-  }
-  }
 
   SmartDashboard::PutNumber("Wanted Position: ", elevator_wantedPos);
 
-
-  if(Robot::oi->GetRightTrigger() > 0){
+  if (Robot::oi->GetRightTrigger() > 0) {
     Robot::elevator->ElevatorUp(Robot::oi->GetRightTrigger());
-  } else{
+  }
+  else {
     Robot::elevator->ElevatorDown(Robot::oi->GetLeftTrigger());
   }
 
-  
-  if(Robot::elevatorMotor->GetEncoder().GetPosition()>0)
-  {
+  if (Robot::elevatorMotor->GetEncoder().GetPosition() > 0) {
     pos = Robot::elevatorMotor->GetEncoder().GetPosition();
   }
   
   float realSpeed = motorSpeed;
-  if(elevator_pos < elevator_wantedPos-deadvalue)
-  {
-    if(elevator_pos>elevator_wantedPos-decreaseDistance)
-    {
+  if (elevator_pos < elevator_wantedPos-deadvalue) {
+    if (elevator_pos>elevator_wantedPos-decreaseDistance) {
       realSpeed = motorSpeed / 4;
     }
     Robot::elevator->ElevatorUp(realSpeed);
-  } else if(elevator_pos > elevator_wantedPos+deadvalue)
-  {
-    if(elevator_pos<elevator_wantedPos+decreaseDistance)
-    {
+  }
+  else if (elevator_pos > elevator_wantedPos+deadvalue) {
+    if (elevator_pos<elevator_wantedPos+decreaseDistance) {
       realSpeed = motorSpeed / 4;
     }
     Robot::elevator->ElevatorDown(realSpeed);
   }
 
   realSpeed = motorSpeed;
-  if(arm_pos < arm_wantedPos-deadvalue)
-  {
-    if(arm_pos>arm_wantedPos-decreaseDistance)
-    {
+  if (arm_pos < arm_wantedPos-deadvalue) {
+    if (arm_pos>arm_wantedPos-decreaseDistance) {
       realSpeed = motorSpeed / 4;
     }
     Robot::arm->ArmDown(realSpeed);
-  } else if(arm_pos > arm_wantedPos+deadvalue)
-  {
-    if(arm_pos<arm_wantedPos+decreaseDistance)
-    {
+  }
+  else if (arm_pos > arm_wantedPos+deadvalue) {
+    if (arm_pos<arm_wantedPos+decreaseDistance) {
       realSpeed = motorSpeed / 4;
     }
     Robot::arm->ArmDown(realSpeed);
   }
 }
+}
 
-bool ElevatorCommand::IsFinished() { return false; }
+bool ElevatorCommand::IsFinished() {
+  return false;
+}
 
 void ElevatorCommand::End() {
   Robot::elevator->ElevatorStop();

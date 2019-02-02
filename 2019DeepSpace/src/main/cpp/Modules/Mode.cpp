@@ -41,13 +41,13 @@ void Mode::ToggleInGameMode()
 
 void Mode::SetLED()
 {
-    if(gameMode = GameMode::HATCHMODE){
+    if(GameMode::HATCHMODE == gameMode){
         Lights::SetHatchLights();
     }
-    else if(gameMode = GameMode::CARGOMODE){
+    else if(GameMode::CARGOMODE == gameMode){
         Lights::SetCargoLights();
     }
-    else if(gameMode = GameMode::ENDGAME){
+    else if(GameMode::ENDGAME == gameMode){
         Lights::SetEndGameLights();
     }
 
