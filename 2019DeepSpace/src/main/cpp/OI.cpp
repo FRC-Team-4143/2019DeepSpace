@@ -85,3 +85,8 @@ bool OI::GetRightBumper() {
 bool OI::GetLeftBumper() {
   return driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_LB);
 }
+
+float OI::GetLJoystickY(){
+  auto value = driverjoystick->GetRawAxis(JOYSTICK_LY_AXIS);
+  return (fabs(value) > JOYSTICK_DEAD_ZONE) ? value : 0;  
+}

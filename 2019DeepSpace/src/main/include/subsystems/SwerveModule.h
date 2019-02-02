@@ -9,7 +9,8 @@ class SwerveModule  {
   void SetGeometry(double x, double y);
   void SetWheelOffset();
   void LoadWheelOffset();
-  
+  void TESTSetDriveSpeed(float _speed)
+;  
  private:
 
   double _x;

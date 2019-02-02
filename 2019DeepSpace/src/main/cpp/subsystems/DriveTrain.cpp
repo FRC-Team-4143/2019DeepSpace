@@ -39,3 +39,10 @@ void DriveTrain::LoadWheelOffsets(){
   rearLeftModule->LoadWheelOffset();
   rearRightModule->LoadWheelOffset();
 }
+
+void DriveTrain::TESTDrive(){
+  frontLeftModule->TESTSetDriveSpeed(Robot::oi->GetLJoystickY());
+  frontRightModule->TESTSetDriveSpeed(Robot::oi->GetLJoystickY());
+  rearLeftModule->TESTSetDriveSpeed(Robot::oi->GetLJoystickY());
+  rearRightModule->TESTSetDriveSpeed(Robot::oi->GetLJoystickY());
+}

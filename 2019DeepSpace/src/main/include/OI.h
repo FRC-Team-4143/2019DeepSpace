@@ -36,4 +36,5 @@ class OI {
   bool GetButtonStart();
   bool GetRightBumper();
   bool GetLeftBumper();
+  float GetLJoystickY();
 };

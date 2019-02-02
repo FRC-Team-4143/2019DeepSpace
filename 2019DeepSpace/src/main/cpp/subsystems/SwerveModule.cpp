@@ -30,3 +30,7 @@ void SwerveModule::SetWheelOffset(){
 void SwerveModule::LoadWheelOffset(){
 
 }
+
+void SwerveModule::TESTSetDriveSpeed(float _speed){
+  _drive->Set(ControlMode::PercentOutput, _speed);
+}
