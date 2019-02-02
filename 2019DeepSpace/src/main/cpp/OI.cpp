@@ -23,15 +23,33 @@ const float JOYSTICK_DEAD_ZONE = 0.1;
 ElevatorCommand* elevatorCommand;
 ToggleGameMode* toggleGameMode;
 SetEndGame* setEndGame;
+ExtendWheelsCommand* extendWheelsCommand;
+RetractWheelsCommand* retractWheelsCommand;
+BallPickup* ballPickup;
+BallRelease* ballRelease;
+ClampGrab* clampGrab;
+ClampRelease* clampRelease;
 
 OI::OI() {
   driverjoystick = new Joystick(0);
   elevatorCommand = new ElevatorCommand();
   toggleGameMode = new ToggleGameMode();
   setEndGame = new SetEndGame();
+  extendWheelsCommand = new ExtendWheelsCommand();
+  retractWheelsCommand = new RetractWheelsCommand();
+  ballRelease = new BallRelease();
+  ballPickup = new BallPickup();
+  clampGrab = new ClampGrab();
+  clampRelease = new ClampRelease();
   
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(toggleGameMode);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhileHeld(setEndGame);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhileHeld(extendWheelsCommand);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhileHeld(retractWheelsCommand);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ballRelease);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(ballPickup);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(clampRelease);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(clampGrab);
 
 }
 
@@ -49,14 +67,20 @@ bool OI::GetButtonA(){
   return value;
 }
 
-bool OI::GetButtonBack()
-{
+bool OI::GetButtonBack(){
   auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_BACK);
   return value;
 }
 
-bool OI::GetButtonStart()
-{
+bool OI::GetButtonStart() {
   auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_START);
   return value;
+}
+
+bool OI::GetRightBumper() {
+  return driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_RB);
+}
+
+bool OI::GetLeftBumper() {
+  return driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_LB);
 }

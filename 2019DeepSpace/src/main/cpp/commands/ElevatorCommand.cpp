@@ -66,7 +66,7 @@ void ElevatorCommand::Execute() {
 
   posNum = posNum + 1;
 
-  SmartDashboard::PutNumber("Button Was Pressed, Position Number: ", posNum);
+  SmartDashboard::PutNumber("Position Number: ", posNum);
 
   if(Mode::IsEndGame())
   {
