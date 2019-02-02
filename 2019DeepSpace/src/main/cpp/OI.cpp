@@ -72,10 +72,15 @@ bool OI::GetButtonBack(){
   return value;
 }
 
-bool OI::GetRightBumper(){
+bool OI::GetButtonStart() {
+  auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_START);
+  return value;
+}
+
+bool OI::GetRightBumper() {
   return driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_RB);
 }
 
-bool OI::GetLeftBumper(){
+bool OI::GetLeftBumper() {
   return driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_LB);
 }

@@ -7,7 +7,7 @@ Elevator::Elevator() : frc::Subsystem("Elevator") {
 
 
 void Elevator::InitDefaultCommand() {
-  SetDefaultCommand(new ElevatorCommand());
+  //SetDefaultCommand(new ElevatorCommand());
 }
 
 //======= Method to Control Elevator Lift =======//
