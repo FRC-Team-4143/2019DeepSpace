@@ -8,15 +8,6 @@ ElevatorCommand::ElevatorCommand() {
   Requires(Robot::elevator);
 }
 
-int posNum=0;
-
-float motorSpeed=1;
-
-float deadvalue;
-double pos;
-
-float decreaseDistance;
-
 void ElevatorCommand::Initialize() {
   posNum = 0;
 
@@ -62,8 +53,8 @@ void ElevatorCommand::Execute() {
   }
 
   if (Robot::oi->GetButtonY()) {
-    if (posNum==0) {
-      posNum = 4;
+    if (posNum==1) {
+      posNum = 5;
     }
     posNum = posNum - 1;
   }
