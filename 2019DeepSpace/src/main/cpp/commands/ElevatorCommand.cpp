@@ -14,7 +14,7 @@ void ElevatorCommand::Initialize() {
   hatch_elevator_pos1=1000; //what pos does the elevator need to be to pick up a hatch
   hatch_elevator_pos2=2000; //what pos does the elevator need to put a hatch on bottem rocket
   hatch_elevator_pos3=3000; //what pos does the elevator need to put a hatch on middle rocket
-  hatch_elevator_pos4=400`0; //what pos does the elevator need to put a hatch on top of the rocket
+  hatch_elevator_pos4=4000; //what pos does the elevator need to put a hatch on top of the rocket
 
   cargo_elevator_pos1 = 1000; //what pos does the elevator need to be to pick up a ball
   cargo_elevator_pos2 = 2000; //what pos does the elevator need to be to chuck the ball in the first level of the rocket
@@ -122,10 +122,10 @@ void ElevatorCommand::Execute() {
   }
 
   if (Robot::elevatorMotor->GetEncoder().GetPosition() > 0) {
-    elevator_pos = Robot::elevatorMotorelevatorMotor->GetEncoder().GetPosition();
+    elevator_pos = Robot::elevatorMotor->GetEncoder().GetPosition();
   }
   if (Robot::armMotor->GetEncoder().GetPosition() > 0) {
-    arm_pos = Robot::elevatorMotorelevatorMotor->GetEncoder().GetPosition();
+    arm_pos = Robot::armMotor->GetEncoder().GetPosition();
   }
 
   float realSpeed = motorSpeed;
