@@ -1,10 +1,11 @@
 #pragma once
 #include <ctre/Phoenix.h>
+#include <rev/CANSparkMax.h>
 #include <string>
 
 class SwerveModule  {
  public:
-  SwerveModule(WPI_TalonSRX* driveMotor, WPI_TalonSRX* steerMotor, std::string configName);
+  SwerveModule(rev::CANSparkMax* driveMotor, WPI_TalonSRX* steerMotor, std::string configName); // CHANGE DRIVE MOTOR BACK TO WPI_TalonSRX
   double GetSteerPosition();
   void SetGeometry(double x, double y);
   void SetWheelOffset();
@@ -19,7 +20,7 @@ class SwerveModule  {
   double _steerPosition;
   
 
-  WPI_TalonSRX* _drive; // speed controller for the drive motor
+  rev::CANSparkMax* _drive; // speed controller for the drive motor CHANGE BACK TO WPI_TalonSRX
   WPI_TalonSRX* _steer; // speed controller for the steer motor
 
   };

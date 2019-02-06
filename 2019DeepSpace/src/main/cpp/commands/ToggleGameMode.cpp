@@ -15,14 +15,6 @@ void ToggleGameMode::Initialize() {
 }
 
 void ToggleGameMode::Execute() {
- /* if(Robot::oi->GetButtonBack())
-  {
-    Mode::ToggleInGameMode();
-  }
-  else if(Robot::oi->GetButtonStart())
-  {
-    Mode::SetEndgame();
-  }*/
 }
 
 bool ToggleGameMode::IsFinished() { return true; }

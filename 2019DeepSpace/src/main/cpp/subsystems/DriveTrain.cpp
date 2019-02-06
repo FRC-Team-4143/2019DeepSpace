@@ -1,6 +1,9 @@
 #include "subsystems/DriveTrain.h"
 #include "Modules/Constants.h"
 #include "Robot.h"
+#include "Commands/DriveTestCommand.h"
+
+#define USINGTALON 0
 
 DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
 
@@ -12,9 +15,9 @@ DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
 }
 
 void DriveTrain::InitDefaultCommand() {
-  //SetDefaultCommand());
+  SetDefaultCommand(new DriveTestCommand());
 }
-
+#if USINGTALON
 void DriveTrain::SetWheelbase(double width, double length){
   
   double halfWidth = width/2;
@@ -39,7 +42,7 @@ void DriveTrain::LoadWheelOffsets(){
   rearLeftModule->LoadWheelOffset();
   rearRightModule->LoadWheelOffset();
 }
-
+#endif
 void DriveTrain::TESTDrive(){
   frontLeftModule->TESTSetDriveSpeed(Robot::oi->GetLJoystickY());
   frontRightModule->TESTSetDriveSpeed(Robot::oi->GetLJoystickY());

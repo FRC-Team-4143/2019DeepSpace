@@ -11,12 +11,12 @@ void RetractWheelsCommand::Initialize() {
 }
 
 void RetractWheelsCommand::Execute() {
-  if(Robot::oi->GetLeftBumper() == true && Robot::oi->GetRightBumper() != true){
-    Robot::climber->RetractWheels('F', 0.5);
-  }else if(Robot::oi->GetRightBumper() == true && Robot::oi->GetLeftBumper() != true){
-    Robot::climber->RetractWheels('R', 0.5);
-  }else if(Robot::oi->GetRightBumper() == true && Robot::oi->GetLeftBumper() == true){
-    Robot::climber->RetractWheels('B', 0.5);
+  if(Robot::oi->GetLeftBumper() && !Robot::oi->GetRightBumper()){
+    Robot::climber->RetractWheels('F', 0.25);
+  }else if(Robot::oi->GetRightBumper() && !Robot::oi->GetLeftBumper()){
+    Robot::climber->RetractWheels('R', 0.25);
+  }else if(Robot::oi->GetRightBumper() && Robot::oi->GetLeftBumper()){
+    Robot::climber->RetractWheels('B', 0.25);
   }
 }
 

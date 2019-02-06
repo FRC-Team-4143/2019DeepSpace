@@ -7,7 +7,7 @@
 #include "commands/RetractWheelsCommand.h"
 #include "commands/AcquireGamePiece.h"
 #include "commands/EjectGamePiece.h"
-
+#include "commands/HatchServo.h"
 
 using namespace frc;
 
@@ -24,12 +24,15 @@ class OI {
   RetractWheelsCommand* retractWheelsCommand;
   AcquireGamePiece* acquireGamePiece;
   EjectGamePiece* ejectGamePiece;
+  HatchServo* hatchServo;
 
 
 //======= OI Methods =======//
   OI();
   float GetLeftTrigger();
   float GetRightTrigger();
+  bool GetButtonB();
+  bool GetButtonX();
   bool GetButtonA();
   bool GetButtonY();
   bool GetButtonBack();
