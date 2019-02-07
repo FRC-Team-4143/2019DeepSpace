@@ -14,7 +14,7 @@ void HatchServo::Execute() {
   Robot::hatchServo->SetAngle(60);
 }
 
-bool HatchServo::IsFinished() { return false; }
+bool HatchServo::IsFinished() { return true; }
 
 void HatchServo::End() {
   Robot::hatchServo->SetAngle(0);

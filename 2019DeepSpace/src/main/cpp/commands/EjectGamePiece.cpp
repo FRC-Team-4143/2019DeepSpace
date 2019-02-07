@@ -22,7 +22,7 @@ void EjectGamePiece::Execute() {
   }
 }
 
-bool EjectGamePiece::IsFinished() { return true; }
+bool EjectGamePiece::IsFinished() { return false; }
 
 void EjectGamePiece::End() {
   Robot::roller->RollerStop();
