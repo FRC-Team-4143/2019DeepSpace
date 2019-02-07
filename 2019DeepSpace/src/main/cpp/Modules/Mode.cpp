@@ -1,4 +1,4 @@
-
+#include <iostream>
 #include "Modules/Mode.h"
 #include "Modules/Lights.h"
 
@@ -21,6 +21,8 @@ bool Mode::IsEndGame()
 
 void Mode::SetEndgame()
 {
+    std::cout << "setendgame" << std::endl;
+    std::cout.flush();
     gameMode = GameMode::ENDGAME;
     SetLED();
 }

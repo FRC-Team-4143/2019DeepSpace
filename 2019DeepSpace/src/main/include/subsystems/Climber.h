@@ -10,6 +10,7 @@ class Climber : public frc::Subsystem {
   void RetractWheels(char _side, float _speed);
   void ExtendWheels(char _side, float _speed);
   void HoldWheels();
+  void Default();
 
  private:
 

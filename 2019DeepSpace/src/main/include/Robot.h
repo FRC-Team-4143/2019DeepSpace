@@ -14,6 +14,7 @@
 #include "subsystems/Roller.h"
 #include "subsystems/Clamp.h"
 #include "subsystems/Climber.h"
+#include "subsystems/DriveTrain.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -25,21 +26,27 @@ class Robot : public frc::TimedRobot {
   static Clamp* clamp;
   static Arm* arm;
   static Climber* climber;
+  static DriveTrain* driveTrain;
 
 
 
 //======= Drive Train =======//
-  static WPI_TalonSRX* driveTrainFrontLeftDrive;
+  //static WPI_TalonSRX* driveTrainFrontLeftDrive;
   static WPI_TalonSRX* driveTrainFrontLeftSteer;
 
-  static WPI_TalonSRX* driveTrainFrontRightDrive;
+  //static WPI_TalonSRX* driveTrainFrontRightDrive;
   static WPI_TalonSRX* driveTrainFrontRightSteer;
 
-  static WPI_TalonSRX* driveTrainRearLeftDrive;
+  //static WPI_TalonSRX* driveTrainRearLeftDrive;
   static WPI_TalonSRX* driveTrainRearLeftSteer;
 
-  static WPI_TalonSRX* driveTrainRearRightDrive;
+  //static WPI_TalonSRX* driveTrainRearRightDrive;
   static WPI_TalonSRX* driveTrainRearRightSteer;
+
+  static rev::CANSparkMax* driveTrainFrontLeftDrive;
+  static rev::CANSparkMax* driveTrainFrontRightDrive;
+  static rev::CANSparkMax* driveTrainRearLeftDrive;
+  static rev::CANSparkMax* driveTrainRearRightDrive;
 
 
 
@@ -51,6 +58,7 @@ class Robot : public frc::TimedRobot {
   static rev::CANSparkMax* rearClimberMotor;
   static Servo* frontServo;
   static Servo* rearServo;
+  static Servo* hatchServo;
   static rev::CANSparkMax* armMotor;
 
 //===========================================//

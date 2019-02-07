@@ -9,19 +9,19 @@ frc::I2C* Lights::i2c = nullptr;
 void Lights::SetCargoLights()
 {
     i2c->Write(1 , 0);
-    std::cout << "CargoMode" << std::endl;
+    frc::SmartDashboard::PutString("GameMode: ", "Cargo");
 }
 
 void Lights::SetHatchLights()
 {
     i2c->Write(2 , 0);
-    std::cout << "HatchMode" << std::endl;
+    frc::SmartDashboard::PutString("GameMode: ", "Hatch");
 }
 
 void Lights::SetEndGameLights()
 {
     i2c->Write(6 , 0);
-    std::cout << "EndGameMode" << std::endl;
+    frc::SmartDashboard::PutString("GameMode: ", "EndGame");
 }
 
 void Lights::Init()
