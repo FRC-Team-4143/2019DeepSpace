@@ -45,14 +45,14 @@ void ElevatorCommand::Execute() {
     return;
   }
 
-  if (Robot::oi->GetButtonA()) {
+  if (Robot::oi->GetButtonAPressed()) {
     if (posNum==4) {
       posNum = 0;
     }
     posNum = posNum + 1;
   }
 
-  if (Robot::oi->GetButtonY()) {
+  if (Robot::oi->GetButtonYPressed()) {
     if (posNum==1) {
       posNum = 5;
     }

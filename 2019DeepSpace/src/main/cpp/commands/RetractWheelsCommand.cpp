@@ -20,7 +20,7 @@ void RetractWheelsCommand::Execute() {
   }
 }
 
-bool RetractWheelsCommand::IsFinished() { return true; }
+bool RetractWheelsCommand::IsFinished() { return false; }
 
 void RetractWheelsCommand::End() {
   Robot::climber->HoldWheels();

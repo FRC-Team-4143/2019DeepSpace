@@ -35,6 +35,8 @@ class OI {
   bool GetButtonX();
   bool GetButtonA();
   bool GetButtonY();
+  bool GetButtonAPressed();
+  bool GetButtonYPressed();
   bool GetButtonBack();
   bool GetButtonStart();
   bool GetRightBumper();

@@ -14,13 +14,13 @@ void AcquireGamePiece::Execute() {
 	if (Mode::IsCargoMode()){
 		Robot::roller->RollerIn(1);
 	}
-	else if(Mode::IsHatchMode()) {
+	else if (Mode::IsHatchMode()) {
 		Robot::clamp->ClampOut(.25);
 	}
 }
 
 bool AcquireGamePiece::IsFinished() {
-	return true;
+	return false;
 }
 
 void AcquireGamePiece::End() {
