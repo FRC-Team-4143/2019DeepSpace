@@ -69,17 +69,17 @@ void Climber::InitDefaultCommand() {
 
 void Climber::Default(){
   if(Robot::oi->GetButtonY()){
-    Robot::frontClimberMotor->Set(-0.25);
+    Robot::frontClimberMotor->Set(-0.5);
   }else if(Robot::oi->GetButtonX()){
-    Robot::frontClimberMotor->Set(0.25);
+    Robot::frontClimberMotor->Set(0.5);
   }else{
     Robot::frontClimberMotor->Set(0);
   }
   
   if(Robot::oi->GetButtonB()){
-    Robot::rearClimberMotor->Set(0.25);
+    Robot::rearClimberMotor->Set(0.5);
   }else if(Robot::oi->GetButtonA()){
-    Robot::rearClimberMotor->Set(-0.25);
+    Robot::rearClimberMotor->Set(-0.5);
   }else{
     Robot::rearClimberMotor->Set(0);
   }
