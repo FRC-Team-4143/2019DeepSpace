@@ -5,35 +5,33 @@
 #include <iostream>
 
 SwerveModule::SwerveModule(MultiController* drive, PositionMultiController* steer, std::string configName) {
-  _drive = drive;
-  _steer = steer;
-  _configName = configName;
+	_drive = drive;
+	_steer = steer;
+	_configName = configName;
 }
 
 // ================================================================
 
 void SwerveModule::SetGeometry(double x, double y) {
-  _x = x;
-  _y = y;
+	_x = x;
+	_y = y;
 }
 
 // ================================================================
 
 double SwerveModule::GetSteerPosition() {
-
-  float currentPosition = _steer->GetEncoderPosition() / EncoderConstants::COUNTS_PER_TURN;
-  int turns = trunc(currentPosition);
-  float currentAngle = currentPosition - turns;
-  return currentAngle *EncoderConstants::FULL_TURN;
+	float currentPosition = _steer->GetEncoderPosition() / EncoderConstants::COUNTS_PER_TURN;
+	int turns = trunc(currentPosition);
+	float currentAngle = currentPosition - turns;
+	return currentAngle *EncoderConstants::FULL_TURN;
 }
 
 // ================================================================
 
 void SwerveModule::SetWheelOffset() {
-
-  _steerPosition = GetSteerPosition();
-  auto prefs = frc::Preferences::GetInstance();
-  prefs->PutDouble(_configName, _steerPosition);
+	_steerPosition = GetSteerPosition();
+	auto prefs = frc::Preferences::GetInstance();
+	prefs->PutDouble(_configName, _steerPosition);
 	SetOffset(_steerPosition);
 }
 
@@ -51,19 +49,21 @@ void SwerveModule::LoadWheelOffset() {
 // ================================================================
 
 void SwerveModule::SetDriveSpeed(float speed) {
-  _drive->SetPercentPower(speed * _inverse);
+	_drive->SetPercentPower(speed * _inverse);
 }
 
 // ================================================================
 
-void SwerveModule::SetSteer(double x, double y, double twist, bool operatorControl) {
-
- static constexpr double pi = 3.141592653589793238462643383;
+void SwerveModule::SetSteerDrive(double x, double y, double twist, bool operatorControl) {
+	static constexpr double pi = 3.141592653589793238462643383;
 
 	auto radius = std::sqrt(pow(_y, 2) + pow(_x, 2));
 
-	auto BP = x + twist * _x / radius;
-	auto CP = y - twist * _y / radius;
+	auto signX = (_x >= 0) ? 1 : -1;
+	auto signY = (_y >= 0) ? 1 : -1;
+
+	auto BP = x + twist * signY * std::fabs(_x) / radius;
+	auto CP = y - twist * signX * std::fabs(_y) / radius;
 
 	float setpoint = EncoderConstants::HALF_TURN;
 
@@ -77,20 +77,18 @@ void SwerveModule::SetSteer(double x, double y, double twist, bool operatorContr
 	radius = sqrt(pow(BP, 2) + pow(CP, 2));
 
 	if (operatorControl && fabs(x) <= Constants::DEAD_ZONE && fabs(y) <= Constants::DEAD_ZONE && fabs(twist) <= Constants::DEAD_ZONE) {
-			radius = 0;
+		radius = 0;
 	}
 
 	if (_x > 0){
 		radius = -radius;
 	}
 	SetDriveSpeed(radius);
-
 }
 
 // ================================================================
 
 void SwerveModule::SetSteerSetpoint(float setpoint) {
-
 	float currentPosition = _steer->GetEncoderPosition() / EncoderConstants::COUNTS_PER_TURN;
 	int turns = trunc(currentPosition);
 	float currentAngle = currentPosition - turns;

@@ -3,13 +3,13 @@
 #include "Robot.h"
 #include "commands/CrabDrive.h"
 #include "commands/FieldCentric.h"
+#include "Modules/Logger.h"
 #include <iostream>
 
-const float DEAD_ZONE = 0.15;
+//const float DEAD_ZONE = 0.15;
 
 DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
-
-  frontLeftModule = new SwerveModule(Robot::driveTrainFrontLeftDrive, Robot::driveTrainFrontLeftSteer, Constants::FL_POS_NAME);
+	frontLeftModule = new SwerveModule(Robot::driveTrainFrontLeftDrive, Robot::driveTrainFrontLeftSteer, Constants::FL_POS_NAME);
   frontRightModule = new SwerveModule(Robot::driveTrainFrontRightDrive, Robot::driveTrainFrontRightSteer, Constants::FR_POS_NAME);
   rearLeftModule = new SwerveModule(Robot::driveTrainRearLeftDrive, Robot::driveTrainRearLeftSteer, Constants::RL_POS_NAME);
   rearRightModule = new SwerveModule(Robot::driveTrainRearRightDrive, Robot::driveTrainRearRightSteer, Constants::RR_POS_NAME);
@@ -61,7 +61,7 @@ void DriveTrain::LoadWheelOffsets(){
 // ================================================================
 
 void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
-   
+
   if (operatorControl && x == 0.0 && y == 0.0 && twist == 0.0) {
 		if (fabs(lasty) > 0 || fabs(lastx) > 0 || fabs(lasttwist) > 0) {
 			y = std::min(std::max(lasty, -Constants::DEAD_ZONE), Constants::DEAD_ZONE);
@@ -86,10 +86,10 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 		twist *= scale; // TWISTSCALE;
 	}
 	
-  frontLeftModule->SetSteer(x, y, twist, operatorControl); 
-  frontRightModule->SetSteer(x, y, twist, operatorControl);
-  rearLeftModule->SetSteer(x, y, twist, operatorControl);
-  rearRightModule->SetSteer(x, y, twist, operatorControl);
+  frontLeftModule->SetSteerDrive(x, y, twist, operatorControl); 
+  frontRightModule->SetSteerDrive(x, y, twist, operatorControl);
+  rearLeftModule->SetSteerDrive(x, y, twist, operatorControl);
+  rearRightModule->SetSteerDrive(x, y, twist, operatorControl);
 
 }
 
