@@ -8,7 +8,7 @@ public:
     SteerTalonController(int canId);
     virtual void SetPercentPower(double value) override;
     virtual double GetEncoderPosition() override;
-    virtual void SetPosition(double value, double deadzone) override;
+    virtual void SetPosition(double value) override;
     void ConfigPID();
 
 

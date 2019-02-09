@@ -1,6 +1,7 @@
 #include "OI.h"
 #include <frc/WPILib.h>
 #include <iostream>
+#include "modules/Constants.H"
 
 const uint32_t JOYSTICK_LX_AXIS = 0;
 const uint32_t JOYSTICK_LY_AXIS = 1;
@@ -19,7 +20,6 @@ const uint32_t JOYSTICK_BUTTON_BACK = 7;
 const uint32_t JOYSTICK_BUTTON_START = 8;
 const uint32_t JOYSTICK_BUTTON_LEFT = 9;
 const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
-const float JOYSTICK_DEAD_ZONE = 0.15;
 
 ElevatorCommand* elevatorCommand;
 ToggleGameMode* toggleGameMode;
@@ -50,10 +50,10 @@ OI::OI() {
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhileHeld(hatchServo);
-  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhileHeld(extendWheelsCommand);
-  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhileHeld(retractWheelsCommand);
-  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
-  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(acquireGamePiece);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhileHeld(extendWheelsCommand);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhileHeld(retractWheelsCommand);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(acquireGamePiece);
 
 }
 
@@ -61,35 +61,35 @@ OI::OI() {
 
 float OI::GetJoystickX() {
 	auto value = driverjoystick->GetRawAxis(JOYSTICK_LX_AXIS);
-	return (fabs(value) <= JOYSTICK_DEAD_ZONE) ? 0 : value;
+	return (fabs(value) <= Constants::DEAD_ZONE) ? 0 : value;
 }
 
 // ==========================================================================
 
 float OI::GetJoystickY() {
 	auto value = driverjoystick->GetRawAxis(JOYSTICK_LY_AXIS);
-	return (fabs(value) <= JOYSTICK_DEAD_ZONE) ? 0 : value;
+	return (fabs(value) <= Constants::DEAD_ZONE) ? 0 : value;
 }
 
 // ==========================================================================
 
 float OI::GetJoystickZ() {
 	auto value = driverjoystick->GetRawAxis(JOYSTICK_RX_AXIS);
-	return (fabs(value) <= JOYSTICK_DEAD_ZONE) ? 0 : value;
+	return (fabs(value) <= Constants::DEAD_ZONE) ? 0 : value;
 }
 
 // ==========================================================================
 
 float OI::GetLeftTrigger(){
   float value = driverjoystick->GetRawAxis(JOYSTICK_LTRIG_AXIS);
-  return (fabs(value) > JOYSTICK_DEAD_ZONE) ? value :0;
+  return (fabs(value) > Constants::DEAD_ZONE) ? value :0;
 }
 
 // ==========================================================================
 
 float OI::GetRightTrigger(){
   float value = driverjoystick->GetRawAxis(JOYSTICK_RTRIG_AXIS);
-  return (fabs(value) > JOYSTICK_DEAD_ZONE) ? value :0;
+  return (fabs(value) > Constants::DEAD_ZONE) ? value :0;
 }
 
 // ==========================================================================

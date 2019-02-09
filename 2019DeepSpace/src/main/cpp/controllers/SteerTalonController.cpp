@@ -7,6 +7,8 @@
 #define IZone 100
 #define STEERPOW 0.7
 
+#define ENCODER_COUNTS_PER_TURN 4096
+
 SteerTalonController::SteerTalonController(WPI_TalonSRX* motor){
     _motor = motor;
     ConfigPID();
@@ -25,8 +27,8 @@ double SteerTalonController::GetEncoderPosition(){
     return _motor->GetSelectedSensorPosition();
 }
 
-void SteerTalonController::SetPosition(double value, double deadzone){
-    _motor->Set(ControlMode::Position, value);
+void SteerTalonController::SetPosition(double value){
+    _motor->Set(ControlMode::Position, value * ENCODER_COUNTS_PER_TURN);
 }
 
 void SteerTalonController::ConfigPID(){

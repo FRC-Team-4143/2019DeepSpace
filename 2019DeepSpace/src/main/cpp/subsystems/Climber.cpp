@@ -10,7 +10,7 @@ Climber::Climber() : frc::Subsystem("Climber") {
 }
 
 void Climber::InitDefaultCommand() {
-  SetDefaultCommand(new ClimberTest());
+  //SetDefaultCommand(new ClimberTest());
 }
 
  void Climber::RetractWheels(char _side, float _speed){
@@ -68,6 +68,7 @@ void Climber::InitDefaultCommand() {
 
 
 void Climber::Default(){
+/*
   if(Robot::oi->GetButtonY()){
     Robot::frontClimberMotor->SetPercentPower(-0.5);
   }else if(Robot::oi->GetButtonX()){
@@ -83,4 +84,5 @@ void Climber::Default(){
   }else{
     Robot::rearClimberMotor->SetPercentPower(0);
   }
+*/
 }

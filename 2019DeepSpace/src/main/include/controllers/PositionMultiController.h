@@ -3,6 +3,6 @@
 
 class PositionMultiController : public MultiController {
 public:
-    virtual void SetPosition(double value, double deadzone) = 0;
+    virtual void SetPosition(double value) = 0;
 
 };
