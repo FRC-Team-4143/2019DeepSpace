@@ -9,6 +9,7 @@
 #include "commands/EjectGamePiece.h"
 #include "commands/HatchServo.h"
 #include "commands/SetWheelOffsets.h"
+#include "commands/ZeroYaw.h"
 
 using namespace frc;
 
@@ -26,6 +27,7 @@ class OI {
   AcquireGamePiece* acquireGamePiece;
   EjectGamePiece* ejectGamePiece;
   HatchServo* hatchServo;
+  ZeroYaw* zeroYaw;
 
 
 //======= OI Methods =======//

@@ -1,30 +1,27 @@
 #include "modules/SwerveModule.h"
 #include "subsystems/EncoderConstants.h"
-#include  <frc/Preferences.h>
+#include <frc/Preferences.h>
 #include <iostream>
 
-double Offset = 0;
-
-SwerveModule::SwerveModule(MultiController* drive, MultiController* steer, std::string configName) { 
+SwerveModule::SwerveModule(MultiController* drive, PositionMultiController* steer, std::string configName) {
   _drive = drive;
   _steer = steer;
   _configName = configName;
 }
 
-void SwerveModule::SetGeometry(double x, double y){
+void SwerveModule::SetGeometry(double x, double y) {
   _x = x;
   _y = y;
 }
 
-double SwerveModule::GetSteerPosition(){
+double SwerveModule::GetSteerPosition() {
   float currentPosition = _steer->GetEncoderPosition() / EncoderConstants::COUNTS_PER_TURN;
   int turns = trunc(currentPosition);
   float currentAngle = currentPosition - turns;
   return currentAngle *EncoderConstants::FULL_TURN;
-
 }
 
-void SwerveModule::SetWheelOffset(){
+void SwerveModule::SetWheelOffset() {
 	std::cout << "SetWheelOffsets SwerveModule" << std::endl;
   std::cout.flush();
   _steerPosition = GetSteerPosition();
@@ -33,38 +30,36 @@ void SwerveModule::SetWheelOffset(){
 	SetOffset(_steerPosition);
 }
 
-void SwerveModule::SetOffset(float off){
-	Offset = off;
+void SwerveModule::SetOffset(float off) {
+	_offset = off;
 }
 
-void SwerveModule::LoadWheelOffset(){
-
+void SwerveModule::LoadWheelOffset() {
 }
 
-void SwerveModule::TESTSetDriveSpeed(float speed){
+void SwerveModule::TESTSetDriveSpeed(float speed) {
   _drive->SetPercentPower(speed/4);
 }
 
-void SwerveModule::SetDriveSpeed(float speed){
-  _drive->SetPercentPower(speed * inverse);
+void SwerveModule::SetDriveSpeed(float speed) {
+  _drive->SetPercentPower(speed * _inverse);
 }
 
-void SwerveModule::SetSteer(float setpoint){
+void SwerveModule::SetSteer(float setpoint) {
   std::cout << "SetSteer()" << std::endl;
   std::cout.flush();
 
 	setpoint = -setpoint;
-	SetSteerSetpoint(setpoint + Offset);
+	SetSteerSetpoint(setpoint + _offset);
 }
 
-void SwerveModule::SetSteerSetpoint(float setpoint){
+void SwerveModule::SetSteerSetpoint(float setpoint) {
 	std::cout << "SetSteerSetpoint()" << std::endl;
   std::cout.flush();
 
 	float currentPosition = _steer->GetEncoderPosition() / EncoderConstants::COUNTS_PER_TURN;
 	int turns = trunc(currentPosition);
 	float currentAngle = currentPosition - turns;
-
 
 	currentPosition *= EncoderConstants::FULL_TURN;
 	turns *= EncoderConstants::FULL_TURN;
@@ -86,11 +81,11 @@ void SwerveModule::SetSteerSetpoint(float setpoint){
 			minI = i;
 		}
 	}
+
 	_steer->SetPosition(angleOptions[minI]/EncoderConstants::FULL_TURN * 4096, 0);
 
 	if (minI % 2)
-		inverse = -1;
+		_inverse = -1;
 	else
-		inverse = 1;
-
-} 
+		_inverse = 1;
+}

@@ -19,7 +19,7 @@ const uint32_t JOYSTICK_BUTTON_BACK = 7;
 const uint32_t JOYSTICK_BUTTON_START = 8;
 const uint32_t JOYSTICK_BUTTON_LEFT = 9;
 const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
-const float JOYSTICK_DEAD_ZONE = 0.1;
+const float JOYSTICK_DEAD_ZONE = 0.15;
 
 ElevatorCommand* elevatorCommand;
 ToggleGameMode* toggleGameMode;
@@ -29,7 +29,7 @@ RetractWheelsCommand* retractWheelsCommand;
 AcquireGamePiece* acquireGamePiece;
 EjectGamePiece* ejectGamePiece;
 HatchServo* hatchServo;
-
+ZeroYaw* zeroYaw;
 
 OI::OI() {
   std::cout << "OI constructor" << std::endl;
@@ -44,7 +44,8 @@ OI::OI() {
   acquireGamePiece = new AcquireGamePiece();
   hatchServo = new HatchServo();
 
-  SmartDashboard::PutData("Set Wheel Offsets", new SetWheelOffsets());
+  SmartDashboard::PutData("SetWheel Offsets", new SetWheelOffsets());
+  SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
   
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);

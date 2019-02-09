@@ -7,6 +7,9 @@
 #include <rev/CANSparkMax.h>
 #include <rev/SparkMax.h>
 #include <ctre/Phoenix.h>
+#include <AHRS.h>
+#include <frc/I2C.h>
+
 #include "controllers/MultiController.h"
 #include "controllers/TalonController.h"
 #include "controllers/SteerTalonController.h"
@@ -19,6 +22,7 @@
 #include "subsystems/Clamp.h"
 #include "subsystems/Climber.h"
 #include "subsystems/DriveTrain.h"
+#include "subsystems/GyroSub.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -31,22 +35,23 @@ class Robot : public frc::TimedRobot {
   static Arm* arm;
   static Climber* climber;
   static DriveTrain* driveTrain;
+  static GyroSub* gyroSub;
 
 
 
 //======= Drive Train =======//
 
   static MultiController* driveTrainFrontLeftDrive;
-  static MultiController* driveTrainFrontLeftSteer;
+  static PositionMultiController* driveTrainFrontLeftSteer;
 
   static MultiController* driveTrainFrontRightDrive;
-  static MultiController* driveTrainFrontRightSteer;
+  static PositionMultiController* driveTrainFrontRightSteer;
 
   static MultiController* driveTrainRearLeftDrive;
-  static MultiController* driveTrainRearLeftSteer;
+  static PositionMultiController* driveTrainRearLeftSteer;
 
   static MultiController* driveTrainRearRightDrive;
-  static MultiController* driveTrainRearRightSteer;
+  static PositionMultiController* driveTrainRearRightSteer;
 
 
 //======= Susystem Motors and Sensors =======//
@@ -59,6 +64,8 @@ class Robot : public frc::TimedRobot {
   static Servo* rearServo;
   static Servo* hatchServo;
   static rev::CANSparkMax* armMotor;
+
+  static AHRS* navx;
 
 //===========================================//
 
