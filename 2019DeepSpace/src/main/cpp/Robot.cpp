@@ -5,12 +5,7 @@
 #include "Modules/Lights.h"
 #include "Modules/Mode.h"
 
-#include "subsystems/Arm.h"
-#include "subsystems/Elevator.h"
-#include "subsystems/Roller.h"
-#include "subsystems/Clamp.h"
-
-#define USINGSPARKMAX 1
+#define USINGSPARKMAXDRIVE 0
 
 #define ELEVATOR 11
 #define ROLLER 13
@@ -39,19 +34,20 @@ Clamp* Robot::clamp = nullptr;
 Arm* Robot::arm = nullptr;  
 Climber* Robot::climber = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
+GyroSub* Robot::gyroSub = nullptr;
 
 //======= Motor Definition =======//
 MultiController* Robot::driveTrainFrontLeftDrive;
-MultiController* Robot::driveTrainFrontLeftSteer;
+PositionMultiController* Robot::driveTrainFrontLeftSteer;
 
 MultiController* Robot::driveTrainFrontRightDrive;
-MultiController* Robot::driveTrainFrontRightSteer;
+PositionMultiController* Robot::driveTrainFrontRightSteer;
 
 MultiController* Robot::driveTrainRearLeftDrive;
-MultiController* Robot::driveTrainRearLeftSteer;
+PositionMultiController* Robot::driveTrainRearLeftSteer;
 
 MultiController* Robot::driveTrainRearRightDrive;
-MultiController* Robot::driveTrainRearRightSteer;
+PositionMultiController* Robot::driveTrainRearRightSteer;
 
 rev::CANSparkMax* Robot::elevatorMotor;
 MultiController* Robot::rollerMotor;
@@ -63,6 +59,8 @@ MultiController* Robot::rearClimberMotor;
 Servo* Robot::frontServo;
 Servo* Robot::rearServo;
 Servo* Robot::hatchServo;
+
+AHRS* Robot::navx;
 
 void Robot::DeviceInitialization(){
    //======= Front Left Steer =======//
@@ -78,7 +76,7 @@ void Robot::DeviceInitialization(){
       driveTrainRearRightSteer = new SteerTalonController(RRS);
 
 
-   #if USINGSPARKMAX
+   #if USINGSPARKMAXDRIVE
    //======= Front Left Drive =======//
       driveTrainFrontLeftDrive = new SparkMaxController(FLD);
 
@@ -127,6 +125,11 @@ void Robot::DeviceInitialization(){
    climber = new Climber();
    oi = new OI();
    driveTrain = new DriveTrain();
+   gyroSub = new GyroSub();
+
+//======= Sensor Initialization =======//
+
+   navx = new AHRS(I2C::Port::kOnboard);
 }
 
 void Robot::RobotInit() {

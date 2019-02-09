@@ -1,8 +1,8 @@
 #pragma once
 #include <ctre/Phoenix.h>
-#include "controllers/MultiController.h"
+#include "controllers/PositionMultiController.h"
 
-class SteerTalonController : public MultiController  {
+class SteerTalonController : public PositionMultiController  {
 public:
     SteerTalonController(WPI_TalonSRX* motor);
     SteerTalonController(int canId);

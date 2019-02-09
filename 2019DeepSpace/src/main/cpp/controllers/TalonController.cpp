@@ -16,6 +16,4 @@ double TalonController::GetEncoderPosition(){
     return _motor->GetSelectedSensorPosition();
 }
 
-void TalonController::SetPosition(double value, double deadzone){
-    _motor->Set(ControlMode::Position, value);
-}
+

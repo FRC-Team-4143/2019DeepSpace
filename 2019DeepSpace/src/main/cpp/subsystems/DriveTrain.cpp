@@ -3,6 +3,7 @@
 #include "Robot.h"
 #include "Commands/DriveTestCommand.h"
 #include "commands/CrabDrive.h"
+#include "commands/FieldCentric.h"
 #include <iostream>
 
 const float DEAD_ZONE = 0.15;
@@ -24,7 +25,7 @@ DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
 }
 
 void DriveTrain::InitDefaultCommand() {
-  SetDefaultCommand(new CrabDrive());
+  SetDefaultCommand(new FieldCentric());
 }
 
 void DriveTrain::SetWheelbase(double width, double length){
@@ -42,6 +43,7 @@ void DriveTrain::SetWheelbase(double width, double length){
 }
 
 void DriveTrain::SetWheelOffsets(){
+
   std::cout << "SetWheelOffsets Method" << std::endl;
   std::cout.flush();
   frontLeftModule->SetWheelOffset();
@@ -58,6 +60,7 @@ void DriveTrain::LoadWheelOffsets(){
 }
 
 void DriveTrain::TESTDrive(){
+
   frontLeftModule->TESTSetDriveSpeed(Robot::oi->GetJoystickY());
   frontRightModule->TESTSetDriveSpeed(Robot::oi->GetJoystickY());
   rearLeftModule->TESTSetDriveSpeed(Robot::oi->GetJoystickY());
@@ -65,6 +68,7 @@ void DriveTrain::TESTDrive(){
 }
 
 void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
+
   std::cout << "Crab()" << std::endl;
   std::cout.flush();
    
@@ -195,4 +199,17 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
   std::cout << "Crab end" << std::endl;
   std::cout.flush();
 
+}
+
+void DriveTrain::FieldCentricCrab(float twist, float y, float x, bool operatorControl){
+
+	float FWD = y;
+	float STR = x;
+
+	auto robotangle = Robot::gyroSub->PIDGet() * pi / 180;
+
+	FWD = y * cos(robotangle) + x * sin(robotangle);
+	STR = -y * sin(robotangle) + x * cos(robotangle);
+
+	Crab((twist*0.65), FWD, STR, operatorControl); // twist * 0.65
 }
