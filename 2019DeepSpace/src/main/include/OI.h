@@ -10,6 +10,7 @@
 #include "commands/HatchServo.h"
 #include "commands/SetWheelOffsets.h"
 #include "commands/ZeroYaw.h"
+#include "commands/CrabDrive.h"
 
 using namespace frc;
 
@@ -28,6 +29,7 @@ class OI {
   EjectGamePiece* ejectGamePiece;
   HatchServo* hatchServo;
   ZeroYaw* zeroYaw;
+  CrabDrive* crabDrive;
 
 
 //======= OI Methods =======//

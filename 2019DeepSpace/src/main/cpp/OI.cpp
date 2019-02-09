@@ -30,10 +30,10 @@ AcquireGamePiece* acquireGamePiece;
 EjectGamePiece* ejectGamePiece;
 HatchServo* hatchServo;
 ZeroYaw* zeroYaw;
+CrabDrive* crabDrive;
 
 OI::OI() {
-  std::cout << "OI constructor" << std::endl;
-  std::cout.flush();
+
   driverjoystick = new Joystick(0);
   elevatorCommand = new ElevatorCommand();
   toggleGameMode = new ToggleGameMode();
@@ -43,6 +43,7 @@ OI::OI() {
   ejectGamePiece = new EjectGamePiece();
   acquireGamePiece = new AcquireGamePiece();
   hatchServo = new HatchServo();
+  crabDrive = new CrabDrive();
 
   SmartDashboard::PutData("SetWheel Offsets", new SetWheelOffsets());
   SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
@@ -54,6 +55,7 @@ OI::OI() {
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhileHeld(retractWheelsCommand);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(acquireGamePiece);
+  (new JoystickButton(driverjoystick,JOYSTICK_BUTTON_RIGHT))->ToggleWhenPressed(crabDrive);
 
 }
 
