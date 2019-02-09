@@ -10,6 +10,8 @@
 #include "subsystems/Roller.h"
 #include "subsystems/Clamp.h"
 
+#define USINGSPARKMAX 1
+
 #define ELEVATOR 11
 #define ROLLER 13
 #define CLAMP 12
@@ -39,73 +41,79 @@ Climber* Robot::climber = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
 
 //======= Motor Definition =======//
-//WPI_TalonSRX* Robot::driveTrainFrontLeftDrive;
-WPI_TalonSRX* Robot::driveTrainFrontLeftSteer;
+MultiController* Robot::driveTrainFrontLeftDrive;
+MultiController* Robot::driveTrainFrontLeftSteer;
 
-//WPI_TalonSRX* Robot::driveTrainFrontRightDrive;
-WPI_TalonSRX* Robot::driveTrainFrontRightSteer;
+MultiController* Robot::driveTrainFrontRightDrive;
+MultiController* Robot::driveTrainFrontRightSteer;
 
-//WPI_TalonSRX* Robot::driveTrainRearLeftDrive;
-WPI_TalonSRX* Robot::driveTrainRearLeftSteer;
+MultiController* Robot::driveTrainRearLeftDrive;
+MultiController* Robot::driveTrainRearLeftSteer;
 
-//WPI_TalonSRX* Robot::driveTrainRearRightDrive;
-WPI_TalonSRX* Robot::driveTrainRearRightSteer;
-
-rev::CANSparkMax* Robot::driveTrainFrontLeftDrive;
-rev::CANSparkMax* Robot::driveTrainFrontRightDrive;
-rev::CANSparkMax* Robot::driveTrainRearLeftDrive;
-rev::CANSparkMax* Robot::driveTrainRearRightDrive;
+MultiController* Robot::driveTrainRearRightDrive;
+MultiController* Robot::driveTrainRearRightSteer;
 
 rev::CANSparkMax* Robot::elevatorMotor;
-WPI_TalonSRX* Robot::rollerMotor;
-WPI_TalonSRX* Robot::clampMotor;
+MultiController* Robot::rollerMotor;
+MultiController* Robot::clampMotor;
 rev::CANSparkMax* Robot::armMotor;
-rev::CANSparkMax* Robot::frontClimberMotor;
-rev::CANSparkMax* Robot::rearClimberMotor;
+MultiController* Robot::frontClimberMotor;
+MultiController* Robot::rearClimberMotor;
 
 Servo* Robot::frontServo;
 Servo* Robot::rearServo;
 Servo* Robot::hatchServo;
 
 void Robot::DeviceInitialization(){
-   std::cout << "deviceinit" << std::endl;
-   std::cout.flush();
-//======= Front Left Drive =======//
-   //driveTrainFrontLeftDrive = new WPI_TalonSRX(FLD);
-   driveTrainFrontLeftDrive = new rev::CANSparkMax(FLD,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   //======= Front Left Steer =======//
+      driveTrainFrontLeftSteer = new SteerTalonController(FLS);
 
-//======= Front Left Steer =======//
-   driveTrainFrontLeftSteer = new WPI_TalonSRX(FLS);
+   //======= Front Right Steer =======//
+      driveTrainFrontRightSteer = new SteerTalonController(FRS);
 
-//======= Front Rigth Drive =======//
-   //driveTrainFrontRightDrive = new WPI_TalonSRX(FRD);
-   driveTrainFrontRightDrive = new rev::CANSparkMax(FRD,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   //======= Rear Left Steer =======//
+      driveTrainRearLeftSteer = new SteerTalonController(RLS);
 
-//======= Front Right Steer =======//
-   driveTrainFrontLeftSteer = new WPI_TalonSRX(FRS);
+   //======= Rear Right Steer =======//
+      driveTrainRearRightSteer = new SteerTalonController(RRS);
 
-//======= Rear Left Drive =======//
-   //driveTrainRearLeftDrive = new WPI_TalonSRX(RLD);
-   driveTrainRearLeftDrive = new rev::CANSparkMax(RLD,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
 
-//======= Rear Left Steer =======//
-   driveTrainRearLeftSteer = new WPI_TalonSRX(RLS);
+   #if USINGSPARKMAX
+   //======= Front Left Drive =======//
+      driveTrainFrontLeftDrive = new SparkMaxController(FLD);
 
-//======= Rear Right Drive =======//
-   //driveTrainRearRightDrive = new WPI_TalonSRX(RRD);
-   driveTrainRearRightDrive = new rev::CANSparkMax(RRD,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   //======= Front Rigth Drive =======//
+      driveTrainFrontRightDrive = new SparkMaxController(FRD);
 
-//======= Rear Right Steer =======//
-   driveTrainRearRightSteer = new WPI_TalonSRX(RRS);
+   //======= Rear Left Drive =======//
+      driveTrainRearLeftDrive = new SparkMaxController(RLD);
+
+   //======= Rear Right Drive =======//
+      driveTrainRearRightDrive = new SparkMaxController(RRD);
+
+   #else
+   //======= Front Left Drive =======//
+      driveTrainFrontLeftDrive = new TalonController(FLD);
+
+   //======= Front Rigth Drive =======//
+      driveTrainFrontRightDrive = new TalonController(FRD);
+
+   //======= Rear Left Drive =======//
+      driveTrainRearLeftDrive = new TalonController(RLD);
+
+   //======= Rear Right Drive =======//
+      driveTrainRearRightDrive = new TalonController(RRD);
+   #endif
+
 
 
 //======= Subsystem Motor Initialization =======//
    elevatorMotor = new rev::CANSparkMax(ELEVATOR,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
-   rollerMotor = new WPI_TalonSRX(ROLLER);
-   clampMotor = new WPI_TalonSRX(CLAMP);
+   rollerMotor = new TalonController(ROLLER);
+   clampMotor = new TalonController(CLAMP);
    armMotor = new rev::CANSparkMax(ARM,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
-   frontClimberMotor = new rev::CANSparkMax(FRONTCLIMBER,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
-   rearClimberMotor = new rev::CANSparkMax(REARCLIMBER,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   frontClimberMotor = new SparkMaxController(FRONTCLIMBER);
+   rearClimberMotor = new SparkMaxController(REARCLIMBER);
 
    frontServo = new Servo(0);
    rearServo = new Servo(1);
@@ -128,11 +136,21 @@ void Robot::RobotInit() {
 }
    
 void Robot::RobotPeriodic() {
-   if(elevatorMotor == nullptr)
+
+	if(frc::RobotController::GetUserButton() == 1 && counter == 0){
+		Robot::driveTrain->SetWheelOffsets();
+		counter = 100;
+		std::cout << "SetWheelOffsets Complete" << std::endl;
+      std::cout.flush();
+	}
+	if(counter > 0) counter -= 1;
+
+
+   if(elevatorMotor != nullptr)
    {
       SmartDashboard::PutNumber("Elevator Encoder Position", elevatorMotor->GetEncoder().GetPosition());
    }
-   if(armMotor == nullptr)
+   if(armMotor != nullptr)
    {
       SmartDashboard::PutNumber("Arm Encoder Position", armMotor->GetEncoder().GetPosition());
    }

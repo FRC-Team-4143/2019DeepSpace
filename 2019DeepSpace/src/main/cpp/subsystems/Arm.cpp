@@ -5,7 +5,6 @@
 Arm::Arm() : frc::Subsystem("Arm") {
 }
 
-
 void Arm::InitDefaultCommand() {
   //SetDefaultCommand(new ArmCommand());
 }
