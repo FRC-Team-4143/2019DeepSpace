@@ -3,10 +3,14 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/WPILib.h>
 #include <rev/CANSparkMax.h>
 #include <rev/SparkMax.h>
 #include <ctre/Phoenix.h>
-
+#include "controllers/MultiController.h"
+#include "controllers/TalonController.h"
+#include "controllers/SteerTalonController.h"
+#include "controllers/SparkMaxController.h"
 
 #include "OI.h"
 #include "subsystems/Elevator.h"
@@ -31,31 +35,26 @@ class Robot : public frc::TimedRobot {
 
 
 //======= Drive Train =======//
-  //static WPI_TalonSRX* driveTrainFrontLeftDrive;
-  static WPI_TalonSRX* driveTrainFrontLeftSteer;
 
-  //static WPI_TalonSRX* driveTrainFrontRightDrive;
-  static WPI_TalonSRX* driveTrainFrontRightSteer;
+  static MultiController* driveTrainFrontLeftDrive;
+  static MultiController* driveTrainFrontLeftSteer;
 
-  //static WPI_TalonSRX* driveTrainRearLeftDrive;
-  static WPI_TalonSRX* driveTrainRearLeftSteer;
+  static MultiController* driveTrainFrontRightDrive;
+  static MultiController* driveTrainFrontRightSteer;
 
-  //static WPI_TalonSRX* driveTrainRearRightDrive;
-  static WPI_TalonSRX* driveTrainRearRightSteer;
+  static MultiController* driveTrainRearLeftDrive;
+  static MultiController* driveTrainRearLeftSteer;
 
-  static rev::CANSparkMax* driveTrainFrontLeftDrive;
-  static rev::CANSparkMax* driveTrainFrontRightDrive;
-  static rev::CANSparkMax* driveTrainRearLeftDrive;
-  static rev::CANSparkMax* driveTrainRearRightDrive;
-
+  static MultiController* driveTrainRearRightDrive;
+  static MultiController* driveTrainRearRightSteer;
 
 
 //======= Susystem Motors and Sensors =======//
   static rev::CANSparkMax* elevatorMotor;
-  static WPI_TalonSRX* rollerMotor;
-  static WPI_TalonSRX* clampMotor;
-  static rev::CANSparkMax* frontClimberMotor;
-  static rev::CANSparkMax* rearClimberMotor;
+  static MultiController* rollerMotor;
+  static MultiController* clampMotor;
+  static MultiController* frontClimberMotor;
+  static MultiController* rearClimberMotor;
   static Servo* frontServo;
   static Servo* rearServo;
   static Servo* hatchServo;
@@ -73,6 +72,8 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
+
+  int counter = 0;
 
  private:
   // Have it null by default so that if testing teleop it

@@ -8,6 +8,7 @@
 #include "commands/AcquireGamePiece.h"
 #include "commands/EjectGamePiece.h"
 #include "commands/HatchServo.h"
+#include "commands/SetWheelOffsets.h"
 
 using namespace frc;
 
@@ -29,6 +30,9 @@ class OI {
 
 //======= OI Methods =======//
   OI();
+  float GetJoystickX();
+  float GetJoystickY();
+  float GetJoystickZ();
   float GetLeftTrigger();
   float GetRightTrigger();
   bool GetButtonB();
@@ -41,5 +45,5 @@ class OI {
   bool GetButtonStart();
   bool GetRightBumper();
   bool GetLeftBumper();
-  float GetLJoystickY();
+  
 };

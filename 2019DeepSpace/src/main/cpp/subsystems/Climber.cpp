@@ -18,21 +18,21 @@ void Climber::InitDefaultCommand() {
      if(_side == 'F'){
        Robot::frontServo->Set(SERVOPASS);
        if(Robot::frontServo->GetAngle() == SERVOPASS){
-         Robot::frontClimberMotor->Set(_speed);
-         Robot::rearClimberMotor->Set(0);
+         Robot::frontClimberMotor->SetPercentPower(_speed);
+         Robot::rearClimberMotor->SetPercentPower(0);
        }
      }else if(_side == 'R'){
        Robot::rearServo->Set(SERVOPASS);
        if(Robot::rearServo->GetAngle() == SERVOPASS){
-         Robot::rearClimberMotor->Set(-_speed);
-         Robot::frontClimberMotor->Set(0);
+         Robot::rearClimberMotor->SetPercentPower(-_speed);
+         Robot::frontClimberMotor->SetPercentPower(0);
        }
      }else{
        Robot::frontServo->Set(SERVOPASS);
        Robot::rearServo->Set(SERVOPASS);
        if(Robot::frontServo->GetAngle() == SERVOPASS && Robot::rearServo->GetAngle() == SERVOPASS){
-       Robot::frontClimberMotor->Set(_speed);
-       Robot::rearClimberMotor->Set(-_speed);
+       Robot::frontClimberMotor->SetPercentPower(_speed);
+       Robot::rearClimberMotor->SetPercentPower(-_speed);
        }
      }
    }
@@ -43,14 +43,14 @@ void Climber::InitDefaultCommand() {
    std::cout.flush();
    if(Robot::frontClimberMotor != nullptr && Robot::rearClimberMotor != nullptr){
     if(_side == 'F'){
-      Robot::frontClimberMotor->Set(-_speed);
-      Robot::rearClimberMotor->Set(0);
+      Robot::frontClimberMotor->SetPercentPower(-_speed);
+      Robot::rearClimberMotor->SetPercentPower(0);
     }else if(_side == 'R'){
-     Robot::rearClimberMotor->Set(_speed);
-     Robot::frontClimberMotor->Set(0); 
+     Robot::rearClimberMotor->SetPercentPower(_speed);
+     Robot::frontClimberMotor->SetPercentPower(0); 
     }else{
-      Robot::frontClimberMotor->Set(-_speed);
-      Robot::rearClimberMotor->Set(_speed);
+      Robot::frontClimberMotor->SetPercentPower(-_speed);
+      Robot::rearClimberMotor->SetPercentPower(_speed);
     }
    }
  }
@@ -59,9 +59,9 @@ void Climber::InitDefaultCommand() {
    std::cout << "Hold Wheels" << std::endl;
    std::cout.flush();
    if(Robot::frontClimberMotor != nullptr && Robot::rearClimberMotor != nullptr){
-     Robot::frontClimberMotor->Set(0);
+     Robot::frontClimberMotor->SetPercentPower(0);
      Robot::frontServo->Set(SERVOLOCK);
-     Robot::rearClimberMotor->Set(0);
+     Robot::rearClimberMotor->SetPercentPower(0);
      Robot::rearServo->Set(SERVOLOCK);   
    }
  }
@@ -69,18 +69,18 @@ void Climber::InitDefaultCommand() {
 
 void Climber::Default(){
   if(Robot::oi->GetButtonY()){
-    Robot::frontClimberMotor->Set(-0.5);
+    Robot::frontClimberMotor->SetPercentPower(-0.5);
   }else if(Robot::oi->GetButtonX()){
-    Robot::frontClimberMotor->Set(0.5);
+    Robot::frontClimberMotor->SetPercentPower(0.5);
   }else{
-    Robot::frontClimberMotor->Set(0);
+    Robot::frontClimberMotor->SetPercentPower(0);
   }
   
   if(Robot::oi->GetButtonB()){
-    Robot::rearClimberMotor->Set(0.5);
+    Robot::rearClimberMotor->SetPercentPower(0.5);
   }else if(Robot::oi->GetButtonA()){
-    Robot::rearClimberMotor->Set(-0.5);
+    Robot::rearClimberMotor->SetPercentPower(-0.5);
   }else{
-    Robot::rearClimberMotor->Set(0);
+    Robot::rearClimberMotor->SetPercentPower(0);
   }
 }

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include "subsystems/SwerveModule.h"
+#include "modules/SwerveModule.h"
+#include "EncoderConstants.h"
 
 
 
@@ -14,9 +15,20 @@ class DriveTrain : public frc::Subsystem {
   void SetWheelOffsets();
   void LoadWheelOffsets();
   void TESTDrive();
+  void Crab(float twist, float y, float x, bool operatorControl);
 
 
  private:
+
+  static constexpr double pi = 3.141592653589793238462643383;
+
+  double X;
+  double Y; 
+  
+	float lastx;
+	float lasty;
+	float lasttwist;
+
     SwerveModule* frontLeftModule;
     SwerveModule* frontRightModule;
     SwerveModule* rearLeftModule;

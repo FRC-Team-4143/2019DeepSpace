@@ -28,7 +28,7 @@ ExtendWheelsCommand* extendWheelsCommand;
 RetractWheelsCommand* retractWheelsCommand;
 AcquireGamePiece* acquireGamePiece;
 EjectGamePiece* ejectGamePiece;
-HatchServo* hacthServo;
+HatchServo* hatchServo;
 
 
 OI::OI() {
@@ -42,12 +42,13 @@ OI::OI() {
   retractWheelsCommand = new RetractWheelsCommand();
   ejectGamePiece = new EjectGamePiece();
   acquireGamePiece = new AcquireGamePiece();
-  hacthServo = new HatchServo();
+  hatchServo = new HatchServo();
 
+  SmartDashboard::PutData("Set Wheel Offsets", new SetWheelOffsets());
   
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhileHeld(hacthServo);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhileHeld(hatchServo);
   //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhileHeld(extendWheelsCommand);
   //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhileHeld(retractWheelsCommand);
   //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
@@ -55,64 +56,108 @@ OI::OI() {
 
 }
 
+// ==========================================================================
+
+float OI::GetJoystickX() {
+	auto value = driverjoystick->GetRawAxis(JOYSTICK_LX_AXIS);
+	return (fabs(value) <= JOYSTICK_DEAD_ZONE) ? 0 : value;
+}
+
+// ==========================================================================
+
+float OI::GetJoystickY() {
+	auto value = driverjoystick->GetRawAxis(JOYSTICK_LY_AXIS);
+	return (fabs(value) <= JOYSTICK_DEAD_ZONE) ? 0 : value;
+}
+
+// ==========================================================================
+
+float OI::GetJoystickZ() {
+	auto value = driverjoystick->GetRawAxis(JOYSTICK_RX_AXIS);
+	return (fabs(value) <= JOYSTICK_DEAD_ZONE) ? 0 : value;
+}
+
+// ==========================================================================
+
 float OI::GetLeftTrigger(){
   float value = driverjoystick->GetRawAxis(JOYSTICK_LTRIG_AXIS);
   return (fabs(value) > JOYSTICK_DEAD_ZONE) ? value :0;
 }
+
+// ==========================================================================
+
 float OI::GetRightTrigger(){
   float value = driverjoystick->GetRawAxis(JOYSTICK_RTRIG_AXIS);
   return (fabs(value) > JOYSTICK_DEAD_ZONE) ? value :0;
 }
+
+// ==========================================================================
+
 bool OI::GetButtonB(){
   auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_B);
   return value;
 }
+
+// ==========================================================================
 
 bool OI::GetButtonX(){
   auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_X);
   return value;
 }
 
+// ==========================================================================
+
 bool OI::GetButtonA(){
   auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_A);
   return value;
 }
+
+// ==========================================================================
 
 bool OI::GetButtonY(){
   auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_Y);
   return value;
 }
 
+// ==========================================================================
+
 bool OI::GetButtonAPressed(){
   auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_A);
   return value;
 }
+
+// ==========================================================================
 
 bool OI::GetButtonYPressed(){
   auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_Y);
   return value;
 }
 
+// ==========================================================================
+
 bool OI::GetButtonBack(){
   auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_BACK);
   return value;
 }
+
+// ==========================================================================
 
 bool OI::GetButtonStart() {
   auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_START);
   return value;
 }
 
+// ==========================================================================
+
 bool OI::GetRightBumper() {
   auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_RB);
   return value;
 }
 
+// ==========================================================================
+
 bool OI::GetLeftBumper() {
   return driverjoystick->GetRawButton(JOYSTICK_BUTTON_LB);
 }
 
-float OI::GetLJoystickY(){
-  auto value = driverjoystick->GetRawAxis(JOYSTICK_LY_AXIS);
-  return (fabs(value) > JOYSTICK_DEAD_ZONE) ? value : 0;  
-}
+// ==========================================================================
