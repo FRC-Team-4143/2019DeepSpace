@@ -24,6 +24,8 @@ public:
 	static const double RL_POS_DEFAULT;
 	static const double RR_POS_DEFAULT;
 	static const double ARM_POSITION_DEFAULT;
+
+	static const float DEAD_ZONE;
 };
 
 // ==========================================================================

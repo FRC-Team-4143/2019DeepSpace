@@ -14,7 +14,6 @@ class DriveTrain : public frc::Subsystem {
   void SetWheelbase(double width, double length);
   void SetWheelOffsets();
   void LoadWheelOffsets();
-  void TESTDrive();
   void Crab(float twist, float y, float x, bool operatorControl);
   void FieldCentricCrab(float twist, float y, float x, bool operatorControl);
 

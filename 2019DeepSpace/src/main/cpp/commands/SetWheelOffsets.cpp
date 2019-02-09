@@ -8,8 +8,6 @@ SetWheelOffsets::SetWheelOffsets() {
 
 
 void SetWheelOffsets::Initialize() {
-  std::cout << "SetWheelOffsets Init" << std::endl;
-  std::cout.flush();
   SetTimeout(1);
   Robot::driveTrain->SetWheelOffsets();
 }

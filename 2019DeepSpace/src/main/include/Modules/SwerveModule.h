@@ -12,7 +12,7 @@ class SwerveModule  {
   void LoadWheelOffset();
   void TESTSetDriveSpeed(float speed);
   void SetDriveSpeed(float speed);
-  void SetSteer(float setpoint);
+  void SetSteer(double x, double y, double twist, bool operatorControl);
   void SetSteerSetpoint(float setpoint);
 
  private:
