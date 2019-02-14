@@ -11,6 +11,7 @@
 #include "commands/SetWheelOffsets.h"
 #include "commands/ZeroYaw.h"
 #include "commands/CrabDrive.h"
+#include "commands/ElevatorManualControl.h"
 
 using namespace frc;
 
@@ -30,6 +31,7 @@ class OI {
   HatchServo* hatchServo;
   ZeroYaw* zeroYaw;
   CrabDrive* crabDrive;
+  ElevatorManualControl* elevatorManualControl;
 
 
 //======= OI Methods =======//

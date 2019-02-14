@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Modules/Lights.h"
 #include "Modules/Mode.h"
+#include "Modules/Logger.h"
 
 #define USINGSPARKMAXDRIVE 0
 
@@ -25,6 +26,7 @@
 
 #define RRD 4
 #define RRS 8
+
 
 //======= System Definition =======//
 OI* Robot::oi = nullptr;
@@ -179,8 +181,6 @@ void Robot::TestPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS
 int main(){
-   std::cout << "maincalled" << std::endl; 
-   std::cout.flush();
    return frc::StartRobot<Robot>();
     }
 #endif

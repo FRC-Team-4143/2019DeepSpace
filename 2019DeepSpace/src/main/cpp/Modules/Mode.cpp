@@ -21,8 +21,6 @@ bool Mode::IsEndGame()
 
 void Mode::SetEndgame()
 {
-    std::cout << "setendgame" << std::endl;
-    std::cout.flush();
     gameMode = GameMode::ENDGAME;
     SetLED();
 }

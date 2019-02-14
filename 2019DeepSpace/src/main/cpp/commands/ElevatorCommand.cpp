@@ -9,6 +9,9 @@ ElevatorCommand::ElevatorCommand() {
 }
 
 void ElevatorCommand::Initialize() {
+
+  SmartDashboard::PutString("Elevator Mode","Encoder");
+
   posNum = 0;
 
   hatch_elevator_pos1=1000; //what pos does the elevator need to be to pick up a hatch
@@ -163,7 +166,9 @@ bool ElevatorCommand::IsFinished() {
 }
 
 void ElevatorCommand::End() {
+  
   Robot::elevator->ElevatorStop();
+  SmartDashboard::PutString("Elevator Mode","Manual");
 }
 
 void ElevatorCommand::Interrupted() {

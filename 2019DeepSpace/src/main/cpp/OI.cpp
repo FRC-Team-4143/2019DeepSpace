@@ -1,7 +1,7 @@
 #include "OI.h"
 #include <frc/WPILib.h>
 #include <iostream>
-#include "modules/Constants.H"
+#include "modules/Constants.h"
 
 const uint32_t JOYSTICK_LX_AXIS = 0;
 const uint32_t JOYSTICK_LY_AXIS = 1;
@@ -31,6 +31,7 @@ EjectGamePiece* ejectGamePiece;
 HatchServo* hatchServo;
 ZeroYaw* zeroYaw;
 CrabDrive* crabDrive;
+ElevatorManualControl* elevatorManualControl; 
 
 OI::OI() {
 
@@ -44,6 +45,7 @@ OI::OI() {
   acquireGamePiece = new AcquireGamePiece();
   hatchServo = new HatchServo();
   crabDrive = new CrabDrive();
+  elevatorManualControl = new ElevatorManualControl();
 
   SmartDashboard::PutData("SetWheel Offsets", new SetWheelOffsets());
   SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
@@ -56,6 +58,8 @@ OI::OI() {
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(acquireGamePiece);
   (new JoystickButton(driverjoystick,JOYSTICK_BUTTON_RIGHT))->ToggleWhenPressed(crabDrive);
+
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LEFT))->ToggleWhenPressed(elevatorManualControl);
 
 }
 
