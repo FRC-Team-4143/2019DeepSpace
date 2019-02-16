@@ -10,10 +10,7 @@
 #include <AHRS.h>
 #include <frc/I2C.h>
 
-#include "controllers/MultiController.h"
-#include "controllers/TalonController.h"
-#include "controllers/SteerTalonController.h"
-#include "controllers/SparkMaxController.h"
+#include "controllers/PositionMultiController.h"
 
 #include "OI.h"
 #include "subsystems/Elevator.h"
@@ -55,7 +52,8 @@ class Robot : public frc::TimedRobot {
 
 
 //======= Susystem Motors and Sensors =======//
-  static rev::CANSparkMax* elevatorMotor;
+  static PositionMultiController* elevatorMotor;
+  static MultiController* testElevator;
   static MultiController* rollerMotor;
   static MultiController* clampMotor;
   static MultiController* frontClimberMotor;
@@ -63,13 +61,14 @@ class Robot : public frc::TimedRobot {
   static Servo* frontServo;
   static Servo* rearServo;
   static Servo* hatchServo;
-  static rev::CANSparkMax* armMotor;
+  static PositionMultiController* armMotor;
 
   static AHRS* navx;
 
 //===========================================//
 
   void DeviceInitialization();
+  void AddHeights();
   void RobotInit() override;
   void RobotPeriodic() override;
   void DisabledInit() override;

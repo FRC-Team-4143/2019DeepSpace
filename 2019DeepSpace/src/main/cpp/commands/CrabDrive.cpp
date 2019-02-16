@@ -6,13 +6,12 @@ CrabDrive::CrabDrive() {
   Requires(Robot::driveTrain);
 }
 
-
 void CrabDrive::Initialize() {
-
-  SmartDashboard::PutString("Driving Mode","Crab Drive");
 }
 
 void CrabDrive::Execute() {
+	SmartDashboard::PutString("Driving Mode","Crab Drive");
+
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -28,16 +27,21 @@ void CrabDrive::Execute() {
 		z *= 0.75;
 	//y *= (y < 0 ? -y: y);
 
+	if(Robot::oi->GetButtonLeft() == false){
+		Robot::driveTrain->Crab(z, -y, x, true);
+		SmartDashboard::PutString("Driving Speed","Full");
+	}
+	else{
+		Robot::driveTrain->Crab(z/2, -y/2, x/2, true);
+		SmartDashboard::PutString("Driving Speed","Half");
+	}
 
-
-	Robot::driveTrain->Crab(z, -y, x, true);
 }
 
 bool CrabDrive::IsFinished() { return false; }
 
 void CrabDrive::End() {
-
-  SmartDashboard::PutString("Driving Mode","Unknown");
+  //SmartDashboard::PutString("Driving Mode","Unknown");
 }
 
 void CrabDrive::Interrupted() {

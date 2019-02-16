@@ -1,6 +1,6 @@
 #include "subsystems/Climber.h"
 #include "Robot.h"
-#include "Commands/ClimberTest.h"
+#include "Commands/ExtendRetractWheelsCommand.h"
 #include <iostream>
 
 #define SERVOPASS 45
@@ -10,7 +10,7 @@ Climber::Climber() : frc::Subsystem("Climber") {
 }
 
 void Climber::InitDefaultCommand() {
-  //SetDefaultCommand(new ClimberTest());
+  SetDefaultCommand(new ExtendRetractWheelsCommand());
 }
 
  void Climber::RetractWheels(char _side, float _speed){

@@ -1,10 +1,3 @@
-// ==========================================================================
-// Constants class
-//
-// FRC 4143 "MARS WARS"
-// ==========================================================================
-// 2015-02-01 JKSalmon - Initial development
-// ==========================================================================
 #pragma once
 // ==========================================================================
 
@@ -15,6 +8,7 @@ public:
 	static bool IsHatchMode();
 	static bool IsCargoMode();
 	static bool IsEndGame();
+	static GameMode GetMode();
 
 	static void SetLED();
 	static void SetEndgame();

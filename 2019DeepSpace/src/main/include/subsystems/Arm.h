@@ -10,9 +10,7 @@ class Arm : public frc::Subsystem {
   void ArmUp(float _speed);
   void ArmDown(float _speed);
   void ArmStop();
-  void ToggleMode();
-  bool IsCargoMode();
+  void SetPosition(double pos);
 
  private:
-    bool isCargoMode;
   };

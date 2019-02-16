@@ -2,10 +2,10 @@
 
 #include <frc/commands/Command.h>
 
-class RetractWheelsCommand : public frc::Command {
+class ExtendRetractWheelsCommand : public frc::Command {
  public:
 
-  RetractWheelsCommand();
+  ExtendRetractWheelsCommand();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

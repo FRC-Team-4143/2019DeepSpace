@@ -6,41 +6,38 @@
 
 Mode::GameMode Mode::gameMode = Mode::GameMode::HATCHMODE;
 
-bool Mode::IsHatchMode()
-{
+bool Mode::IsHatchMode(){
     return(gameMode == GameMode::HATCHMODE);
 }
-bool Mode::IsCargoMode()
-{
+bool Mode::IsCargoMode(){
      return(gameMode == GameMode::CARGOMODE);
 }
-bool Mode::IsEndGame()
-{
+bool Mode::IsEndGame(){
      return(gameMode == GameMode::ENDGAME);
 }
 
-void Mode::SetEndgame()
-{
+Mode::GameMode Mode::GetMode(){
+    return gameMode;
+}
+
+void Mode::SetEndgame(){
     gameMode = GameMode::ENDGAME;
     SetLED();
 }
 
-void Mode::ToggleInGameMode()
-{
-    if(gameMode == GameMode::HATCHMODE)
-    {
+void Mode::ToggleInGameMode(){
+    if(gameMode == GameMode::HATCHMODE){
         gameMode = GameMode::CARGOMODE;
         SetLED();
     }
     else
-    {
+{
         gameMode = GameMode::HATCHMODE;
         SetLED();
     }
 }
 
-void Mode::SetLED()
-{
+void Mode::SetLED(){
     if(GameMode::HATCHMODE == gameMode){
         Lights::SetHatchLights();
     }
@@ -50,7 +47,6 @@ void Mode::SetLED()
     else if(GameMode::ENDGAME == gameMode){
         Lights::SetEndGameLights();
     }
-
 }
 
 // ==========================================================================
