@@ -20,7 +20,7 @@ void Lights::SetHatchLights()
 
 void Lights::SetEndGameLights()
 {
-    i2c->Write(6 , 0);
+    i2c->Write(6, 0);
     frc::SmartDashboard::PutString("GameMode: ", "EndGame");
 }
 

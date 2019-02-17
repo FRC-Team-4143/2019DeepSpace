@@ -2,11 +2,20 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <iostream>
+
+#include "controllers/TalonController.h"
+#include "controllers/SteerTalonController.h"
+#include "controllers/SparkMaxController.h"
+#include "controllers/PositionSparkController.h"
+
 #include "Modules/Lights.h"
 #include "Modules/Mode.h"
+#include "Modules/Logger.h"
+#include "Modules/Height.h"
 
 #define USINGSPARKMAXDRIVE 0
 
+#define TESTELEVATOR 21
 #define ELEVATOR 11
 #define ROLLER 13
 #define CLAMP 12
@@ -25,6 +34,7 @@
 
 #define RRD 4
 #define RRS 8
+
 
 //======= System Definition =======//
 OI* Robot::oi = nullptr;
@@ -49,10 +59,11 @@ PositionMultiController* Robot::driveTrainRearLeftSteer;
 MultiController* Robot::driveTrainRearRightDrive;
 PositionMultiController* Robot::driveTrainRearRightSteer;
 
-rev::CANSparkMax* Robot::elevatorMotor;
+PositionMultiController* Robot::elevatorMotor;
+PositionMultiController* Robot::armMotor;
+MultiController* Robot::testElevator;
 MultiController* Robot::rollerMotor;
 MultiController* Robot::clampMotor;
-rev::CANSparkMax* Robot::armMotor;
 MultiController* Robot::frontClimberMotor;
 MultiController* Robot::rearClimberMotor;
 
@@ -106,10 +117,11 @@ void Robot::DeviceInitialization(){
 
 
 //======= Subsystem Motor Initialization =======//
-   elevatorMotor = new rev::CANSparkMax(ELEVATOR,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   testElevator = new TalonController(TESTELEVATOR);
+   elevatorMotor = new PositionSparkController(ELEVATOR);
    rollerMotor = new TalonController(ROLLER);
    clampMotor = new TalonController(CLAMP);
-   armMotor = new rev::CANSparkMax(ARM,rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+   armMotor = new PositionSparkController(ARM);
    frontClimberMotor = new SparkMaxController(FRONTCLIMBER);
    rearClimberMotor = new SparkMaxController(REARCLIMBER);
 
@@ -132,13 +144,33 @@ void Robot::DeviceInitialization(){
    navx = new AHRS(I2C::Port::kOnboard);
 }
 
+void Robot::AddHeights(){
+   auto h = Height::GetInstance();
+
+   h.AddCargoTarget(0, 0); // Starting Position with Elevator Down and Arm In / CargoShip
+   h.AddCargoTarget(10, 50); // Floor Pickup
+   h.AddCargoTarget(15, 50); // 1st Level Rocket
+   h.AddCargoTarget(15, 0); // 2nd Level Rocket
+   h.AddCargoTarget(30, 25); // 3rd Level Rocket
+
+   h.AddHatchTarget(0, 0); // Starting Position with Elevator DOwn and Arim In / CargoShip / Floor Pickup / Loading Station 
+   h.AddHatchTarget(10, 0); // 2nd Level Rocket
+   h.AddHatchTarget(25,0); // 3rd Level Rocket
+
+   h.AddClimbingTarget(0,0);
+}
+
 void Robot::RobotInit() {
    DeviceInitialization();
+   AddHeights();
+   driveTrain->LoadWheelOffsets();
    Lights::Init();
    ::Mode::SetLED();
 }
    
 void Robot::RobotPeriodic() {
+
+   SmartDashboard::PutNumber("Yaw", Robot::navx->GetYaw());
 
 	if(frc::RobotController::GetUserButton() == 1 && counter == 0){
 		Robot::driveTrain->SetWheelOffsets();
@@ -149,13 +181,11 @@ void Robot::RobotPeriodic() {
 	if(counter > 0) counter -= 1;
 
 
-   if(elevatorMotor != nullptr)
-   {
-      SmartDashboard::PutNumber("Elevator Encoder Position", elevatorMotor->GetEncoder().GetPosition());
+   if(elevatorMotor != nullptr){
+      SmartDashboard::PutNumber("Elevator Encoder Position", elevatorMotor->GetEncoderPosition());
    }
-   if(armMotor != nullptr)
-   {
-      SmartDashboard::PutNumber("Arm Encoder Position", armMotor->GetEncoder().GetPosition());
+   if(armMotor != nullptr){
+      SmartDashboard::PutNumber("Arm Encoder Position", armMotor->GetEncoderPosition());
    }
 }
 
@@ -179,8 +209,6 @@ void Robot::TestPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS
 int main(){
-   std::cout << "maincalled" << std::endl; 
-   std::cout.flush();
    return frc::StartRobot<Robot>();
     }
 #endif

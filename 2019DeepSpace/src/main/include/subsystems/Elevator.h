@@ -10,9 +10,7 @@ class Elevator : public frc::Subsystem {
   void ElevatorUp(float _speed);
   void ElevatorDown(float _speed);
   void ElevatorStop();
-  void ToggleMode();
-  bool IsCargoMode();
-
+  void SetHeight(double pos);
+  
  private:
-    bool isCargoMode;
   };

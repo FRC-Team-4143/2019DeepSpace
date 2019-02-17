@@ -1,7 +1,7 @@
 #include "OI.h"
 #include <frc/WPILib.h>
 #include <iostream>
-#include "modules/Constants.H"
+#include "modules/Constants.h"
 
 const uint32_t JOYSTICK_LX_AXIS = 0;
 const uint32_t JOYSTICK_LY_AXIS = 1;
@@ -24,13 +24,13 @@ const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
 ElevatorCommand* elevatorCommand;
 ToggleGameMode* toggleGameMode;
 SetEndGame* setEndGame;
-ExtendWheelsCommand* extendWheelsCommand;
-RetractWheelsCommand* retractWheelsCommand;
 AcquireGamePiece* acquireGamePiece;
 EjectGamePiece* ejectGamePiece;
 HatchServo* hatchServo;
 ZeroYaw* zeroYaw;
 CrabDrive* crabDrive;
+NextTargetPosition* nextTargetPosition;
+PreviousTargetPosition* previousTargetPosition;
 
 OI::OI() {
 
@@ -38,24 +38,28 @@ OI::OI() {
   elevatorCommand = new ElevatorCommand();
   toggleGameMode = new ToggleGameMode();
   setEndGame = new SetEndGame();
-  extendWheelsCommand = new ExtendWheelsCommand();
-  retractWheelsCommand = new RetractWheelsCommand();
   ejectGamePiece = new EjectGamePiece();
   acquireGamePiece = new AcquireGamePiece();
   hatchServo = new HatchServo();
   crabDrive = new CrabDrive();
+  nextTargetPosition = new NextTargetPosition();
+  previousTargetPosition = new PreviousTargetPosition();
 
   SmartDashboard::PutData("SetWheel Offsets", new SetWheelOffsets());
   SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
+  SmartDashboard::PutData("Manual ElevatorControl", new ElevatorManualControl());
+  SmartDashboard::PutData("Manual ArmControl", new ArmManualControl());
   
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhileHeld(hatchServo);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhileHeld(extendWheelsCommand);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhileHeld(retractWheelsCommand);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(acquireGamePiece);
-  (new JoystickButton(driverjoystick,JOYSTICK_BUTTON_RIGHT))->ToggleWhenPressed(crabDrive);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RIGHT))->ToggleWhenPressed(crabDrive);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhenPressed(nextTargetPosition);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(previousTargetPosition);
+
+  
 
 }
 
@@ -96,6 +100,13 @@ float OI::GetRightTrigger(){
 
 // ==========================================================================
 
+bool OI::GetButtonLeft(){
+  auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_LEFT);
+  return value;
+}
+
+// ==========================================================================
+
 bool OI::GetButtonB(){
   auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_B);
   return value;
@@ -119,20 +130,6 @@ bool OI::GetButtonA(){
 
 bool OI::GetButtonY(){
   auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_Y);
-  return value;
-}
-
-// ==========================================================================
-
-bool OI::GetButtonAPressed(){
-  auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_A);
-  return value;
-}
-
-// ==========================================================================
-
-bool OI::GetButtonYPressed(){
-  auto value = driverjoystick->GetRawButtonPressed(JOYSTICK_BUTTON_Y);
   return value;
 }
 

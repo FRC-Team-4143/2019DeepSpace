@@ -6,13 +6,11 @@ FieldCentric::FieldCentric() {
   Requires(Robot::driveTrain);
 }
 
-
 void FieldCentric::Initialize() {
-
-  SmartDashboard::PutString("Driving Mode","Field Centric");
 }
 
 void FieldCentric::Execute() {
+	SmartDashboard::PutString("Driving Mode","Field Centric");
 
 	auto x = Robot::oi->GetJoystickX();
 	auto y = Robot::oi->GetJoystickY();
@@ -26,15 +24,22 @@ void FieldCentric::Execute() {
 	if(z > 0) z = z* z + 0.1;
 	else if(z < 0) z = -(z* z + 0.1);
 
-	Robot::driveTrain->FieldCentricCrab(z, -y, x, true);
-	
+	if(Robot::oi->GetButtonLeft() == false){
+		Robot::driveTrain->FieldCentricCrab(z, -y, x, true);
+		SmartDashboard::PutString("Driving Speed","Full");	
+	}
+	else{
+		SmartDashboard::PutString("Driving Speed","Half");
+		Robot::driveTrain->FieldCentricCrab(z/2, -y/2, x/2, true);
+		
+	}
+
 }
 
 bool FieldCentric::IsFinished() { return false; }
 
 void FieldCentric::End() {
-
-  SmartDashboard::PutString("Driving Mode","Unknown");
+  //SmartDashboard::PutString("Driving Mode","Unknown");
 }
 
 void FieldCentric::Interrupted() {

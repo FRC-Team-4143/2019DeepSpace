@@ -44,6 +44,9 @@ void SwerveModule::SetOffset(float off) {
 // ================================================================
 
 void SwerveModule::LoadWheelOffset() {
+	auto prefs = frc::Preferences::GetInstance();
+	_steerPosition = prefs->GetDouble(_configName);
+	SetOffset(_steerPosition);
 }
 
 // ================================================================

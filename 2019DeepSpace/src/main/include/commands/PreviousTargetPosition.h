@@ -2,11 +2,11 @@
 
 #include <frc/commands/Command.h>
 
-class ClimberTest : public frc::Command {
+class PreviousTargetPosition : public frc::Command {
  public:
 
 
-  ClimberTest();
+  PreviousTargetPosition();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

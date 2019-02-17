@@ -2,10 +2,11 @@
 
 #include <frc/commands/Command.h>
 
-class ExtendWheelsCommand : public frc::Command {
+class ElevatorManualControl : public frc::Command {
  public:
 
-  ExtendWheelsCommand();
+
+  ElevatorManualControl();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
