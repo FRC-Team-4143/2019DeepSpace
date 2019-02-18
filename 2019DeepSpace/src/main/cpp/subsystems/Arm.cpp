@@ -2,7 +2,6 @@
 #include "commands/ArmCommand.h"
 #include "Robot.h"
 
-
 Arm::Arm() : frc::Subsystem("Arm") {
 }
 
@@ -11,29 +10,29 @@ void Arm::InitDefaultCommand() {
 }
 
 //======= Method to Rotate Arm Up =======//
-void Arm::ArmUp(float _speed){
+void Arm::ArmUp(float _speed) {
   if (Robot::armMotor != nullptr){
     Robot::armMotor->SetPercentPower(_speed);
   }
 }
 
 //======= Method to Rotate Arm Down =======//
-void Arm::ArmDown(float _speed){
-  if (Robot::armMotor != nullptr){
+void Arm::ArmDown(float _speed) {
+  if (Robot::armMotor != nullptr) {
     Robot::armMotor->SetPercentPower(-_speed);
   }
   
 }
 
-//======= Metod to Stop Arm Movement =======//
-void Arm::ArmStop(){
-  if (Robot::armMotor != nullptr){
+//======= Method to Stop Arm Movement =======//
+void Arm::ArmStop() {
+  if (Robot::armMotor != nullptr) {
     Robot::armMotor->SetPercentPower(0);
   }
 }
 
-void Arm::SetPosition(double pos){
-  if(Robot::armMotor != nullptr){
+void Arm::SetPosition(double pos) {
+  if (Robot::armMotor != nullptr) {
     Robot::armMotor->SetPosition(pos);
   }
 }

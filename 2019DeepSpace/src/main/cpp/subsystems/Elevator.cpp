@@ -5,7 +5,6 @@
 Elevator::Elevator() : frc::Subsystem("Elevator") {
 }
 
-
 void Elevator::InitDefaultCommand() {
   SetDefaultCommand(new ElevatorCommand());
 }
@@ -22,7 +21,6 @@ void Elevator::ElevatorDown(float _speed){
   if (Robot::elevatorMotor != nullptr){
     Robot::elevatorMotor->SetPercentPower(-_speed);
   }
-  
 }
 
 //======= Metod to Stop Elevator Movement =======//

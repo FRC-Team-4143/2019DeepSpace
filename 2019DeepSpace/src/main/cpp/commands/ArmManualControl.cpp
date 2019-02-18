@@ -14,20 +14,20 @@ void ArmManualControl::Initialize() {
 
 void ArmManualControl::Execute() {
   if(Robot::oi->GetRightTrigger() > 0){
-    Robot::armMotor->SetPercentPower(-(Robot::oi->GetRightTrigger()));
+    Robot::arm->ArmUp(-(Robot::oi->GetRightTrigger()));
     
   }else if (Robot::oi->GetLeftTrigger() > 0){
-    Robot::armMotor->SetPercentPower(Robot::oi->GetLeftTrigger());
+    Robot::arm->ArmDown(Robot::oi->GetLeftTrigger());
 
   }else{
-    Robot::armMotor->SetPercentPower(0);
+    Robot::arm->ArmStop();
   }
 }
 
 bool ArmManualControl::IsFinished() { return false; }
 
 void ArmManualControl::End() {
-  Robot::armMotor->SetPercentPower(0);
+  Robot::arm->ArmStop();
   
   SmartDashboard::PutString("Arm Mode","UnKnown");
 }

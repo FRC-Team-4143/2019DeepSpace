@@ -7,11 +7,10 @@ CrabDrive::CrabDrive() {
 }
 
 void CrabDrive::Initialize() {
+	SmartDashboard::PutString("Driving Mode","Crab Drive");
 }
 
 void CrabDrive::Execute() {
-	SmartDashboard::PutString("Driving Mode","Crab Drive");
-
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -41,7 +40,7 @@ void CrabDrive::Execute() {
 bool CrabDrive::IsFinished() { return false; }
 
 void CrabDrive::End() {
-  //SmartDashboard::PutString("Driving Mode","Unknown");
+  SmartDashboard::PutString("Driving Mode","Unknown");
 }
 
 void CrabDrive::Interrupted() {

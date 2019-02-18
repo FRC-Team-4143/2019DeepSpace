@@ -9,11 +9,11 @@ ArmCommand::ArmCommand() {
 
 void ArmCommand::Initialize() {
 
-  SmartDashboard::PutString("Elevator Arm","Encoder");
+  SmartDashboard::PutString("Arm Mode","Encoder");
 }
 
 void ArmCommand::Execute() {
-  Robot::arm->SetPosition(Height::GetInstance().GetArmTarget());
+  Robot::arm->SetPosition(Height::GetInstance()->GetArmTarget());
 }
 
 bool ArmCommand::IsFinished() {
@@ -22,7 +22,7 @@ bool ArmCommand::IsFinished() {
 
 void ArmCommand::End() {
   Robot::elevator->ElevatorStop();
-  SmartDashboard::PutString("Elevator Arm","Unknown");
+  SmartDashboard::PutString("Arm Mode","Unknown");
 }
 
 void ArmCommand::Interrupted() {

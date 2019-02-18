@@ -14,22 +14,18 @@ void ElevatorManualControl::Initialize() {
 
 void ElevatorManualControl::Execute() {
   if(Robot::oi->GetRightTrigger() > 0){
-    Robot::testElevator->SetPercentPower(-(Robot::oi->GetRightTrigger()));
-    //Robot::elevator->ElevatorUp(Robot::oi->GetRightTrigger());
+    Robot::elevator->ElevatorUp(-(Robot::oi->GetRightTrigger()));
   }else if (Robot::oi->GetLeftTrigger() > 0){
-    Robot::testElevator->SetPercentPower(Robot::oi->GetLeftTrigger());
-    //Robot::elevator->ElevatorDown(Robot::oi->GetLeftTrigger());
+    Robot::elevator->ElevatorDown(Robot::oi->GetLeftTrigger());
   }else{
-    Robot::testElevator->SetPercentPower(0);
-    //Robot::elevator->ElevatorStop();
+    Robot::elevator->ElevatorStop();
   }
 }
 
 bool ElevatorManualControl::IsFinished() { return false; }
 
 void ElevatorManualControl::End() {
-  Robot::testElevator->SetPercentPower(0);
-  //Robot::elevator->ElevatorStop();
+  Robot::elevator->ElevatorStop();
   SmartDashboard::PutString("Elevator Mode","Unknown");
 }
 

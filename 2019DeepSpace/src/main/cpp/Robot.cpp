@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "controllers/TalonController.h"
+#include "controllers/VictorController.h"
 #include "controllers/SteerTalonController.h"
 #include "controllers/SparkMaxController.h"
 #include "controllers/PositionSparkController.h"
@@ -14,11 +15,12 @@
 #include "Modules/Height.h"
 
 #define USINGSPARKMAXDRIVE 0
+#define USINGVICTORDRIVE 0
 
 #define TESTELEVATOR 21
 #define ELEVATOR 11
-#define ROLLER 13
 #define CLAMP 12
+#define ROLLER 13
 #define ARM 14
 #define FRONTCLIMBER 15
 #define REARCLIMBER 16
@@ -35,43 +37,43 @@
 #define RRD 4
 #define RRS 8
 
-
 //======= System Definition =======//
 OI* Robot::oi = nullptr;
-Elevator* Robot::elevator = nullptr;
-Roller* Robot::roller = nullptr;
-Clamp* Robot::clamp = nullptr; 
 Arm* Robot::arm = nullptr;  
+Clamp* Robot::clamp = nullptr; 
 Climber* Robot::climber = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
+Elevator* Robot::elevator = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
+Roller* Robot::roller = nullptr;
 
 //======= Motor Definition =======//
-MultiController* Robot::driveTrainFrontLeftDrive;
-PositionMultiController* Robot::driveTrainFrontLeftSteer;
 
-MultiController* Robot::driveTrainFrontRightDrive;
-PositionMultiController* Robot::driveTrainFrontRightSteer;
+MultiController* Robot::driveTrainFrontLeftDrive = nullptr;
+PositionMultiController* Robot::driveTrainFrontLeftSteer = nullptr;
 
-MultiController* Robot::driveTrainRearLeftDrive;
-PositionMultiController* Robot::driveTrainRearLeftSteer;
+MultiController* Robot::driveTrainFrontRightDrive = nullptr;
+PositionMultiController* Robot::driveTrainFrontRightSteer = nullptr;
 
-MultiController* Robot::driveTrainRearRightDrive;
-PositionMultiController* Robot::driveTrainRearRightSteer;
+MultiController* Robot::driveTrainRearLeftDrive = nullptr;
+PositionMultiController* Robot::driveTrainRearLeftSteer = nullptr;
 
-PositionMultiController* Robot::elevatorMotor;
-PositionMultiController* Robot::armMotor;
-MultiController* Robot::testElevator;
-MultiController* Robot::rollerMotor;
-MultiController* Robot::clampMotor;
-MultiController* Robot::frontClimberMotor;
-MultiController* Robot::rearClimberMotor;
+MultiController* Robot::driveTrainRearRightDrive = nullptr;
+PositionMultiController* Robot::driveTrainRearRightSteer = nullptr;
 
-Servo* Robot::frontServo;
-Servo* Robot::rearServo;
-Servo* Robot::hatchServo;
+PositionMultiController* Robot::armMotor = nullptr;
+MultiController* Robot::clampMotor = nullptr;
+MultiController* Robot::frontClimberMotor = nullptr;
+MultiController* Robot::rearClimberMotor = nullptr;
+PositionMultiController* Robot::elevatorMotor = nullptr;
+MultiController* Robot::rollerMotor = nullptr;
+MultiController* Robot::testElevator = nullptr;
 
-AHRS* Robot::navx;
+Servo* Robot::frontServo = nullptr;
+Servo* Robot::rearServo = nullptr;
+Servo* Robot::hatchServo = nullptr;
+
+AHRS* Robot::navx = nullptr;
 
 void Robot::DeviceInitialization(){
    //======= Front Left Steer =======//
@@ -101,6 +103,20 @@ void Robot::DeviceInitialization(){
       driveTrainRearRightDrive = new SparkMaxController(RRD);
 
    #else
+   #if USINGVICTORDRIVE
+   //======= Front Left Drive =======//
+      driveTrainFrontLeftDrive = new VictorController(FLD);
+
+   //======= Front Rigth Drive =======//
+      driveTrainFrontRightDrive = new VictorController(FRD);
+
+   //======= Rear Left Drive =======//
+      driveTrainRearLeftDrive = new VictorController(RLD);
+
+   //======= Rear Right Drive =======//
+      driveTrainRearRightDrive = new VictorController(RRD);
+
+   #else
    //======= Front Left Drive =======//
       driveTrainFrontLeftDrive = new TalonController(FLD);
 
@@ -113,51 +129,51 @@ void Robot::DeviceInitialization(){
    //======= Rear Right Drive =======//
       driveTrainRearRightDrive = new TalonController(RRD);
    #endif
-
-
+   #endif
 
 //======= Subsystem Motor Initialization =======//
-   testElevator = new TalonController(TESTELEVATOR);
-   elevatorMotor = new PositionSparkController(ELEVATOR);
-   rollerMotor = new TalonController(ROLLER);
-   clampMotor = new TalonController(CLAMP);
-   armMotor = new PositionSparkController(ARM);
+   //armMotor = new PositionSparkController(ARM);
+   //clampMotor = new TalonController(CLAMP);
    frontClimberMotor = new SparkMaxController(FRONTCLIMBER);
    rearClimberMotor = new SparkMaxController(REARCLIMBER);
+   //elevatorMotor = new PositionSparkController(ELEVATOR);
+   //rollerMotor = new TalonController(ROLLER);
+   //testElevator = new TalonController(TESTELEVATOR);
 
    frontServo = new Servo(0);
    rearServo = new Servo(1);
    hatchServo = new Servo(2);
 
-//======= System Initialization =======//
-   elevator = new Elevator();
-   arm = new Arm();
-   roller = new Roller();
-   clamp = new Clamp();
-   climber = new Climber();
-   oi = new OI();
-   driveTrain = new DriveTrain();
-   gyroSub = new GyroSub();
-
 //======= Sensor Initialization =======//
 
    navx = new AHRS(I2C::Port::kOnboard);
+
+//======= System Initialization =======//
+   arm = new Arm();
+   clamp = new Clamp();
+   climber = new Climber();
+   driveTrain = new DriveTrain();
+   elevator = new Elevator();
+   gyroSub = new GyroSub();
+   roller = new Roller();
+
+   oi = new OI();
 }
 
 void Robot::AddHeights(){
    auto h = Height::GetInstance();
 
-   h.AddCargoTarget(0, 0); // Starting Position with Elevator Down and Arm In / CargoShip
-   h.AddCargoTarget(10, 50); // Floor Pickup
-   h.AddCargoTarget(15, 50); // 1st Level Rocket
-   h.AddCargoTarget(15, 0); // 2nd Level Rocket
-   h.AddCargoTarget(30, 25); // 3rd Level Rocket
+   h->AddCargoTarget(0, 0); // Starting Position with Elevator Down and Arm In / CargoShip
+   h->AddCargoTarget(10, 50); // Floor Pickup
+   h->AddCargoTarget(15, 50); // 1st Level Rocket
+   h->AddCargoTarget(15, 0); // 2nd Level Rocket
+   h->AddCargoTarget(30, 25); // 3rd Level Rocket
 
-   h.AddHatchTarget(0, 0); // Starting Position with Elevator DOwn and Arim In / CargoShip / Floor Pickup / Loading Station 
-   h.AddHatchTarget(10, 0); // 2nd Level Rocket
-   h.AddHatchTarget(25,0); // 3rd Level Rocket
+   h->AddHatchTarget(0, 0); // Starting Position with Elevator DOwn and Arim In / CargoShip / Floor Pickup / Loading Station 
+   h->AddHatchTarget(10, 0); // 2nd Level Rocket
+   h->AddHatchTarget(25,0); // 3rd Level Rocket
 
-   h.AddClimbingTarget(0,0);
+   h->AddClimbingTarget(0,0);
 }
 
 void Robot::RobotInit() {
@@ -169,46 +185,55 @@ void Robot::RobotInit() {
 }
    
 void Robot::RobotPeriodic() {
-
    SmartDashboard::PutNumber("Yaw", Robot::navx->GetYaw());
 
-	if(frc::RobotController::GetUserButton() == 1 && counter == 0){
+	if (frc::RobotController::GetUserButton() == 1 && counter == 0) {
 		Robot::driveTrain->SetWheelOffsets();
 		counter = 100;
 		std::cout << "SetWheelOffsets Complete" << std::endl;
       std::cout.flush();
 	}
-	if(counter > 0) counter -= 1;
 
+	if (counter > 0) {
+      counter -= 1;
+   }
 
-   if(elevatorMotor != nullptr){
+   if (elevatorMotor != nullptr) {
       SmartDashboard::PutNumber("Elevator Encoder Position", elevatorMotor->GetEncoderPosition());
    }
-   if(armMotor != nullptr){
+
+   if (armMotor != nullptr) {
       SmartDashboard::PutNumber("Arm Encoder Position", armMotor->GetEncoderPosition());
    }
 }
 
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+}
 
-void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::DisabledPeriodic() {
+   frc::Scheduler::GetInstance()->Run();
+}
 
 void Robot::AutonomousInit() {
-   
 }
 
-void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::AutonomousPeriodic() {
+   frc::Scheduler::GetInstance()->Run();
+}
 
 void Robot::TeleopInit() {
-   
 }
 
-void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::TeleopPeriodic() {
+   frc::Scheduler::GetInstance()->Run();
+   Height::GetInstance()->UpdateSmartDashboard();
+}
 
-void Robot::TestPeriodic() {}
+void Robot::TestPeriodic() {
+}
 
 #ifndef RUNNING_FRC_TESTS
 int main(){
    return frc::StartRobot<Robot>();
-    }
+}
 #endif

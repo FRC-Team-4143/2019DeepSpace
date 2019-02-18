@@ -1,11 +1,13 @@
 #include "Modules/Height.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
-Height& Height::GetInstance(){
-    static Height* instance = nullptr;
-    if(!instance){
-        instance = new Height();
+Height* Height::_instance = nullptr;
+
+Height* Height::GetInstance() {
+    if(nullptr ==_instance){
+        _instance = new Height();
     }
-    return *instance;
+    return _instance;
 }
 
 Height::Height(){
@@ -23,44 +25,48 @@ void Height::AddHatchTarget(double elevatorPos, double armPos){
     _hatchArmTargets.push_back(armPos);
 }
 
-void Height::AddClimbingTarget(double elevatorPos, double armPos){
+void Height::AddClimbingTarget(double elevatorPos, double armPos) {
     _climbingElevatorTargets.push_back(elevatorPos);
     _climbingArmTargets.push_back(armPos);
 }
 
-double Height::GetElevatorTarget(){ 
+double Height::GetElevatorTarget() {
     auto mode = Mode::GetMode();
     if(mode != _lastGameMode){
         _index = 0;
     }
     _lastGameMode = mode;
 
-    if(_lastGameMode == Mode::GameMode::CARGOMODE){
+    if (_lastGameMode == Mode::GameMode::CARGOMODE) {
         return _cargoElevatorTargets[_index];
-    }else if(_lastGameMode == Mode::GameMode::HATCHMODE){
+    }
+    else if (_lastGameMode == Mode::GameMode::HATCHMODE) {
         return _hatchElevatorTargets[_index];
-    }else{
+    }
+    else {
         return _climbingElevatorTargets[_index];
     }
 }
+
 double Height::GetArmTarget(){ 
     auto mode = Mode::GetMode();
     if(mode != _lastGameMode){
         _index = 0;
     }
-
     _lastGameMode = mode;
 
-    if(_lastGameMode == Mode::GameMode::CARGOMODE){
+    if (_lastGameMode == Mode::GameMode::CARGOMODE) {
         return _cargoArmTargets[_index];
-    }else if(_lastGameMode == Mode::GameMode::HATCHMODE){
+    }
+    else if (_lastGameMode == Mode::GameMode::HATCHMODE) {
         return _hatchArmTargets[_index];
-    }else{
+    }
+    else {
         return _climbingArmTargets[_index];
     }
 }
 
-void Height::NextPosition(){  
+void Height::NextPosition() {
     int max = _hatchArmTargets.size() - 1;
     if(_lastGameMode == Mode::GameMode::CARGOMODE){
         max = _cargoArmTargets.size() - 1;
@@ -88,5 +94,24 @@ void Height::PreviousPosition(){
     if(_index < 0){
         _index = max;
     }
+}
 
+void Height::UpdateSmartDashboard(){
+    char sz[20];
+    int count = _hatchArmTargets.size();
+
+    for(int i = 0; i < count; i++){
+        sprintf(sz, "Hatch Index %d", i);
+        frc::SmartDashboard::PutBoolean(sz, Mode::IsHatchMode() ? (i == _index) : false);
+    }
+    count = _cargoArmTargets.size();
+    for(int i = 0; i < count; i++){
+        sprintf(sz, "Cargo Index %d", i);
+        frc::SmartDashboard::PutBoolean(sz, Mode::IsCargoMode() ? (i == _index) : false);
+    }
+    count = _climbingArmTargets.size();
+    for(int i = 0; i < count; i++){
+        sprintf(sz, "Climbing Index %d", i);
+        frc::SmartDashboard::PutBoolean(sz, Mode::IsEndGame() ? (i == _index) : false);
+    }
 }

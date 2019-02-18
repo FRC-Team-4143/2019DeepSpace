@@ -8,47 +8,32 @@ ExtendRetractWheelsCommand::ExtendRetractWheelsCommand() {
   Requires(Robot::climber);
 }
 
-
 void ExtendRetractWheelsCommand::Initialize() {
-  
 }
 
 void ExtendRetractWheelsCommand::Execute() {
-  if(Mode::IsEndGame()){
-    auto left = Robot::oi->GetLeftBumper();
-    auto right = Robot::oi->GetRightBumper();
+    if(Mode::IsEndGame()) {
+      auto left = Robot::oi->GetLeftTrigger();
+      auto right = Robot::oi->GetRightTrigger();
 
     if(Robot::oi->GetButtonY()){ // Extend Wheels
-      if(left && !right){
-        Robot::climber->ExtendWheels('F', 0.25);
-      }else if(right && !left){
-        Robot::climber->ExtendWheels('R', 0.25);
-      }else if(left && right){
-        Robot::climber->ExtendWheels('B', 0.25);
-      }else {
-        Robot::climber->HoldWheels();
-      }
+      Robot::climber->ExtendWheels(left, right);
 
     }else if(Robot::oi->GetButtonA()){ //Retract Wheels
-      if(left && !right){
-        Robot::climber->ExtendWheels('F', 0.25);
-      }else if(right && !left){
-        Robot::climber->ExtendWheels('R', 0.25);
-      }else if(left && right){
-        Robot::climber->ExtendWheels('B', 0.25);
-      }else {
-        Robot::climber->HoldWheels();
-      }
+      Robot::climber->RetractWheels(left, right);
+
     }else{
       Robot::climber->HoldWheels();
     }
   }
 }
 
-bool ExtendRetractWheelsCommand::IsFinished() { return false; }
+bool ExtendRetractWheelsCommand::IsFinished() {
+  return false;
+}
 
 void ExtendRetractWheelsCommand::End() {
-  if(Mode::IsEndGame()){
+  if (Mode::IsEndGame()) {
     Robot::climber->HoldWheels();
   }
 }
