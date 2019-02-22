@@ -4,7 +4,8 @@
 
 class Height {
 public:
-    static Height& GetInstance();
+    static Height* GetInstance();
+
     void AddCargoTarget(double elevatorPos, double armPos);
     void AddHatchTarget(double elevatorPos, double armPos);
     void AddClimbingTarget(double elevatorPos, double armPos);
@@ -12,9 +13,11 @@ public:
     double GetArmTarget();
     void NextPosition();
     void PreviousPosition();
+    void UpdateSmartDashboard();
 
 private:
     Height();
+    Height(const Height&) = delete;
 
     std::vector<double> _cargoElevatorTargets;
     std::vector<double> _cargoArmTargets;
@@ -26,4 +29,5 @@ private:
     int _index;
     Mode::GameMode _lastGameMode;
 
+    static Height* _instance;
 };

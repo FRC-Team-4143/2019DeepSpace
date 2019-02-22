@@ -26,15 +26,13 @@ class Robot : public frc::TimedRobot {
 
 //======= System Declaration =======//
   static OI* oi;
-  static Elevator* elevator;
-  static Roller* roller;
-  static Clamp* clamp;
   static Arm* arm;
+  static Clamp* clamp;
   static Climber* climber;
   static DriveTrain* driveTrain;
+  static Elevator* elevator;
   static GyroSub* gyroSub;
-
-
+  static Roller* roller;
 
 //======= Drive Train =======//
 
@@ -50,18 +48,18 @@ class Robot : public frc::TimedRobot {
   static MultiController* driveTrainRearRightDrive;
   static PositionMultiController* driveTrainRearRightSteer;
 
-
 //======= Susystem Motors and Sensors =======//
-  static PositionMultiController* elevatorMotor;
-  static MultiController* testElevator;
-  static MultiController* rollerMotor;
+  static PositionMultiController* armMotor;
   static MultiController* clampMotor;
   static MultiController* frontClimberMotor;
   static MultiController* rearClimberMotor;
+  static PositionMultiController* elevatorMotor;
+  static MultiController* rollerMotor;
+  static MultiController* testElevator;
+
   static Servo* frontServo;
   static Servo* rearServo;
   static Servo* hatchServo;
-  static PositionMultiController* armMotor;
 
   static AHRS* navx;
 

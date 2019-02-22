@@ -7,32 +7,28 @@
 #include "commands/EjectGamePiece.h"
 #include "commands/HatchServo.h"
 #include "commands/SetWheelOffsets.h"
-#include "commands/ZeroYaw.h"
 #include "commands/CrabDrive.h"
 #include "commands/NextTargetPosition.h"
 #include "commands/PreviousTargetPosition.h"
 #include "commands/ElevatorManualControl.h"
 #include "commands/ArmManualControl.h"
+#include "commands/ZeroYaw.h"
 
 using namespace frc;
-
 
 class OI {
  public: 
 
   Joystick* driverjoystick;
 
-  ElevatorCommand* elevatorCommand;
-  ToggleGameMode* toggleGameMode;
-  SetEndGame* setEndGame;
   AcquireGamePiece* acquireGamePiece;
+  CrabDrive* crabDrive;
   EjectGamePiece* ejectGamePiece;
   HatchServo* hatchServo;
-  ZeroYaw* zeroYaw;
-  CrabDrive* crabDrive;
   NextTargetPosition* nextTargetPosition;
   PreviousTargetPosition* previousTargetPosition;
-
+  SetEndGame* setEndGame;
+  ToggleGameMode* toggleGameMode;
 
 //======= OI Methods =======//
   OI();
@@ -50,5 +46,4 @@ class OI {
   bool GetButtonStart();
   bool GetRightBumper();
   bool GetLeftBumper();
-  
 };

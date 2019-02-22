@@ -21,31 +21,20 @@ const uint32_t JOYSTICK_BUTTON_START = 8;
 const uint32_t JOYSTICK_BUTTON_LEFT = 9;
 const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
 
-ElevatorCommand* elevatorCommand;
-ToggleGameMode* toggleGameMode;
-SetEndGame* setEndGame;
-AcquireGamePiece* acquireGamePiece;
-EjectGamePiece* ejectGamePiece;
-HatchServo* hatchServo;
-ZeroYaw* zeroYaw;
-CrabDrive* crabDrive;
-NextTargetPosition* nextTargetPosition;
-PreviousTargetPosition* previousTargetPosition;
-
 OI::OI() {
 
   driverjoystick = new Joystick(0);
-  elevatorCommand = new ElevatorCommand();
-  toggleGameMode = new ToggleGameMode();
-  setEndGame = new SetEndGame();
-  ejectGamePiece = new EjectGamePiece();
+
   acquireGamePiece = new AcquireGamePiece();
-  hatchServo = new HatchServo();
   crabDrive = new CrabDrive();
+  ejectGamePiece = new EjectGamePiece();
+  hatchServo = new HatchServo();
   nextTargetPosition = new NextTargetPosition();
   previousTargetPosition = new PreviousTargetPosition();
+  setEndGame = new SetEndGame();
+  toggleGameMode = new ToggleGameMode();
 
-  SmartDashboard::PutData("SetWheel Offsets", new SetWheelOffsets());
+  SmartDashboard::PutData("Set WheelOffsets", new SetWheelOffsets());
   SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
   SmartDashboard::PutData("Manual ElevatorControl", new ElevatorManualControl());
   SmartDashboard::PutData("Manual ArmControl", new ArmManualControl());
@@ -55,11 +44,9 @@ OI::OI() {
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhileHeld(hatchServo);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(acquireGamePiece);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RIGHT))->ToggleWhenPressed(crabDrive);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LEFT))->ToggleWhenPressed(crabDrive);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhenPressed(nextTargetPosition);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(previousTargetPosition);
-
-  
 
 }
 

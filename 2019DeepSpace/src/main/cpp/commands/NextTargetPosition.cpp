@@ -13,11 +13,11 @@ void NextTargetPosition::Initialize() {
 }
 
 void NextTargetPosition::Execute() {
-  Height::GetInstance().NextPosition();  
+  Height::GetInstance()->NextPosition();  
 }
 
 bool NextTargetPosition::IsFinished() {
-  return false;
+  return true;
 }
 
 void NextTargetPosition::End() {

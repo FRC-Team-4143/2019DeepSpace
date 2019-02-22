@@ -1,6 +1,5 @@
 #include "commands/PreviousTargetPosition.h"
 #include "Modules/Height.h"
-
 #include "Robot.h"
 
 PreviousTargetPosition::PreviousTargetPosition() {
@@ -13,11 +12,11 @@ void PreviousTargetPosition::Initialize() {
 }
 
 void PreviousTargetPosition::Execute() {
-  Height::GetInstance().PreviousPosition();  
+  Height::GetInstance()->PreviousPosition();  
 }
 
 bool PreviousTargetPosition::IsFinished() {
-  return false;
+  return true;
 }
 
 void PreviousTargetPosition::End() {

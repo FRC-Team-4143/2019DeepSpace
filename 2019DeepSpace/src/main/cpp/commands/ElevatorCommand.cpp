@@ -1,6 +1,5 @@
 #include "commands/ElevatorCommand.h"
 #include "Modules/Height.h"
-
 #include "Robot.h"
 
 ElevatorCommand::ElevatorCommand() {
@@ -14,7 +13,7 @@ void ElevatorCommand::Initialize() {
 }
 
 void ElevatorCommand::Execute() {
-  Robot::elevator->SetHeight(Height::GetInstance().GetElevatorTarget());
+  Robot::elevator->SetHeight(Height::GetInstance()->GetElevatorTarget());
 }
 
 bool ElevatorCommand::IsFinished() {

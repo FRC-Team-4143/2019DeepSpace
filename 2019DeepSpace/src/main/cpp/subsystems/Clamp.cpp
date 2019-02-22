@@ -30,5 +30,3 @@ void Clamp::ClampStop(){
     Robot::clampMotor->SetPercentPower(0);
   }
 }
-
-

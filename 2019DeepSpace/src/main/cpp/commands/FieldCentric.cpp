@@ -7,10 +7,10 @@ FieldCentric::FieldCentric() {
 }
 
 void FieldCentric::Initialize() {
+	SmartDashboard::PutString("Driving Mode","Field Centric");
 }
 
 void FieldCentric::Execute() {
-	SmartDashboard::PutString("Driving Mode","Field Centric");
 
 	auto x = Robot::oi->GetJoystickX();
 	auto y = Robot::oi->GetJoystickY();
@@ -39,7 +39,7 @@ void FieldCentric::Execute() {
 bool FieldCentric::IsFinished() { return false; }
 
 void FieldCentric::End() {
-  //SmartDashboard::PutString("Driving Mode","Unknown");
+  SmartDashboard::PutString("Driving Mode","Unknown");
 }
 
 void FieldCentric::Interrupted() {
