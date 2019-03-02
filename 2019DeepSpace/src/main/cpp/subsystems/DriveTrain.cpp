@@ -107,3 +107,21 @@ void DriveTrain::FieldCentricCrab(float twist, float y, float x, bool operatorCo
 
 	Crab((twist*0.65), FWD, STR, operatorControl); // twist * 0.65
 }
+
+// ================================================================
+
+void DriveTrain::GyroRotate(float desiredangle, double power){
+	
+	auto robotangle = Robot::gyroSub->PIDGet();
+
+	float twist = desiredangle - robotangle;
+	while (twist > 180.0) {
+		twist -= 360.0;
+	}
+	while (twist < -180.0) {
+		twist += 360.0;
+	}
+
+	twist = std::min(power, std::max(-power, twist * (0.2/10)));
+	Crab(twist, 0, 0, false);
+}

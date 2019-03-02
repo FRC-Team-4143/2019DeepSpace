@@ -20,6 +20,7 @@
 #include "subsystems/Climber.h"
 #include "subsystems/DriveTrain.h"
 #include "subsystems/GyroSub.h"
+#include "subsystems/VisionBridgeSub.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -33,6 +34,7 @@ class Robot : public frc::TimedRobot {
   static Elevator* elevator;
   static GyroSub* gyroSub;
   static Roller* roller;
+  static VisionBridgeSub* visionBridge;
 
 //======= Drive Train =======//
 
@@ -53,13 +55,12 @@ class Robot : public frc::TimedRobot {
   static MultiController* clampMotor;
   static MultiController* frontClimberMotor;
   static MultiController* rearClimberMotor;
-  static PositionMultiController* elevatorMotor;
+  static MultiController* elevatorMotor; //PositionMultiController
   static MultiController* rollerMotor;
   static MultiController* testElevator;
 
   static Servo* frontServo;
   static Servo* rearServo;
-  static Servo* hatchServo;
 
   static AHRS* navx;
 

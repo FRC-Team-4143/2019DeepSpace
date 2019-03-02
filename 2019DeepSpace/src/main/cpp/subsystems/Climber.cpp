@@ -21,8 +21,8 @@ void Climber::InitDefaultCommand() {
     if(_rearSpeed != 0){
       Robot::rearServo->Set(SERVOPASS);
     }
-    Robot::frontClimberMotor->SetPercentPower(_frontSpeed);
-    Robot::rearClimberMotor->SetPercentPower(_rearSpeed);
+    Robot::frontClimberMotor->SetPercentPower(-_frontSpeed);
+    Robot::rearClimberMotor->SetPercentPower(-_rearSpeed);
    }
  }
 

@@ -2,11 +2,11 @@
 
 #include <frc/commands/Command.h>
 
-class HatchServo : public frc::Command {
+class ArmDownCommand : public frc::Command {
  public:
 
 
-  HatchServo();
+  ArmDownCommand();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
