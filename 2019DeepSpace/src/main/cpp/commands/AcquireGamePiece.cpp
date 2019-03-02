@@ -13,9 +13,10 @@ void AcquireGamePiece::Initialize() {
 void AcquireGamePiece::Execute() {
 	if (Mode::IsCargoMode()){
 		Robot::roller->RollerIn(1);
+		Robot::clamp->ClampStop();
 	}
 	else if (Mode::IsHatchMode()) {
-		Robot::clamp->ClampOut(.25);
+		Robot::clamp->ClampOut(0.3);
 	}
 }
 
@@ -25,7 +26,13 @@ bool AcquireGamePiece::IsFinished() {
 
 void AcquireGamePiece::End() {
 	Robot::roller->RollerStop();
-	Robot::clamp->ClampStop();
+	if(Mode::IsHatchMode()){
+		Robot::clamp->ClampOut(0.3);
+	}else{
+		Robot::clamp->ClampStop();
+	}
+	
+	
 }
 
 void AcquireGamePiece::Interrupted() {

@@ -28,26 +28,31 @@ OI::OI() {
   acquireGamePiece = new AcquireGamePiece();
   crabDrive = new CrabDrive();
   ejectGamePiece = new EjectGamePiece();
-  hatchServo = new HatchServo();
   nextTargetPosition = new NextTargetPosition();
   previousTargetPosition = new PreviousTargetPosition();
   setEndGame = new SetEndGame();
   toggleGameMode = new ToggleGameMode();
+  armUpCommand = new ArmUpCommand();
+  armDownCommand = new ArmDownCommand();
+  gyroStraighten = new GyroStraighten();
+
 
   SmartDashboard::PutData("Set WheelOffsets", new SetWheelOffsets());
   SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
   SmartDashboard::PutData("Manual ElevatorControl", new ElevatorManualControl());
-  SmartDashboard::PutData("Manual ArmControl", new ArmManualControl());
+  SmartDashboard::PutData("Vision LineUp", new HatchLineUp());
+  
   
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhileHeld(hatchServo);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(acquireGamePiece);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LEFT))->ToggleWhenPressed(crabDrive);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhenPressed(nextTargetPosition);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(previousTargetPosition);
-
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhileHeld(armUpCommand);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LB))->WhileHeld(armDownCommand);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RIGHT))->WhileHeld(gyroStraighten);
 }
 
 // ==========================================================================
@@ -74,15 +79,15 @@ float OI::GetJoystickZ() {
 // ==========================================================================
 
 float OI::GetLeftTrigger(){
-  float value = driverjoystick->GetRawAxis(JOYSTICK_LTRIG_AXIS);
-  return (fabs(value) > Constants::DEAD_ZONE) ? value :0;
+  float value = fabs(driverjoystick->GetRawAxis(JOYSTICK_LTRIG_AXIS));
+  return (value > Constants::DEAD_ZONE) ? value :0;
 }
 
 // ==========================================================================
 
 float OI::GetRightTrigger(){
-  float value = driverjoystick->GetRawAxis(JOYSTICK_RTRIG_AXIS);
-  return (fabs(value) > Constants::DEAD_ZONE) ? value :0;
+  float value = fabs(driverjoystick->GetRawAxis(JOYSTICK_RTRIG_AXIS));
+  return (value > Constants::DEAD_ZONE) ? value :0;
 }
 
 // ==========================================================================

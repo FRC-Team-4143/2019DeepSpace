@@ -15,7 +15,8 @@
 #include "Modules/Height.h"
 
 #define USINGSPARKMAXDRIVE 0
-#define USINGVICTORDRIVE 0
+#define USINGVICTORDRIVE 0 
+#define ONROBORIONAVX 1
 
 #define TESTELEVATOR 21
 #define ELEVATOR 11
@@ -46,6 +47,7 @@ DriveTrain* Robot::driveTrain = nullptr;
 Elevator* Robot::elevator = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
 Roller* Robot::roller = nullptr;
+VisionBridgeSub* Robot::visionBridge = nullptr;
 
 //======= Motor Definition =======//
 
@@ -65,13 +67,12 @@ PositionMultiController* Robot::armMotor = nullptr;
 MultiController* Robot::clampMotor = nullptr;
 MultiController* Robot::frontClimberMotor = nullptr;
 MultiController* Robot::rearClimberMotor = nullptr;
-PositionMultiController* Robot::elevatorMotor = nullptr;
+MultiController* Robot::elevatorMotor = nullptr; //PositionMultiController
 MultiController* Robot::rollerMotor = nullptr;
 MultiController* Robot::testElevator = nullptr;
 
 Servo* Robot::frontServo = nullptr;
 Servo* Robot::rearServo = nullptr;
-Servo* Robot::hatchServo = nullptr;
 
 AHRS* Robot::navx = nullptr;
 
@@ -105,7 +106,8 @@ void Robot::DeviceInitialization(){
    #else
    #if USINGVICTORDRIVE
    //======= Front Left Drive =======//
-      driveTrainFrontLeftDrive = new VictorController(FLD);
+      //driveTrainFrontLeftDrive = new VictorController(FLD);
+      driveTrainFrontLeftDrive = new TalonController(FLD); // Needed to use talon b/c of dead victor
 
    //======= Front Rigth Drive =======//
       driveTrainFrontRightDrive = new VictorController(FRD);
@@ -132,21 +134,26 @@ void Robot::DeviceInitialization(){
    #endif
 
 //======= Subsystem Motor Initialization =======//
-   //armMotor = new PositionSparkController(ARM);
-   //clampMotor = new TalonController(CLAMP);
+   armMotor = new PositionSparkController(ARM);
+   clampMotor = new TalonController(CLAMP);
    frontClimberMotor = new SparkMaxController(FRONTCLIMBER);
    rearClimberMotor = new SparkMaxController(REARCLIMBER);
-   //elevatorMotor = new PositionSparkController(ELEVATOR);
-   //rollerMotor = new TalonController(ROLLER);
+   elevatorMotor = new PositionSparkController(ELEVATOR); 
+   rollerMotor = new TalonController(ROLLER);
    //testElevator = new TalonController(TESTELEVATOR);
 
    frontServo = new Servo(0);
    rearServo = new Servo(1);
-   hatchServo = new Servo(2);
 
-//======= Sensor Initialization =======//
+//======= Sensor and Camera Initialization =======//
+#if ONROBORIONAVX
+   navx = new AHRS(I2C::Port::kMXP);
+#else
+   navx = new AHRS(I2C::Port::kMXP); //kOnboard ?
+#endif
 
-   navx = new AHRS(I2C::Port::kOnboard);
+CameraServer::GetInstance()->StartAutomaticCapture(0);
+//CameraServer::GetInstance()->StartAutomaticCapture(1);
 
 //======= System Initialization =======//
    arm = new Arm();
@@ -156,6 +163,7 @@ void Robot::DeviceInitialization(){
    elevator = new Elevator();
    gyroSub = new GyroSub();
    roller = new Roller();
+   visionBridge = new VisionBridgeSub();
 
    oi = new OI();
 }

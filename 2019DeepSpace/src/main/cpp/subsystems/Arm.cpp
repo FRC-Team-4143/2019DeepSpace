@@ -12,16 +12,15 @@ void Arm::InitDefaultCommand() {
 //======= Method to Rotate Arm Up =======//
 void Arm::ArmUp(float _speed) {
   if (Robot::armMotor != nullptr){
-    Robot::armMotor->SetPercentPower(_speed);
+    Robot::armMotor->SetPercentPower(-_speed);
   }
 }
 
 //======= Method to Rotate Arm Down =======//
 void Arm::ArmDown(float _speed) {
   if (Robot::armMotor != nullptr) {
-    Robot::armMotor->SetPercentPower(-_speed);
+    Robot::armMotor->SetPercentPower(_speed);
   }
-  
 }
 
 //======= Method to Stop Arm Movement =======//

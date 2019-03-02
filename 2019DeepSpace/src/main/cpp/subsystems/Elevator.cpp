@@ -1,25 +1,26 @@
 #include "subsystems/Elevator.h"
 #include "commands/ElevatorCommand.h"
+#include "commands/ElevatorManualControl.h"
 #include "Robot.h"
 
 Elevator::Elevator() : frc::Subsystem("Elevator") {
 }
 
 void Elevator::InitDefaultCommand() {
-  SetDefaultCommand(new ElevatorCommand());
+  SetDefaultCommand(new ElevatorManualControl()); //ElevatorCommand()()
 }
 
 //======= Method to Control Elevator Lift =======//
 void Elevator::ElevatorUp(float _speed){
   if (Robot::elevatorMotor != nullptr){
-    Robot::elevatorMotor->SetPercentPower(_speed);
+    Robot::elevatorMotor->SetPercentPower(-_speed);
   }
 }
 
 //======= Method to Control Elevator Lower =======//
 void Elevator::ElevatorDown(float _speed){
   if (Robot::elevatorMotor != nullptr){
-    Robot::elevatorMotor->SetPercentPower(-_speed);
+    Robot::elevatorMotor->SetPercentPower(_speed);
   }
 }
 
@@ -32,6 +33,6 @@ void Elevator::ElevatorStop(){
 
 void Elevator::SetHeight(double pos){
   if (Robot::elevatorMotor != nullptr){
-    Robot::elevatorMotor->SetPosition(pos);
+    //Robot::elevatorMotor->SetPosition(pos);
   }
 }

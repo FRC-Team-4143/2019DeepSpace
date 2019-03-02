@@ -17,11 +17,18 @@ void ExtendRetractWheelsCommand::Execute() {
       auto right = Robot::oi->GetRightTrigger();
 
     if(Robot::oi->GetButtonY()){ // Extend Wheels
-      Robot::climber->ExtendWheels(left, right);
+      if(Robot::oi->GetButtonX()){
+        Robot::climber->ExtendWheels(right, right);
+      }else{
+        Robot::climber->ExtendWheels(left, right);
+      }
 
     }else if(Robot::oi->GetButtonA()){ //Retract Wheels
-      Robot::climber->RetractWheels(left, right);
-
+      if(Robot::oi->GetButtonX()){
+        Robot::climber->RetractWheels(right, right);
+      }else{
+        Robot::climber->RetractWheels(left, right);
+      }
     }else{
       Robot::climber->HoldWheels();
     }

@@ -15,10 +15,16 @@ void EjectGamePiece::Initialize() {
 
 void EjectGamePiece::Execute() {
   if (Mode::IsCargoMode()){
-    Robot::roller->RollerOut(1);
+    if(Robot::oi->GetButtonA()){
+      Robot::roller->RollerOut(0.4);
+    }
+    else{
+      Robot::roller->RollerOut(0.75);
+    }
+    Robot::clamp->ClampStop();
   }
   else if(Mode::IsHatchMode()){
-    Robot::clamp->ClampIn(.5);
+    Robot::clamp->ClampIn(0.2);
   }
 }
 

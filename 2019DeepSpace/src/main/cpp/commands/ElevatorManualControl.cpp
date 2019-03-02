@@ -1,4 +1,5 @@
 #include "commands/ElevatorManualControl.h"
+#include "Modules/Mode.h"
 #include "Robot.h"
 
 ElevatorManualControl::ElevatorManualControl() {
@@ -13,10 +14,14 @@ void ElevatorManualControl::Initialize() {
 }
 
 void ElevatorManualControl::Execute() {
-  if(Robot::oi->GetRightTrigger() > 0){
-    Robot::elevator->ElevatorUp(-(Robot::oi->GetRightTrigger()));
-  }else if (Robot::oi->GetLeftTrigger() > 0){
-    Robot::elevator->ElevatorDown(Robot::oi->GetLeftTrigger());
+  if(!Mode::IsEndGame()){
+    if(Robot::oi->GetRightTrigger() > 0){
+      Robot::elevator->ElevatorUp(Robot::oi->GetRightTrigger());
+    }else if (Robot::oi->GetLeftTrigger() > 0){
+      Robot::elevator->ElevatorDown(Robot::oi->GetLeftTrigger());
+    }else{
+      Robot::elevator->ElevatorStop();
+    }
   }else{
     Robot::elevator->ElevatorStop();
   }

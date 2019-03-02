@@ -2,11 +2,11 @@
 
 #include <frc/commands/Command.h>
 
-class ArmManualControl : public frc::Command {
+class ArmUpCommand : public frc::Command {
  public:
 
 
-  ArmManualControl();
+  ArmUpCommand();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
