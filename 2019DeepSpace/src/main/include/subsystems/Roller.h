@@ -10,8 +10,8 @@ class Roller : public frc::Subsystem {
   void RollerIn(float _speed);
   void RollerOut(float _speed);
   void RollerStop();
-  bool IsCargoMode();
+  void RollerHold();
 
  private:
-    bool isCargoMode;
+    
   };

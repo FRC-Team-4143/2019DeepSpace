@@ -35,6 +35,7 @@ OI::OI() {
   armUpCommand = new ArmUpCommand();
   armDownCommand = new ArmDownCommand();
   gyroStraighten = new GyroStraighten();
+  hatchLineUp = new HatchLineUp();
 
 
   SmartDashboard::PutData("Set WheelOffsets", new SetWheelOffsets());
@@ -52,7 +53,7 @@ OI::OI() {
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(previousTargetPosition);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhileHeld(armUpCommand);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LB))->WhileHeld(armDownCommand);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RIGHT))->WhileHeld(gyroStraighten);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RIGHT))->WhileHeld(hatchLineUp);
 }
 
 // ==========================================================================

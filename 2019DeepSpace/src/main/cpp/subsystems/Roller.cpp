@@ -1,13 +1,14 @@
 #include "subsystems/Roller.h"
+#include "commands/RollerHold.h"
 #include "Robot.h"
 
 Roller::Roller() : frc::Subsystem("Roller") {
-  isCargoMode = false;
+
 }
 
 
 void Roller::InitDefaultCommand() {
-  //SetDefaultCommand(new Command());
+  //SetDefaultCommand(new RollerHold());
 }
 
 //======= Method to Control Roller Intake =======//
@@ -29,5 +30,12 @@ void Roller::RollerOut(float _speed){
 void Roller::RollerStop(){
   if (Robot::rollerMotor != nullptr){
     Robot::rollerMotor->SetPercentPower(0);
+  }
+}
+
+//======= Method to Hold Rollers In =======//
+void Roller::RollerHold(){
+  if(Robot::rollerMotor != nullptr){
+    Robot::rollerMotor->SetPercentPower(0.1);
   }
 }

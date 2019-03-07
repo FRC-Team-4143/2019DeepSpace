@@ -2,7 +2,7 @@
 #include "Robot.h"
 #include <iostream>
 
-SetWheelOffsets::SetWheelOffsets() {
+SetWheelOffsets::SetWheelOffsets(): frc::Command("Set WheelOffsets") {
   SetRunWhenDisabled(true);
 }
 

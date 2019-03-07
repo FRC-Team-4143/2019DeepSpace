@@ -10,6 +10,7 @@ class Elevator : public frc::Subsystem {
   void ElevatorUp(float _speed);
   void ElevatorDown(float _speed);
   void ElevatorStop();
+  void ElevatorHold();
   void SetHeight(double pos);
   
  private:

@@ -4,7 +4,7 @@
 
 // ==========================================================================
 
-ZeroYaw::ZeroYaw() {
+ZeroYaw::ZeroYaw(): frc::Command("Zero Yaw") {
 	SetRunWhenDisabled(true);
 }
 

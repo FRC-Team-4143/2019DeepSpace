@@ -33,6 +33,7 @@ class OI {
   ArmDownCommand* armDownCommand;
   ArmUpCommand* armUpCommand;
   GyroStraighten* gyroStraighten;
+  HatchLineUp* hatchLineUp;
 
 //======= OI Methods =======//
   OI();

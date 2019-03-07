@@ -31,6 +31,13 @@ void Elevator::ElevatorStop(){
   }
 }
 
+//======= Method to Hold Elevator Position =======//
+void Elevator::ElevatorHold(){
+  if(Robot::elevatorMotor != nullptr){
+    Robot::elevatorMotor->SetPercentPower(-0.05);
+  }
+}
+
 void Elevator::SetHeight(double pos){
   if (Robot::elevatorMotor != nullptr){
     //Robot::elevatorMotor->SetPosition(pos);

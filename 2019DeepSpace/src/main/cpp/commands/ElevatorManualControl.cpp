@@ -19,6 +19,8 @@ void ElevatorManualControl::Execute() {
       Robot::elevator->ElevatorUp(Robot::oi->GetRightTrigger());
     }else if (Robot::oi->GetLeftTrigger() > 0){
       Robot::elevator->ElevatorDown(Robot::oi->GetLeftTrigger());
+    }else if (Robot::elevatorMotor->GetEncoderPosition() < -15){
+      Robot::elevator->ElevatorHold();
     }else{
       Robot::elevator->ElevatorStop();
     }

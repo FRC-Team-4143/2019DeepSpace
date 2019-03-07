@@ -136,8 +136,8 @@ void Robot::DeviceInitialization(){
 //======= Subsystem Motor Initialization =======//
    armMotor = new PositionSparkController(ARM);
    clampMotor = new TalonController(CLAMP);
-   frontClimberMotor = new SparkMaxController(FRONTCLIMBER);
-   rearClimberMotor = new SparkMaxController(REARCLIMBER);
+   frontClimberMotor = new PositionSparkController(FRONTCLIMBER);
+   rearClimberMotor = new PositionSparkController(REARCLIMBER);
    elevatorMotor = new PositionSparkController(ELEVATOR); 
    rollerMotor = new TalonController(ROLLER);
    //testElevator = new TalonController(TESTELEVATOR);
@@ -152,7 +152,7 @@ void Robot::DeviceInitialization(){
    navx = new AHRS(I2C::Port::kMXP); //kOnboard ?
 #endif
 
-CameraServer::GetInstance()->StartAutomaticCapture(0);
+//CameraServer::GetInstance()->StartAutomaticCapture(0);
 //CameraServer::GetInstance()->StartAutomaticCapture(1);
 
 //======= System Initialization =======//
@@ -212,6 +212,14 @@ void Robot::RobotPeriodic() {
 
    if (armMotor != nullptr) {
       SmartDashboard::PutNumber("Arm Encoder Position", armMotor->GetEncoderPosition());
+   }
+
+   if (frontClimberMotor != nullptr) {
+      SmartDashboard::PutNumber("Front Climber Encoder Position", frontClimberMotor->GetEncoderPosition());
+   }
+
+   if (rearClimberMotor != nullptr) {
+      SmartDashboard::PutNumber("Rear Climber Encoder Position", rearClimberMotor->GetEncoderPosition());
    }
 }
 

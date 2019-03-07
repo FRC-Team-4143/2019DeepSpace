@@ -11,15 +11,23 @@ void GyroStraighten::Initialize() {
 
 void GyroStraighten::Execute() {
 
-	if(Robot::gyroSub->PIDGet() > 45 && Robot::gyroSub->PIDGet() < 135){
+	auto yaw = Robot::gyroSub->PIDGet();
+
+	if(yaw > 45 && yaw < 135){
 		Robot::driveTrain->GyroRotate(90, 0.25);
-	} else if((Robot::gyroSub->PIDGet() > 135 && Robot::gyroSub->PIDGet() < 179) || (Robot::gyroSub->PIDGet() < -135 && Robot::gyroSub->PIDGet() > -179)){
+	} else if((yaw > 135 && yaw < 179) || (yaw < -135 && yaw > -179)){
 	 Robot::driveTrain->GyroRotate(180, 0.25);
-	} else if(Robot::gyroSub->PIDGet() > -135 && Robot::gyroSub->PIDGet() < -45){
+	} else if(yaw > -135 && yaw < -45){
 		Robot::driveTrain->GyroRotate(-90, 0.25);
-	}else if (Robot::gyroSub->PIDGet() < 45 && Robot::gyroSub->PIDGet() > -45){
+	}else if (yaw < 45 && yaw > -45){
 		Robot::driveTrain->GyroRotate(0, 0.25);
 	}
+
+	/* Rocket at 60 degrees
+	if(yaw > 30 && yaw < 75){
+
+	}
+	*/
 }
 
 

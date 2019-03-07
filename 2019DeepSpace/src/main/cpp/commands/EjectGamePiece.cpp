@@ -16,10 +16,10 @@ void EjectGamePiece::Initialize() {
 void EjectGamePiece::Execute() {
   if (Mode::IsCargoMode()){
     if(Robot::oi->GetButtonA()){
-      Robot::roller->RollerOut(0.4);
+      Robot::roller->RollerOut(0.55);
     }
     else{
-      Robot::roller->RollerOut(0.75);
+      Robot::roller->RollerOut(0.8);
     }
     Robot::clamp->ClampStop();
   }

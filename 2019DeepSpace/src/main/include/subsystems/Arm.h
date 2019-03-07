@@ -10,6 +10,7 @@ class Arm : public frc::Subsystem {
   void ArmUp(float _speed);
   void ArmDown(float _speed);
   void ArmStop();
+  void ArmHold();
   void SetPosition(double pos);
 
  private:
