@@ -12,7 +12,7 @@ void ArmUpCommand::Initialize() {
 }
 
 void ArmUpCommand::Execute() {
-  Robot::arm->ArmUp(0.5);
+  Robot::arm->ArmUp(0.45);
 }
 
 bool ArmUpCommand::IsFinished() {

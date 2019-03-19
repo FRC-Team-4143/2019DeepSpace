@@ -4,6 +4,7 @@
 #include "commands/CrabDrive.h"
 #include "commands/FieldCentric.h"
 #include "Modules/Logger.h"
+#include "Modules/Mode.h"
 #include <iostream>
 
 //const float DEAD_ZONE = 0.15;
@@ -63,6 +64,12 @@ void DriveTrain::LoadWheelOffsets(){
 void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 
   if (operatorControl && x == 0.0 && y == 0.0 && twist == 0.0) {
+	
+	if(Mode::IsEndGame()){
+		y = .05;
+	}	
+
+	else{
 		if (fabs(lasty) > 0 || fabs(lastx) > 0 || fabs(lasttwist) > 0) {
 			y = std::min(std::max(lasty, -Constants::DEAD_ZONE), Constants::DEAD_ZONE);
 			x = std::min(std::max(lastx, -Constants::DEAD_ZONE), Constants::DEAD_ZONE);
@@ -71,11 +78,13 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 			y = .05;
 			// default wheel position
 		}
-	} else	{
-		lastx = x;
-		lasty = y;
-		lasttwist = twist;
+	
 	}
+  }else{
+	lastx = x;
+	lasty = y;
+	lasttwist = twist;
+  }
 
 	if (operatorControl) {
 		// scale for operator control
@@ -85,7 +94,14 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 		float scale = 1 - avg / 2;
 		twist *= scale; // TWISTSCALE;
 	}
-	
+
+	if(Robot::oi->GetButtonRight()){
+		y = 0;
+		x = 0;
+		twist = GyroRotate();
+		twist = std::min(0.18, std::max(-0.18, twist * 0.025));
+	}
+
   frontLeftModule->SetSteerDrive(x, y, twist, operatorControl); 
   frontRightModule->SetSteerDrive(x, y, twist, operatorControl);
   rearLeftModule->SetSteerDrive(x, y, twist, operatorControl);
@@ -110,11 +126,22 @@ void DriveTrain::FieldCentricCrab(float twist, float y, float x, bool operatorCo
 
 // ================================================================
 
-void DriveTrain::GyroRotate(float desiredangle, double power){
+double DriveTrain::GyroRotate(){
 	
-	auto robotangle = Robot::gyroSub->PIDGet();
+	auto yaw = Robot::gyroSub->PIDGet();
+	float desiredangle = 0;
 
-	float twist = desiredangle - robotangle;
+	if(yaw > 45 && yaw < 135){
+		desiredangle = 90;
+	} else if((yaw > 135 && yaw < 179) || (yaw < -135 && yaw > -179)){
+		desiredangle = 180; 
+	} else if(yaw > -135 && yaw < -45){
+		desiredangle = -90;
+	}else if (yaw < 45 && yaw > -45){
+		desiredangle = 0;
+	}
+
+	float twist = desiredangle - yaw;
 	while (twist > 180.0) {
 		twist -= 360.0;
 	}
@@ -122,6 +149,5 @@ void DriveTrain::GyroRotate(float desiredangle, double power){
 		twist += 360.0;
 	}
 
-	twist = std::min(power, std::max(-power, twist * (0.2/10)));
-	Crab(twist, 0, 0, false);
+return twist;
 }

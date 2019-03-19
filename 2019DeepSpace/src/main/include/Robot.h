@@ -35,6 +35,8 @@ class Robot : public frc::TimedRobot {
   static GyroSub* gyroSub;
   static Roller* roller;
   static VisionBridgeSub* visionBridge;
+  static PowerDistributionPanel* pdp;
+
 
 //======= Drive Train =======//
 
@@ -79,6 +81,7 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
   int counter = 0;
+  int hatchCounter = 0;
 
  private:
   // Have it null by default so that if testing teleop it

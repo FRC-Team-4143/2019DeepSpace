@@ -12,7 +12,7 @@ void ArmDownCommand::Initialize() {
 }
 
 void ArmDownCommand::Execute() {
-  Robot::arm->ArmDown(0.5);
+  Robot::arm->ArmDown(0.55);
 }
 
 bool ArmDownCommand::IsFinished() {

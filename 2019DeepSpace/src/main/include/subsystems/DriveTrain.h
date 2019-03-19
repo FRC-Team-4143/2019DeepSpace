@@ -16,7 +16,7 @@ class DriveTrain : public frc::Subsystem {
   void LoadWheelOffsets();
   void Crab(float twist, float y, float x, bool operatorControl);
   void FieldCentricCrab(float twist, float y, float x, bool operatorControl);
-  void GyroRotate(float desiredangle, double power);
+  double GyroRotate();
 
 
  private:

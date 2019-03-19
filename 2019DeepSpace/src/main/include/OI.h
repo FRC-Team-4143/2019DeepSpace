@@ -13,8 +13,8 @@
 #include "commands/ArmUpCommand.h"
 #include "commands/ArmDownCommand.h"
 #include "commands/ZeroYaw.h"
-#include "commands/GyroStraighten.h"
 #include "commands/HatchLineUp.h"
+#include "commands/SandstormHatch.h"
 
 using namespace frc;
 
@@ -32,7 +32,6 @@ class OI {
   ToggleGameMode* toggleGameMode;
   ArmDownCommand* armDownCommand;
   ArmUpCommand* armUpCommand;
-  GyroStraighten* gyroStraighten;
   HatchLineUp* hatchLineUp;
 
 //======= OI Methods =======//
@@ -40,9 +39,11 @@ class OI {
   float GetJoystickX();
   float GetJoystickY();
   float GetJoystickZ();
+  float GetRightJoystickY();
   float GetLeftTrigger();
   float GetRightTrigger();
   bool GetButtonLeft();
+  bool GetButtonRight();
   bool GetButtonB();
   bool GetButtonX();
   bool GetButtonA();

@@ -15,8 +15,8 @@
 #include "Modules/Height.h"
 
 #define USINGSPARKMAXDRIVE 0
-#define USINGVICTORDRIVE 0 
-#define ONROBORIONAVX 1
+#define USINGVICTORDRIVE 1 
+#define ONROBORIONAVX 0
 
 #define TESTELEVATOR 21
 #define ELEVATOR 11
@@ -48,6 +48,8 @@ Elevator* Robot::elevator = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
 Roller* Robot::roller = nullptr;
 VisionBridgeSub* Robot::visionBridge = nullptr;
+PowerDistributionPanel* Robot::pdp = nullptr;
+
 
 //======= Motor Definition =======//
 
@@ -94,7 +96,7 @@ void Robot::DeviceInitialization(){
    //======= Front Left Drive =======//
       driveTrainFrontLeftDrive = new SparkMaxController(FLD);
 
-   //======= Front Rigth Drive =======//
+   //======= Front Right Drive =======//
       driveTrainFrontRightDrive = new SparkMaxController(FRD);
 
    //======= Rear Left Drive =======//
@@ -106,11 +108,11 @@ void Robot::DeviceInitialization(){
    #else
    #if USINGVICTORDRIVE
    //======= Front Left Drive =======//
-      //driveTrainFrontLeftDrive = new VictorController(FLD);
-      driveTrainFrontLeftDrive = new TalonController(FLD); // Needed to use talon b/c of dead victor
+      driveTrainFrontLeftDrive = new VictorController(FLD);
 
-   //======= Front Rigth Drive =======//
-      driveTrainFrontRightDrive = new VictorController(FRD);
+   //======= Front Right Drive =======//
+      //driveTrainFrontRightDrive = new VictorController(FRD);
+      driveTrainFrontRightDrive = new TalonController(FRD);
 
    //======= Rear Left Drive =======//
       driveTrainRearLeftDrive = new VictorController(RLD);
@@ -122,7 +124,7 @@ void Robot::DeviceInitialization(){
    //======= Front Left Drive =======//
       driveTrainFrontLeftDrive = new TalonController(FLD);
 
-   //======= Front Rigth Drive =======//
+   //======= Front Right Drive =======//
       driveTrainFrontRightDrive = new TalonController(FRD);
 
    //======= Rear Left Drive =======//
@@ -149,7 +151,7 @@ void Robot::DeviceInitialization(){
 #if ONROBORIONAVX
    navx = new AHRS(I2C::Port::kMXP);
 #else
-   navx = new AHRS(I2C::Port::kMXP); //kOnboard ?
+   navx = new AHRS(I2C::Port::kOnboard); //kOnboard ?
 #endif
 
 //CameraServer::GetInstance()->StartAutomaticCapture(0);
@@ -231,6 +233,7 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+
 }
 
 void Robot::AutonomousPeriodic() {

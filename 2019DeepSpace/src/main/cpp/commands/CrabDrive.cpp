@@ -14,11 +14,9 @@ void CrabDrive::Execute() {
 	float x = 0;
 	float y = 0;
 	float z = 0;
-	if (!DriverStation::GetInstance().IsAutonomous()) {
 		x = Robot::oi->GetJoystickX();
 		y = Robot::oi->GetJoystickY();
 		z = Robot::oi->GetJoystickZ();
-	}
 
 	//x *= (x < 0 ? -x: x);
 	//z *= (z < 0 ? -z: z);

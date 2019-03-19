@@ -35,9 +35,8 @@ VisionBridgeSub::VisionBridgeSub(uint16_t listeningPort)
 	_gearLeftX2(0),
 	_gearLeftY2(0),
 	_boilerX1(0),
-	_boilerY1(0),
+	_boilerX3(0),
 	_boilerX2(0),
-	_boilerY2(0),
 	_debug(false),
 	_listeningThread(&VisionBridgeSub::Listen, this) {
 }
@@ -74,11 +73,16 @@ double VisionBridgeSub::GetGearDistance() {
 
 double VisionBridgeSub::GetBoilerPosition() {
 	std::unique_lock<std::recursive_mutex> lock(_mutex);
-	return (_boilerX1 + _boilerX2)/2;
-	return 0;
+	float lowestNum = _boilerX1;
+	if(_boilerX2 != 0 && fabs(_boilerX2) < fabs(lowestNum))
+		lowestNum = _boilerX2;
+	if(_boilerX3 != 0 && fabs(_boilerX3) < fabs(lowestNum))
+		lowestNum = _boilerX3;
+	
+	return lowestNum;
 }
 
-// ==========================================================================
+/* ==========================================================================
 
 double VisionBridgeSub::GetBoilerDistance() {
 	std::unique_lock<std::recursive_mutex> lock(_mutex);
@@ -86,7 +90,7 @@ double VisionBridgeSub::GetBoilerDistance() {
 	return 0;
 }
 
-// ==========================================================================
+*/ // ==========================================================================
 
 void VisionBridgeSub::DebugOutput(std::string packet) {
 	LOG("VisionPacket=" + packet);
@@ -152,23 +156,22 @@ void VisionBridgeSub::ParsePacket(char packet[]) {
 		char* pch = std::strtok(packet, " ");
 		auto x1 = std::stod(pch);
 		pch = std::strtok(nullptr, " ");
-		auto y1 = std::stod(pch);
-		pch = std::strtok(nullptr, " ");
 		auto x2 = std::stod(pch);
 		pch = std::strtok(nullptr, " ");
-		auto y2 = std::stod(pch);
+		auto x3 = std::stod(pch);
 		pch = std::strtok(nullptr, " ");
 		int cam = std::stod(pch);
 
 		switch (cam){
 		case 0:
-			SetBoiler(x1, y1, x2, y2);
+			SetBoiler(x1, x2, x3);
 			break;
 		case 1:
-			SetGearLeft(x1, y1, x2, y2);
+			//SetGearLeft(x1, y1, x2, y2);
 			break;
 		case 2:
-			SetGearRight(x1, y1, x2, y2);
+			//SetGearRight(x1, y1, x2, y2);
+			break;
 		}
 	}
 	catch (...) {
@@ -206,17 +209,16 @@ void VisionBridgeSub::SetGearLeft(double x1, double y1, double x2, double y2) {
 }
 
 // ==========================================================================
-void VisionBridgeSub::SetBoiler(double x1, double y1, double x2, double y2) {
+void VisionBridgeSub::SetBoiler(double x1, double x2, double x3) {
 	std::unique_lock<std::recursive_mutex> lock(_mutex);
 	if (x1 != 0.0) _boilerX1 = x1;
-	if (y1 != 0.0) _boilerY1 = y1;
 	if (x2 != 0.0) _boilerX2 = x2;
-	if (y2 != 0.0) _boilerY2 = y2;
+	if (x3 != 0.0) _boilerX3 = x3;
 
 	SmartDashboard::PutNumber("BoilerX1", x1);
-	SmartDashboard::PutNumber("BoilerY1", y1);
 	SmartDashboard::PutNumber("BoilerX2", x2);
-	SmartDashboard::PutNumber("BoilerY2", y2);
+	SmartDashboard::PutNumber("BoilerX3", x3);
+	
 
 }
 

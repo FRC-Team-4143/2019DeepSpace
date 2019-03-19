@@ -34,7 +34,6 @@ OI::OI() {
   toggleGameMode = new ToggleGameMode();
   armUpCommand = new ArmUpCommand();
   armDownCommand = new ArmDownCommand();
-  gyroStraighten = new GyroStraighten();
   hatchLineUp = new HatchLineUp();
 
 
@@ -42,6 +41,7 @@ OI::OI() {
   SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
   SmartDashboard::PutData("Manual ElevatorControl", new ElevatorManualControl());
   SmartDashboard::PutData("Vision LineUp", new HatchLineUp());
+  SmartDashboard::PutData("Hatch Prep", new SandstormHatch());
   
   
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
@@ -53,7 +53,6 @@ OI::OI() {
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(previousTargetPosition);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhileHeld(armUpCommand);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LB))->WhileHeld(armDownCommand);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RIGHT))->WhileHeld(hatchLineUp);
 }
 
 // ==========================================================================
@@ -79,6 +78,13 @@ float OI::GetJoystickZ() {
 
 // ==========================================================================
 
+float OI::GetRightJoystickY() {
+	auto value = driverjoystick->GetRawAxis(JOYSTICK_RY_AXIS);
+	return (fabs(value) <= Constants::DEAD_ZONE) ? 0 : value;
+}
+
+// ==========================================================================
+
 float OI::GetLeftTrigger(){
   float value = fabs(driverjoystick->GetRawAxis(JOYSTICK_LTRIG_AXIS));
   return (value > Constants::DEAD_ZONE) ? value :0;
@@ -95,6 +101,13 @@ float OI::GetRightTrigger(){
 
 bool OI::GetButtonLeft(){
   auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_LEFT);
+  return value;
+}
+
+// ==========================================================================
+
+bool OI::GetButtonRight(){
+  auto value = driverjoystick->GetRawButton(JOYSTICK_BUTTON_RIGHT);
   return value;
 }
 

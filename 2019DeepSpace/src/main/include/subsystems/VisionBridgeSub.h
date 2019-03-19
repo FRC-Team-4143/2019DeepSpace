@@ -42,9 +42,8 @@ private:
 	double _gearLeftY2;
 
 	double _boilerX1;
-	double _boilerY1;
 	double _boilerX2;
-	double _boilerY2;
+	double _boilerX3;
 
 	bool _debug;
 	std::thread _listeningThread;
@@ -55,7 +54,7 @@ private:
 	void SetValues(int cam, double x1, double y1, double x2, double y2);
 	void SetGearRight(double x1, double y1, double x2, double y2);
 	void SetGearLeft(double x1, double y1, double x2, double y2);
-	void SetBoiler(double x1, double y1, double x2, double y2);
+	void SetBoiler(double x1, double x2, double x3);
 };
 
 // ==========================================================================

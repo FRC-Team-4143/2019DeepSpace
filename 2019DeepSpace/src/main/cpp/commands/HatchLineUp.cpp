@@ -38,32 +38,24 @@ void HatchLineUp::Execute() {
 	float pixels = Robot::visionBridge->GetBoilerPosition() - SmartDashboard::GetNumber("vision center", 0);
 	SmartDashboard::PutNumber("GearPixels", pixels);
 
-	float yaw = Robot::gyroSub->PIDGet();
+	float twist = Robot::driveTrain->GyroRotate();
+	float approach = -Robot::oi->GetRightJoystickY();
 	float desiredangle = 0;
 
+	if (approach < .1 && approach > -.1) approach = -.1;
 	
-	if(yaw > 45 && yaw < 135){
-		desiredangle = 90;
-	} else if((yaw > 135 && yaw < 179) || (yaw < -135 && yaw > -179)){
-		desiredangle = 180; 
-	} else if(yaw > -135 && yaw < -45){
-		desiredangle = -90;
-	}else if (yaw < 45 && yaw > -45){
-		desiredangle = 0;
-	}
 
-	float twist = desiredangle - yaw;
-	while (twist > 180.0) {
-		twist -= 360.0;
-	}
-	while (twist < -180.0) {
-		twist += 360.0;
-	}
+	twist = std::min(0.2, std::max(-0.2, twist * 0.0025));
+	pixels = std::min(0.2, std::max(-0.2, pixels * .003));    // .2 / 100 pixels
 
-	twist = std::min(0.2, std::max(-0.2, twist * (0.2/10)));
-	pixels = std::min(0.2, std::max(-0.2, pixels * .001));    // .2 / 100 pixels
+	if (pixels =! 0){
+		Robot::driveTrain->Crab(twist, 0.2, pixels, false);
+	}else{
+		Robot::driveTrain->Crab(twist, approach, pixels, false);
+	}
+  		//Robot::driveTrain->Crab(twist, approach, pixels, false);
+		//Robot::driveTrain->Crab(0, approach, -pixels, false);
 
-  		Robot::driveTrain->Crab(twist, 0.3, -pixels, false);
 		if (fabs(pixels) < _tol)
 			_counter++;
 

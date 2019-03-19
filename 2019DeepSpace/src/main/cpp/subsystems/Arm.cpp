@@ -1,7 +1,9 @@
 #include "subsystems/Arm.h"
 #include "commands/ArmCommand.h"
-#include "commands/ArmHoldCommand.h"
 #include "Robot.h"
+
+#define PDPPORT 1
+#define CURRNETLIMIT 0.1
 
 Arm::Arm() : frc::Subsystem("Arm") {
 }
@@ -13,14 +15,18 @@ void Arm::InitDefaultCommand() {
 //======= Method to Rotate Arm Up =======//
 void Arm::ArmUp(float _speed) {
   if (Robot::armMotor != nullptr){
-    Robot::armMotor->SetPercentPower(-_speed);
+    //if (Robot::pdp->GetCurrent(PDPPORT) > CURRNETLIMIT){
+      Robot::armMotor->SetPercentPower(-_speed);
+    //}
   }
 }
 
 //======= Method to Rotate Arm Down =======//
 void Arm::ArmDown(float _speed) {
   if (Robot::armMotor != nullptr) {
-    Robot::armMotor->SetPercentPower(_speed);
+    //if (Robot::pdp->GetCurrent(PDPPORT) > CURRNETLIMIT){
+      Robot::armMotor->SetPercentPower(_speed);
+    //}
   }
 }
 
