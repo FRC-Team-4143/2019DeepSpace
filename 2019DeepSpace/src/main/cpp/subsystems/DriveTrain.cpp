@@ -86,7 +86,8 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 	lasttwist = twist;
   }
 
-	if (operatorControl) {
+	if (operatorControl && !Robot::oi->GetLeftBumper() && Robot::oi->GetLeftTrigger() == 0) {
+		twist *= 0.65;
 		// scale for operator control
 		x *= 1;
 		y *= 1;
@@ -121,7 +122,7 @@ void DriveTrain::FieldCentricCrab(float twist, float y, float x, bool operatorCo
 	FWD = y * cos(robotangle) + x * sin(robotangle);
 	STR = -y * sin(robotangle) + x * cos(robotangle);
 
-	Crab((twist*0.65), FWD, STR, operatorControl); // twist * 0.65
+	Crab((twist), FWD, STR, operatorControl); // twist * 0.65
 }
 
 // ================================================================

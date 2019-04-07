@@ -13,4 +13,5 @@ public:
 
 private:
     rev::CANSparkMax* _motor;
+    //rev::CANPIDController _pidController;
 };

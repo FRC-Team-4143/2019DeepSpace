@@ -15,8 +15,8 @@
 #include "Modules/Height.h"
 
 #define USINGSPARKMAXDRIVE 0
-#define USINGVICTORDRIVE 1 
-#define ONROBORIONAVX 0
+#define USINGVICTORDRIVE 1 // 1 for Comp Bot 
+#define ONROBORIONAVX 0 // 0 for Comp Bot
 
 #define TESTELEVATOR 21
 #define ELEVATOR 11
@@ -69,7 +69,7 @@ PositionMultiController* Robot::armMotor = nullptr;
 MultiController* Robot::clampMotor = nullptr;
 MultiController* Robot::frontClimberMotor = nullptr;
 MultiController* Robot::rearClimberMotor = nullptr;
-MultiController* Robot::elevatorMotor = nullptr; //PositionMultiController
+PositionMultiController* Robot::elevatorMotor = nullptr;
 MultiController* Robot::rollerMotor = nullptr;
 MultiController* Robot::testElevator = nullptr;
 
@@ -173,21 +173,23 @@ void Robot::DeviceInitialization(){
 void Robot::AddHeights(){
    auto h = Height::GetInstance();
 
-   h->AddCargoTarget(0, 0); // Starting Position with Elevator Down and Arm In / CargoShip
-   h->AddCargoTarget(10, 50); // Floor Pickup
-   h->AddCargoTarget(15, 50); // 1st Level Rocket
-   h->AddCargoTarget(15, 0); // 2nd Level Rocket
-   h->AddCargoTarget(30, 25); // 3rd Level Rocket
+   h->AddCargoTarget(0, 0); // Starting Position with Elevator Down and Arm In
+   h->AddCargoTarget(0, 62); // Floor Pickup
+   h->AddCargoTarget(-48, 60); // CargoShip Down
+   h->AddCargoTarget(0, 39); // 1st Level Rocket
+   h->AddCargoTarget(-43, 41); // 2nd Level Rocket
+   h->AddCargoTarget(-81.5, 41); // 3rd Level Rocket
 
-   h->AddHatchTarget(0, 0); // Starting Position with Elevator DOwn and Arim In / CargoShip / Floor Pickup / Loading Station 
-   h->AddHatchTarget(10, 0); // 2nd Level Rocket
-   h->AddHatchTarget(25,0); // 3rd Level Rocket
+   h->AddHatchTarget(0, 0); // Starting Position with Elevator Down and Arm In / CargoShip / Loading Station 
+   h->AddHatchTarget(-44, 0); // 2nd Level Rocket
+   h->AddHatchTarget(-81,0); // 3rd Level Rocket
 
    h->AddClimbingTarget(0,0);
 }
 
 void Robot::RobotInit() {
    DeviceInitialization();
+   SmartDashboard::PutNumber("Yaw Offset", 0);
    AddHeights();
    driveTrain->LoadWheelOffsets();
    Lights::Init();
@@ -195,7 +197,8 @@ void Robot::RobotInit() {
 }
    
 void Robot::RobotPeriodic() {
-   SmartDashboard::PutNumber("Yaw", Robot::navx->GetYaw());
+   auto yawOff = SmartDashboard::GetNumber("Yaw Offset", 0);
+   SmartDashboard::PutNumber("Yaw", Robot::navx->GetYaw() + yawOff);
 
 	if (frc::RobotController::GetUserButton() == 1 && counter == 0) {
 		Robot::driveTrain->SetWheelOffsets();

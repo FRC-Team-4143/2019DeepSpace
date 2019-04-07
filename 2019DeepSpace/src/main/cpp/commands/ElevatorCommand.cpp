@@ -17,6 +17,7 @@ void ElevatorCommand::Execute() {
 }
 
 bool ElevatorCommand::IsFinished() {
+  
   return false;
 }
 

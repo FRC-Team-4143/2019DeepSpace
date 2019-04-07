@@ -13,6 +13,7 @@ public:
     double GetArmTarget();
     void NextPosition();
     void PreviousPosition();
+    void PickUpPiece();
     void UpdateSmartDashboard();
 
 private:

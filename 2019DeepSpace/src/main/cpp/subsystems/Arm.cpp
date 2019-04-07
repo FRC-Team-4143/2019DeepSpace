@@ -1,5 +1,6 @@
 #include "subsystems/Arm.h"
 #include "commands/ArmCommand.h"
+#include <iostream> 
 #include "Robot.h"
 
 #define PDPPORT 1
@@ -9,7 +10,7 @@ Arm::Arm() : frc::Subsystem("Arm") {
 }
 
 void Arm::InitDefaultCommand() {
-  //SetDefaultCommand(new ArmHoldCommand());
+  SetDefaultCommand(new ArmCommand());
 }
 
 //======= Method to Rotate Arm Up =======//
@@ -46,6 +47,10 @@ void Arm::ArmHold(){
 
 void Arm::SetPosition(double pos) {
   if (Robot::armMotor != nullptr) {
-    Robot::armMotor->SetPosition(pos);
+    if(pos == 62 && Robot::armMotor->GetEncoderPosition() > 62){
+      Robot::armMotor->SetPercentPower(0);
+    }else{
+      Robot::armMotor->SetPosition(pos);
+    }
   }
 }

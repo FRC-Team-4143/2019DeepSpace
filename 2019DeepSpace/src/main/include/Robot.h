@@ -57,7 +57,7 @@ class Robot : public frc::TimedRobot {
   static MultiController* clampMotor;
   static MultiController* frontClimberMotor;
   static MultiController* rearClimberMotor;
-  static MultiController* elevatorMotor; //PositionMultiController
+  static PositionMultiController* elevatorMotor;
   static MultiController* rollerMotor;
   static MultiController* testElevator;
 

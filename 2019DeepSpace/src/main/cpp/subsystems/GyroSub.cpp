@@ -25,7 +25,7 @@ void GyroSub::InitDefaultCommand() {
 
 double GyroSub::PIDGet() { 
 	if(theGyro() != nullptr){
-		return theGyro()->GetYaw(); 
+		return theGyro()->GetYaw() + (SmartDashboard::GetNumber("Yaw Offset", 0)); 
 	}
 	return 0;
 }

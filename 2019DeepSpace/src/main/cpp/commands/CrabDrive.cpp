@@ -18,6 +18,10 @@ void CrabDrive::Execute() {
 		y = Robot::oi->GetJoystickY();
 		z = Robot::oi->GetJoystickZ();
 
+		x *= fabs(x);
+		y *= fabs(y);
+		z *= fabs(z);
+		
 	//x *= (x < 0 ? -x: x);
 	//z *= (z < 0 ? -z: z);
 	if (fabs(y) > 0.5)

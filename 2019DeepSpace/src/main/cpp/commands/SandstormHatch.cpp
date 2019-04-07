@@ -5,6 +5,7 @@
 // ==========================================================================
 
 SandstormHatch::SandstormHatch(): frc::Command("Sandstorm Hatch") {
+	Requires(Robot::arm);
 
 }
 

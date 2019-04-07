@@ -35,6 +35,8 @@ OI::OI() {
   armUpCommand = new ArmUpCommand();
   armDownCommand = new ArmDownCommand();
   hatchLineUp = new HatchLineUp();
+  turtle = new Turtle();
+  pickUpPrep = new PickUpPrep();
 
 
   SmartDashboard::PutData("Set WheelOffsets", new SetWheelOffsets());
@@ -51,8 +53,8 @@ OI::OI() {
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LEFT))->ToggleWhenPressed(crabDrive);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhenPressed(nextTargetPosition);
   (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(previousTargetPosition);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhileHeld(armUpCommand);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LB))->WhileHeld(armDownCommand);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhenPressed(pickUpPrep);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LB))->WhileHeld(turtle);
 }
 
 // ==========================================================================

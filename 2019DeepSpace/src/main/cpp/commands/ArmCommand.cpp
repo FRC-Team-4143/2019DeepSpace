@@ -21,7 +21,7 @@ bool ArmCommand::IsFinished() {
 }
 
 void ArmCommand::End() {
-  Robot::elevator->ElevatorStop();
+  Robot::arm->ArmStop();
   SmartDashboard::PutString("Arm Mode","Unknown");
 }
 

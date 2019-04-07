@@ -96,6 +96,15 @@ void Height::PreviousPosition(){
     }
 }
 
+void Height::PickUpPiece(){
+     if(_lastGameMode == Mode::GameMode::CARGOMODE){
+        _index = 1;
+    }
+    else {
+        _index = 0;
+    }
+}
+
 void Height::UpdateSmartDashboard(){
     char sz[20];
     int count = _hatchArmTargets.size();

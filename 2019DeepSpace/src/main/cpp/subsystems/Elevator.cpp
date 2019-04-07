@@ -7,7 +7,7 @@ Elevator::Elevator() : frc::Subsystem("Elevator") {
 }
 
 void Elevator::InitDefaultCommand() {
-  SetDefaultCommand(new ElevatorManualControl()); //ElevatorCommand()()
+  SetDefaultCommand(new ElevatorCommand()); //ElevatorManualControl()
 }
 
 //======= Method to Control Elevator Lift =======//
@@ -40,6 +40,6 @@ void Elevator::ElevatorHold(){
 
 void Elevator::SetHeight(double pos){
   if (Robot::elevatorMotor != nullptr){
-    //Robot::elevatorMotor->SetPosition(pos);
+    Robot::elevatorMotor->SetPosition(pos);
   }
 }

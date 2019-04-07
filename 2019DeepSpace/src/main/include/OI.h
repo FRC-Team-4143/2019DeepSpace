@@ -15,6 +15,8 @@
 #include "commands/ZeroYaw.h"
 #include "commands/HatchLineUp.h"
 #include "commands/SandstormHatch.h"
+#include "commands/Turtle.h"
+#include "commands/PickUpPrep.h"
 
 using namespace frc;
 
@@ -33,6 +35,8 @@ class OI {
   ArmDownCommand* armDownCommand;
   ArmUpCommand* armUpCommand;
   HatchLineUp* hatchLineUp;
+  Turtle* turtle;
+  PickUpPrep* pickUpPrep;
 
 //======= OI Methods =======//
   OI();
