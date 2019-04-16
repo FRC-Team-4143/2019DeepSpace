@@ -82,6 +82,8 @@ class Robot : public frc::TimedRobot {
 
   int counter = 0;
   int hatchCounter = 0;
+  static double xCenterOffset;
+  static double yCenterOffset;
 
  private:
   // Have it null by default so that if testing teleop it

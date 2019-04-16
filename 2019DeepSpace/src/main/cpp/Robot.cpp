@@ -15,8 +15,8 @@
 #include "Modules/Height.h"
 
 #define USINGSPARKMAXDRIVE 0
-#define USINGVICTORDRIVE 1 // 1 for Comp Bot 
-#define ONROBORIONAVX 0 // 0 for Comp Bot
+#define USINGVICTORDRIVE 0 // 1 for Comp Bot 
+#define ONROBORIONAVX 1 // 0 for Comp Bot
 
 #define TESTELEVATOR 21
 #define ELEVATOR 11
@@ -77,6 +77,10 @@ Servo* Robot::frontServo = nullptr;
 Servo* Robot::rearServo = nullptr;
 
 AHRS* Robot::navx = nullptr;
+
+double Robot::xCenterOffset = 0;
+double Robot::yCenterOffset = 0;
+
 
 void Robot::DeviceInitialization(){
    //======= Front Left Steer =======//
@@ -206,10 +210,16 @@ void Robot::RobotPeriodic() {
 		std::cout << "SetWheelOffsets Complete" << std::endl;
       std::cout.flush();
 	}
-
 	if (counter > 0) {
       counter -= 1;
    }
+
+   xCenterOffset = SmartDashboard::GetNumber("X Center Offset", 0);
+   yCenterOffset = SmartDashboard::GetNumber("Y Center Offset", 0);
+   SmartDashboard::PutNumber("X Center Offset", xCenterOffset);
+   SmartDashboard::PutNumber("Y Center Offset", yCenterOffset);
+ 
+   Robot::driveTrain->SetWheelbase(22.5, 20);
 
    if (elevatorMotor != nullptr) {
       SmartDashboard::PutNumber("Elevator Encoder Position", elevatorMotor->GetEncoderPosition());

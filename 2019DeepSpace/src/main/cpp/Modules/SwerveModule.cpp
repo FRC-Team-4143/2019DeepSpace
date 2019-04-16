@@ -12,9 +12,10 @@ SwerveModule::SwerveModule(MultiController* drive, PositionMultiController* stee
 
 // ================================================================
 
-void SwerveModule::SetGeometry(double x, double y) {
+void SwerveModule::SetGeometry(double x, double y, double maxradius) {
 	_x = x;
 	_y = y;
+	_radius = maxradius;
 }
 
 // ================================================================
@@ -57,16 +58,17 @@ void SwerveModule::SetDriveSpeed(float speed) {
 
 // ================================================================
 
-void SwerveModule::SetSteerDrive(double x, double y, double twist, bool operatorControl) {
+double SwerveModule::SetSteerDrive(double x, double y, double twist, bool operatorControl) {
 	static constexpr double pi = 3.141592653589793238462643383;
 
-	auto radius = std::sqrt(pow(_y, 2) + pow(_x, 2));
+	//auto signX = (_x >= 0) ? 1 : -1;
+	//auto signY = (_y >= 0) ? 1 : -1;
 
-	auto signX = (_x >= 0) ? 1 : -1;
-	auto signY = (_y >= 0) ? 1 : -1;
+	//auto BP = x + twist * signY * std::fabs(_x) / radius;
+	//auto CP = y - twist * signX * std::fabs(_y) / radius;
 
-	auto BP = x + twist * signY * std::fabs(_x) / radius;
-	auto CP = y - twist * signX * std::fabs(_y) / radius;
+	auto BP = x + twist * (_x) / _radius;
+	auto CP = y - twist * (_y) / _radius;
 
 	float setpoint = EncoderConstants::HALF_TURN;
 
@@ -77,16 +79,19 @@ void SwerveModule::SetSteerDrive(double x, double y, double twist, bool operator
 	setpoint = -setpoint;
 	SetSteerSetpoint(setpoint + _offset);
 
-	radius = sqrt(pow(BP, 2) + pow(CP, 2));
+	auto power = sqrt(pow(BP, 2) + pow(CP, 2));
 
 	if (operatorControl && fabs(x) <= Constants::DEAD_ZONE && fabs(y) <= Constants::DEAD_ZONE && fabs(twist) <= Constants::DEAD_ZONE) {
-		radius = 0;
+		power = 0;
 	}
-
-	if (_x > 0){
-		radius = -radius;
+/*
+	if (signX == signY){
+		power = -power;
 	}
-	SetDriveSpeed(radius);
+	if (signX == -1) power = -power;
+	//SetDriveSpeed(power);
+*/
+	return power;
 }
 
 // ================================================================

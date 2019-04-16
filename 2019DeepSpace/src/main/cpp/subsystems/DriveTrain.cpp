@@ -6,6 +6,7 @@
 #include "Modules/Logger.h"
 #include "Modules/Mode.h"
 #include <iostream>
+#include <algorithm>
 
 //const float DEAD_ZONE = 0.15;
 
@@ -15,7 +16,7 @@ DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
   rearLeftModule = new SwerveModule(Robot::driveTrainRearLeftDrive, Robot::driveTrainRearLeftSteer, Constants::RL_POS_NAME);
   rearRightModule = new SwerveModule(Robot::driveTrainRearRightDrive, Robot::driveTrainRearRightSteer, Constants::RR_POS_NAME);
 
-  SetWheelbase(24, 24);
+  SetWheelbase(22.5, 20);
 }
 
 // ================================================================
@@ -34,10 +35,23 @@ void DriveTrain::SetWheelbase(double width, double length){
   double halfWidth = width/2;
   double halfLength = length/2;
 
+	double xOffset = Robot::xCenterOffset;
+	double yOffset = Robot::yCenterOffset;
+
+/* normal code
   frontLeftModule->SetGeometry(-halfWidth, halfLength);
   frontRightModule->SetGeometry(halfWidth, halfLength);
   rearLeftModule->SetGeometry(-halfWidth, -halfWidth);
   rearRightModule->SetGeometry(halfWidth, -halfLength);
+*/
+
+	auto maxradius = std::sqrt(pow(halfWidth + fabs(xOffset), 2) + pow(halfLength + fabs(yOffset), 2));
+
+  frontLeftModule->SetGeometry(halfWidth + xOffset, -halfLength + yOffset, maxradius);
+  frontRightModule->SetGeometry(halfWidth + xOffset, halfLength + yOffset, maxradius);
+  rearLeftModule->SetGeometry(-halfWidth + xOffset, -halfLength + yOffset, maxradius);
+  rearRightModule->SetGeometry(-halfWidth + xOffset, halfLength + yOffset, maxradius);
+
 }
 
 // ================================================================
@@ -103,11 +117,31 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 		twist = std::min(0.18, std::max(-0.18, twist * 0.025));
 	}
 
-  frontLeftModule->SetSteerDrive(x, y, twist, operatorControl); 
-  frontRightModule->SetSteerDrive(x, y, twist, operatorControl);
-  rearLeftModule->SetSteerDrive(x, y, twist, operatorControl);
-  rearRightModule->SetSteerDrive(x, y, twist, operatorControl);
+	double speeds[4]; 
 
+  speeds[0] = frontLeftModule->SetSteerDrive(x, y, twist, operatorControl); 
+  speeds[1] = frontRightModule->SetSteerDrive(x, y, twist, operatorControl);
+  speeds[2] = rearLeftModule->SetSteerDrive(x, y, twist, operatorControl);
+  speeds[3] = rearRightModule->SetSteerDrive(x, y, twist, operatorControl);
+
+	double maxspeed = *std::max_element(speeds, speeds + 4);
+	
+	if(maxspeed > 1){
+		frontLeftModule->SetDriveSpeed(speeds[0]/maxspeed);
+		frontRightModule->SetDriveSpeed(speeds[1]/maxspeed);
+		rearLeftModule->SetDriveSpeed(speeds[2]/maxspeed);
+		rearRightModule->SetDriveSpeed(speeds[3]/maxspeed);
+	}else{
+		frontLeftModule->SetDriveSpeed(speeds[0]);
+		frontRightModule->SetDriveSpeed(speeds[1]);
+		rearLeftModule->SetDriveSpeed(speeds[2]);
+		rearRightModule->SetDriveSpeed(speeds[3]);
+	}
+
+	SmartDashboard::PutNumber("FL Speed", speeds[0]);
+	SmartDashboard::PutNumber("FR Speed", speeds[1]);
+	SmartDashboard::PutNumber("RL Speed", speeds[2]);
+	SmartDashboard::PutNumber("RR Speed", speeds[3]);
 }
 
 // ================================================================

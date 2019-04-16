@@ -7,12 +7,12 @@ public:
 
 	SwerveModule(MultiController* driveMotor, PositionMultiController* steerMotor, std::string configName); 
 	double GetSteerPosition();
-	void SetGeometry(double x, double y);
+	void SetGeometry(double x, double y, double maxradius);
 	void SetWheelOffset();
 	void SetOffset(float off);
 	void LoadWheelOffset();
 	void SetDriveSpeed(float speed);
-	void SetSteerDrive(double x, double y, double twist, bool operatorControl);
+	double SetSteerDrive(double x, double y, double twist, bool operatorControl);
 	void SetSteerSetpoint(float setpoint);
 
 private:
@@ -20,6 +20,7 @@ private:
 	double _offset;
 	double _x;
 	double _y;
+	double _radius;
 	std::string _configName;
 	double _steerPosition;
 	int _inverse = 1;
