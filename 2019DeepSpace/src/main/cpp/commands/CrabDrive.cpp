@@ -14,9 +14,10 @@ void CrabDrive::Execute() {
 	float x = 0;
 	float y = 0;
 	float z = 0;
-		x = Robot::oi->GetJoystickX();
-		y = Robot::oi->GetJoystickY();
-		z = Robot::oi->GetJoystickZ();
+
+	x = Robot::oi->GetJoystickX();
+	y = Robot::oi->GetJoystickY();
+	z = Robot::oi->GetJoystickZ();
 
 		x *= fabs(x);
 		y *= fabs(y);
@@ -28,14 +29,8 @@ void CrabDrive::Execute() {
 		z *= 0.75;
 	//y *= (y < 0 ? -y: y);
 
-	if(Robot::oi->GetButtonLeft() == false){
+
 		Robot::driveTrain->Crab(z, -y, x, true);
-		SmartDashboard::PutString("Driving Speed","Full");
-	}
-	else{
-		Robot::driveTrain->Crab(z/2, -y/2, x/2, true);
-		SmartDashboard::PutString("Driving Speed","Half");
-	}
 
 }
 

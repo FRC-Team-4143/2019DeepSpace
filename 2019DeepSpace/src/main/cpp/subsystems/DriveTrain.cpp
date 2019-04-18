@@ -7,6 +7,7 @@
 #include "Modules/Mode.h"
 #include <iostream>
 #include <algorithm>
+#include <cmath>
 
 //const float DEAD_ZONE = 0.15;
 
@@ -17,6 +18,7 @@ DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
   rearRightModule = new SwerveModule(Robot::driveTrainRearRightDrive, Robot::driveTrainRearRightSteer, Constants::RR_POS_NAME);
 
   SetWheelbase(22.5, 20);
+	yaw = 0;
 }
 
 // ================================================================
@@ -27,16 +29,19 @@ void DriveTrain::InitDefaultCommand() {
 
 // ================================================================
 
-void DriveTrain::SetWheelbase(double width, double length){
+void DriveTrain::SetWheelbase(double width, double length, double xOffset, double yOffset){
   
-  X = width;
-  Y = length;
+	if (width != 0 || length != 0){
+		X = width;
+  	Y = length;
+	}
+  
 
-  double halfWidth = width/2;
-  double halfLength = length/2;
+  double halfWidth = X/2;
+  double halfLength = Y/2;
 
-	double xOffset = Robot::xCenterOffset;
-	double yOffset = Robot::yCenterOffset;
+	//double xOffset = Robot::xCenterOffset;
+	//double yOffset = Robot::yCenterOffset;
 
 /* normal code
   frontLeftModule->SetGeometry(-halfWidth, halfLength);
@@ -100,7 +105,7 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 	lasttwist = twist;
   }
 
-	if (operatorControl && !Robot::oi->GetLeftBumper() && Robot::oi->GetLeftTrigger() == 0) {
+	if (operatorControl && !Robot::oi->GetLeftBumper()) { // Increase spin speed
 		twist *= 0.65;
 		// scale for operator control
 		x *= 1;
@@ -108,6 +113,46 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 		float avg = (abs(x) + abs(y)) / 2;
 		float scale = 1 - avg / 2;
 		twist *= scale; // TWISTSCALE;
+	}
+
+auto leftTrigger = Robot::oi->GetLeftTrigger();
+auto rightTrigger = Robot::oi->GetRightTrigger(); 
+auto joystickAngle = atan2(Robot::oi->GetJoystickX(), -Robot::oi->GetJoystickY()) * 180/pi ;
+SmartDashboard::PutNumber("JoystickAngle", joystickAngle);
+
+	if(leftTrigger > 0 || rightTrigger > 0){ // Spin from corner
+
+		 x = 0;
+		 y = 0;
+
+		double pivotAngle = 0;
+		if(yaw == 0){
+			yaw = Robot::navx->GetYaw();
+		}
+		
+		if(joystickAngle > -90 && joystickAngle < 90){
+			if(rightTrigger){
+				pivotAngle = -135;
+				twist = -1;
+			}else if(leftTrigger){
+				pivotAngle = 135;
+				twist = 1;
+			}
+		}else{
+			if(rightTrigger){
+				pivotAngle = -45;
+				twist = 1;
+			}else if(leftTrigger){
+				pivotAngle = 45;
+				twist = -1;
+			}
+			pivotAngle -= yaw;
+		}
+		SetWheelbase(0, 0, cos(pivotAngle	*pi/180)* 20, sin(pivotAngle *pi/180)* 20);
+
+	}else{
+		yaw = 0;
+		SetWheelbase(0, 0, 0, 0);
 	}
 
 	if(Robot::oi->GetButtonRight()){
@@ -186,3 +231,57 @@ double DriveTrain::GyroRotate(){
 
 return twist;
 }
+
+// ================================================================
+
+ double DriveTrain::GetNearestHeading(){
+
+	 auto yaw = Robot::gyroSub->PIDGet();
+	 auto currentheading = 0;
+
+	if(yaw > 45 && yaw <= 135){
+		currentheading = 90;
+	} else if((yaw > 135 && yaw <= 180) || (yaw < -135 && yaw >= -180)){
+		currentheading = 180; 
+	} else if(yaw > -135 && yaw <= -45){
+		currentheading = -90;
+	}else if (yaw < 45 && yaw >= -45){
+		currentheading = 0;
+	}
+  
+	return currentheading;
+}
+
+// ================================================================
+
+void DriveTrain::RotateAboutPoint(double currentheading){
+
+  if(currentheading == 0){
+    if(Robot::oi->GetJoystickZ() > 0){
+      Robot::driveTrain->SetWheelbase(0, 0, 14, -14);
+    }else{
+      Robot::driveTrain->SetWheelbase(0, 0, 14, 14);
+    }
+
+  }else if(currentheading == 90){
+    if(Robot::oi->GetJoystickZ() > 0){
+      Robot::driveTrain->SetWheelbase(0, 0, -14, -14);
+    }else{
+      Robot::driveTrain->SetWheelbase(0, 0, 14, -14);
+    }
+
+  }else if(currentheading == 180){
+    if(Robot::oi->GetJoystickZ() > 0){
+      Robot::driveTrain->SetWheelbase(0, 0, -14, 14);
+    }else{
+      Robot::driveTrain->SetWheelbase(0, 0, -14, -14);
+    }
+
+  }else{
+    if(Robot::oi->GetJoystickZ() > 0){
+      Robot::driveTrain->SetWheelbase(0, 0, 14, 14);
+    }else{
+      Robot::driveTrain->SetWheelbase(0, 0, -14, 14);
+    }
+  }
+ }

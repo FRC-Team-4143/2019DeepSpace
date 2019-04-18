@@ -9,12 +9,15 @@ Turtle::Turtle() {
 }
 
 void Turtle::Initialize() {
-
+  //currentheading = Robot::driveTrain->GetNearestHeading();
 }
 
 void Turtle::Execute() {
+  
   Robot::arm->SetPosition(0);
   Robot::elevator->SetHeight(0);
+  //Robot::driveTrain->RotateAboutPoint(currentheading);
+
 }
 
 bool Turtle::IsFinished() {
@@ -22,6 +25,7 @@ bool Turtle::IsFinished() {
 }
 
 void Turtle::End() {
+  Robot::driveTrain->SetWheelbase(0, 0, 0, 0);
 }
 
 void Turtle::Interrupted() {

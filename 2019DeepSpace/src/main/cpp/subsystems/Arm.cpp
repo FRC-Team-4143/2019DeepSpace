@@ -5,6 +5,7 @@
 
 #define PDPPORT 1
 #define CURRNETLIMIT 0.1
+#define TESTBOT (1/2)
 
 Arm::Arm() : frc::Subsystem("Arm") {
 }
@@ -47,7 +48,7 @@ void Arm::ArmHold(){
 
 void Arm::SetPosition(double pos) {
   if (Robot::armMotor != nullptr) {
-    if(pos == 62 && Robot::armMotor->GetEncoderPosition() > 62){
+    if(pos == (62 * TESTBOT) && Robot::armMotor->GetEncoderPosition() > (62 * TESTBOT)){
       Robot::armMotor->SetPercentPower(0);
     }else{
       Robot::armMotor->SetPosition(pos);
