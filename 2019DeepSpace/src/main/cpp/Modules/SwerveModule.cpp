@@ -8,6 +8,7 @@ SwerveModule::SwerveModule(MultiController* drive, PositionMultiController* stee
 	_drive = drive;
 	_steer = steer;
 	_configName = configName;
+	_lastPow = 0;
 }
 
 // ================================================================
@@ -53,6 +54,7 @@ void SwerveModule::LoadWheelOffset() {
 // ================================================================
 
 void SwerveModule::SetDriveSpeed(float speed) {
+	_lastPow = speed;
 	_drive->SetPercentPower(speed * _inverse);
 }
 
@@ -113,9 +115,21 @@ void SwerveModule::SetSteerSetpoint(float setpoint) {
 	angleOptions[4] = turns + EncoderConstants::FULL_TURN + setpoint;
 	angleOptions[5] = turns + EncoderConstants::FULL_TURN + setpoint + EncoderConstants::HALF_TURN;
 
-	float minMove = fabs(currentPosition - angleOptions[0]);
+	int firstoption = 0;
+	int optionincr = 1;
+
+    // this prevents motors from having to reverse
+	// if they are already rotating
+	// they may take a longer rotation but will keep spinning the same way
+	if(_lastPow > .3) {  
+		optionincr = 2;
+		if(_inverse == -1)
+			firstoption = 1;
+	}
+
+	float minMove = 360*5; //impossibly big angle
 	int minI = 0;
-	for (int i = 1; i < 6; i++){
+	for (int i = firstoption; i < 6; i+=optionincr){
 		if (fabs(currentPosition - angleOptions[i]) < minMove){
 			minMove = fabs(currentPosition - angleOptions[i]);
 			minI = i;

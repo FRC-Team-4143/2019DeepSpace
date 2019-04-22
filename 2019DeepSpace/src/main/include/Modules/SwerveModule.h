@@ -23,6 +23,7 @@ private:
 	double _radius;
 	std::string _configName;
 	double _steerPosition;
+	double _lastPow;
 	int _inverse = 1;
 	MultiController* _drive; // speed controller for the drive motor
 	PositionMultiController* _steer; // speed controller for the steer motor

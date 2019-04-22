@@ -52,10 +52,10 @@ void DriveTrain::SetWheelbase(double width, double length, double xOffset, doubl
 
 	auto maxradius = std::sqrt(pow(halfWidth + fabs(xOffset), 2) + pow(halfLength + fabs(yOffset), 2));
 
-  frontLeftModule->SetGeometry(halfWidth + xOffset, -halfLength + yOffset, maxradius);
-  frontRightModule->SetGeometry(halfWidth + xOffset, halfLength + yOffset, maxradius);
-  rearLeftModule->SetGeometry(-halfWidth + xOffset, -halfLength + yOffset, maxradius);
-  rearRightModule->SetGeometry(-halfWidth + xOffset, halfLength + yOffset, maxradius);
+  frontLeftModule->SetGeometry(halfWidth - xOffset, -halfLength - yOffset, maxradius);
+  frontRightModule->SetGeometry(halfWidth - xOffset, halfLength - yOffset, maxradius);
+  rearLeftModule->SetGeometry(-halfWidth - xOffset, -halfLength - yOffset, maxradius);
+  rearRightModule->SetGeometry(-halfWidth - xOffset, halfLength - yOffset, maxradius);
 
 }
 
@@ -129,25 +129,26 @@ SmartDashboard::PutNumber("JoystickAngle", joystickAngle);
 		if(yaw == 0){
 			yaw = Robot::navx->GetYaw();
 		}
-		
-		if(joystickAngle > -90 && joystickAngle < 90){
+
+ 		if(joystickAngle > -90 && joystickAngle < 90){
 			if(rightTrigger){
-				pivotAngle = -135;
+				pivotAngle = joystickAngle + 45;
 				twist = -1;
-			}else if(leftTrigger){
-				pivotAngle = 135;
+			} else {
+				pivotAngle = joystickAngle - 45;
 				twist = 1;
 			}
 		}else{
-			if(rightTrigger){
-				pivotAngle = -45;
-				twist = 1;
-			}else if(leftTrigger){
-				pivotAngle = 45;
+			if(leftTrigger){
+				pivotAngle = joystickAngle + 45;
 				twist = -1;
+			} else {
+				pivotAngle = joystickAngle - 45;
+				twist = 1;
 			}
-			pivotAngle -= yaw;
 		}
+		pivotAngle -= yaw;
+
 		SetWheelbase(0, 0, cos(pivotAngle	*pi/180)* 20, sin(pivotAngle *pi/180)* 20);
 
 	}else{
