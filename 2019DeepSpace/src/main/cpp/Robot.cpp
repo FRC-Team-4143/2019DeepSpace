@@ -17,7 +17,7 @@
 #define USINGSPARKMAXDRIVE 0
 #define USINGVICTORDRIVE 0 // 1 for Comp Bot 
 #define ONROBORIONAVX 1 // 0 for Comp Bot
-#define TESTBOT (1/2)
+#define TESTBOT (0.45)
 
 #define TESTELEVATOR 21
 #define ELEVATOR 11
@@ -179,11 +179,11 @@ void Robot::AddHeights(){
    auto h = Height::GetInstance();
 
    h->AddCargoTarget(0, 0); // Starting Position with Elevator Down and Arm In
-   h->AddCargoTarget(0, 62 * TESTBOT); // Floor Pickup
-   h->AddCargoTarget(-48, 60 * TESTBOT); // CargoShip Down
-   h->AddCargoTarget(0, 39 * TESTBOT); // 1st Level Rocket
-   h->AddCargoTarget(-43, 41 * TESTBOT); // 2nd Level Rocket
-   h->AddCargoTarget(-81.5, 41 * TESTBOT); // 3rd Level Rocket
+   h->AddCargoTarget(0, (62 * TESTBOT)); // Floor Pickup
+   h->AddCargoTarget(-48, (60 * TESTBOT)); // CargoShip Down
+   h->AddCargoTarget(0, (39 * TESTBOT)); // 1st Level Rocket
+   h->AddCargoTarget(-43, (41 * TESTBOT)); // 2nd Level Rocket
+   h->AddCargoTarget(-81.5, (41 * TESTBOT)); // 3rd Level Rocket
 
    h->AddHatchTarget(0, 0); // Starting Position with Elevator Down and Arm In / CargoShip / Loading Station 
    h->AddHatchTarget(-44, 0); // 2nd Level Rocket

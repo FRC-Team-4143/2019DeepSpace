@@ -19,6 +19,8 @@ DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
 
   SetWheelbase(22.5, 20);
 	yaw = 0;
+	joystickAngle = 0;
+	fieldCentricMode = false;
 }
 
 // ================================================================
@@ -117,8 +119,6 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 
 auto leftTrigger = Robot::oi->GetLeftTrigger();
 auto rightTrigger = Robot::oi->GetRightTrigger(); 
-auto joystickAngle = atan2(Robot::oi->GetJoystickX(), -Robot::oi->GetJoystickY()) * 180/pi ;
-SmartDashboard::PutNumber("JoystickAngle", joystickAngle);
 
 	if(leftTrigger > 0 || rightTrigger > 0){ // Spin from corner
 
@@ -128,6 +128,8 @@ SmartDashboard::PutNumber("JoystickAngle", joystickAngle);
 		double pivotAngle = 0;
 		if(yaw == 0){
 			yaw = Robot::navx->GetYaw();
+			joystickAngle = atan2(Robot::oi->GetJoystickX(), -Robot::oi->GetJoystickY()) * 180/pi ;
+			SmartDashboard::PutNumber("JoystickAngle", joystickAngle);
 		}
 
  		if(joystickAngle > -90 && joystickAngle < 90){
@@ -153,7 +155,17 @@ SmartDashboard::PutNumber("JoystickAngle", joystickAngle);
 
 	}else{
 		yaw = 0;
-		SetWheelbase(0, 0, 0, 0);
+		joystickAngle = 0;
+
+		if(Mode::IsHatchMode()){
+			if(fieldCentricMode){
+				SetWheelbase(0, 0, 20, 0); //center of hatch panel		
+			}else{
+				SetWheelbase(0, 0, 10, 0); // center of camera
+			}
+		}else{
+			SetWheelbase(0, 0, 0, 0); // center of robot
+		}
 	}
 
 	if(Robot::oi->GetButtonRight()){
@@ -188,11 +200,15 @@ SmartDashboard::PutNumber("JoystickAngle", joystickAngle);
 	SmartDashboard::PutNumber("FR Speed", speeds[1]);
 	SmartDashboard::PutNumber("RL Speed", speeds[2]);
 	SmartDashboard::PutNumber("RR Speed", speeds[3]);
+
+	fieldCentricMode = false;
 }
 
 // ================================================================
 
 void DriveTrain::FieldCentricCrab(float twist, float y, float x, bool operatorControl){
+
+	fieldCentricMode = true;
 
 	float FWD = y;
 	float STR = x;

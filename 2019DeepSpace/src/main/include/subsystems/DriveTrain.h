@@ -29,6 +29,9 @@ class DriveTrain : public frc::Subsystem {
   double Y; 
 
   double yaw;
+  double joystickAngle;
+
+  bool fieldCentricMode;
   
 	float lastx;
 	float lasty;

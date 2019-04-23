@@ -5,7 +5,7 @@
 
 #define PDPPORT 1
 #define CURRNETLIMIT 0.1
-#define TESTBOT (1/2)
+#define TESTBOT (0.45)
 
 Arm::Arm() : frc::Subsystem("Arm") {
 }
