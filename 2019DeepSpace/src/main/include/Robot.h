@@ -11,6 +11,7 @@
 #include <frc/I2C.h>
 
 #include "controllers/PositionMultiController.h"
+#include "Modules/SwerveModuleInterface.h"
 
 #include "OI.h"
 #include "subsystems/Elevator.h"
@@ -51,6 +52,11 @@ class Robot : public frc::TimedRobot {
 
   static MultiController* driveTrainRearRightDrive;
   static PositionMultiController* driveTrainRearRightSteer;
+
+  static SwerveModuleInterface* frontLeftModule;
+  static SwerveModuleInterface* frontRightModule;
+  static SwerveModuleInterface *rearLeftModule;
+  static SwerveModuleInterface* rearRightModule;
 
 //======= Susystem Motors and Sensors =======//
   static PositionMultiController* armMotor;

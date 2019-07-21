@@ -13,11 +13,13 @@
 #include "Modules/Mode.h"
 #include "Modules/Logger.h"
 #include "Modules/Height.h"
+#include "Modules/Constants.h"
 
 #define USINGSPARKMAXDRIVE 0
 #define USINGVICTORDRIVE 0 // 1 for Comp Bot 
 #define ONROBORIONAVX 1 // 0 for Comp Bot
 #define TESTBOT (0.45)
+#define DIFFSWERVE 0
 
 #define TESTELEVATOR 21
 #define ELEVATOR 11
@@ -159,9 +161,6 @@ void Robot::DeviceInitialization(){
    navx = new AHRS(I2C::Port::kOnboard); //kOnboard ?
 #endif
 
-//CameraServer::GetInstance()->StartAutomaticCapture(0);
-//CameraServer::GetInstance()->StartAutomaticCapture(1);
-
 //======= System Initialization =======//
    arm = new Arm();
    clamp = new Clamp();
@@ -171,8 +170,20 @@ void Robot::DeviceInitialization(){
    gyroSub = new GyroSub();
    roller = new Roller();
    visionBridge = new VisionBridgeSub();
-
    oi = new OI();
+
+//======== Swerve Module Initialization =========//
+#if DIFFSWERVE
+   frontLeftModule = new DiffSwerveModule(driveTrainFrontLeftDrive, driveTrainFrontLeftSteer, Constants::FL_POS_NAME);
+   frontRightodule = new DiffSwerveModule(driveTrainFrontRightDrive, driveTrainFrontRightSteer, Constants::FR_POS_NAME);
+   rearLeftModule = new DiffSwerveModule(driveTrainRearLeftDrive, driveTrainRearLeftSteer, Constants::RL_POS_NAME);
+   rearRightModule = new DiffSwerveModule(driveTrainRearRightDrive, driveTrainRearRightSteer, Constants::RR_POS_NAME);
+#else
+   frontLeftModule = new SwerveModule(driveTrainFrontLeftDrive, driveTrainFrontLeftSteer, Constants::FL_POS_NAME);
+   frontRightModule = new SwerveModule(driveTrainFrontRightDrive, driveTrainFrontRightSteer, Constants::FR_POS_NAME);
+   rearLeftModule = new SwerveModule(driveTrainRearLeftDrive, driveTrainRearLeftSteer, Constants::RL_POS_NAME);
+   rearRightModule = new SwerveModule(driveTrainRearRightDrive, driveTrainRearRightSteer, Constants::RR_POS_NAME);
+#endif
 }
 
 void Robot::AddHeights(){

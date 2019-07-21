@@ -37,8 +37,8 @@ class DriveTrain : public frc::Subsystem {
 	float lasty;
 	float lasttwist;
 
-    SwerveModule* frontLeftModule;
-    SwerveModule* frontRightModule;
-    SwerveModule* rearLeftModule;
-    SwerveModule* rearRightModule;
+    SwerveModuleInterface* frontLeftModule;
+    SwerveModuleInterface* frontRightModule;
+    SwerveModuleInterface* rearLeftModule;
+    SwerveModuleInterface* rearRightModule;
   };

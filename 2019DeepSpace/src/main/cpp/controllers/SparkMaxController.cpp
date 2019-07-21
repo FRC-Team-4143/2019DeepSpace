@@ -5,7 +5,7 @@ SparkMaxController::SparkMaxController(rev::CANSparkMax* motor){
 }
 
 SparkMaxController::SparkMaxController(int canId){
-    _motor = new rev::CANSparkMax(canId , rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+    _motor = new rev::CANSparkMax(canId , rev::CANSparkMax::MotorType::kBrushless);
 }
 
 void SparkMaxController::SetPercentPower(double value){

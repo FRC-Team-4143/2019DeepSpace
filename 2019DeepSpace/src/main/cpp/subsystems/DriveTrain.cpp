@@ -12,10 +12,10 @@
 //const float DEAD_ZONE = 0.15;
 
 DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
-	frontLeftModule = new SwerveModule(Robot::driveTrainFrontLeftDrive, Robot::driveTrainFrontLeftSteer, Constants::FL_POS_NAME);
-  frontRightModule = new SwerveModule(Robot::driveTrainFrontRightDrive, Robot::driveTrainFrontRightSteer, Constants::FR_POS_NAME);
-  rearLeftModule = new SwerveModule(Robot::driveTrainRearLeftDrive, Robot::driveTrainRearLeftSteer, Constants::RL_POS_NAME);
-  rearRightModule = new SwerveModule(Robot::driveTrainRearRightDrive, Robot::driveTrainRearRightSteer, Constants::RR_POS_NAME);
+	frontLeftModule = Robot::frontLeftModule;
+  frontRightModule = Robot::frontRightModule;
+  rearLeftModule = Robot::rearLeftModule;
+  rearRightModule = Robot::rearRightModule;
 
   SetWheelbase(22.5, 20);
 	yaw = 0;
