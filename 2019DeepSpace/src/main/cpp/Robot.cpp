@@ -68,6 +68,11 @@ PositionMultiController* Robot::driveTrainRearLeftSteer = nullptr;
 MultiController* Robot::driveTrainRearRightDrive = nullptr;
 PositionMultiController* Robot::driveTrainRearRightSteer = nullptr;
 
+SwerveModuleInterface* Robot::frontLeftModule = nullptr;
+SwerveModuleInterface* Robot::frontRightModule = nullptr;
+SwerveModuleInterface* Robot::rearLeftModule = nullptr;
+SwerveModuleInterface* Robot::rearRightModule  = nullptr;
+
 PositionMultiController* Robot::armMotor = nullptr;
 MultiController* Robot::clampMotor = nullptr;
 MultiController* Robot::frontClimberMotor = nullptr;

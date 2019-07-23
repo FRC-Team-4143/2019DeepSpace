@@ -10,7 +10,6 @@
 #define kFF 0.000156
 #define kMINOUTPUT -1
 #define kMAXOUTPUT 1
-double kMaxVel = 5500, kMinVel = 0, kMaxAcc = 6000, kAllErr = 0;
 
 #define ENCODER_COUNTS_PER_TURN 42
 
@@ -45,6 +44,7 @@ void PositionSparkController::SetPosition(double value){
 }
 
 void PositionSparkController::ConfigPID(){
+	kMaxVel = 5500, kMinVel = 0, kMaxAcc = 6000, kAllErr = 0;
 	auto pidController = _motor->GetPIDController();
 	_motor->RestoreFactoryDefaults();
 	pidController.SetP(kP);
