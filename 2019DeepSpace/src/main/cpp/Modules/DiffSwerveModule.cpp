@@ -4,10 +4,11 @@
 #include <frc/Preferences.h>
 #include <iostream>
 
-DiffSwerveModule::DiffSwerveModule(VelocityMultiController* master, VelocityMultiController* slave, std::string configName) {
+DiffSwerveModule::DiffSwerveModule(VelocityMultiController* master, VelocityMultiController* slave, std::string configName, frc::AnalogInput* headingSensor) {
 	_master = master;
 	_slave = slave;
 	_configName = configName;
+	_headingSensor = headingSensor;
 	_lastPow = 0;
 }
 

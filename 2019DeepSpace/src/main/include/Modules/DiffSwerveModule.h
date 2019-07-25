@@ -1,12 +1,13 @@
 #pragma once
 #include "controllers/VelocityMultiController.h"
 #include "Modules/SwerveModuleInterface.h"
+#include "frc/AnalogInput.h"
 #include <string>
 
 class DiffSwerveModule : public SwerveModuleInterface {
 public:
 
-	DiffSwerveModule(VelocityMultiController* master, VelocityMultiController* slave, std::string configName);
+	DiffSwerveModule(VelocityMultiController* master, VelocityMultiController* slave, std::string configName, frc::AnalogInput* headingSensor);
 	double GetSteerPosition();
 	void SetGeometry(double x, double y, double maxradius) override;
 	void SetWheelOffset() override;
@@ -28,4 +29,5 @@ private:
 	int _inverse = 1;
 	VelocityMultiController* _master; // speed controller for the drive motor
 	VelocityMultiController* _slave; // speed controller for the steer motor
+	frc::AnalogInput* _headingSensor;
 };
