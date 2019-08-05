@@ -2,6 +2,7 @@
 
 #include <frc/commands/Subsystem.h>
 #include "modules/SwerveModule.h"
+#include "Modules/DiffSwerveModule.h"
 #include "EncoderConstants.h"
 
 

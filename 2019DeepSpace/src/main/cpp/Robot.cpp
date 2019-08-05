@@ -1,3 +1,4 @@
+#define DIFFSWERVE 1
 #include "Robot.h"
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -8,6 +9,7 @@
 #include "controllers/SteerTalonController.h"
 #include "controllers/SparkMaxController.h"
 #include "controllers/PositionSparkController.h"
+#include "controllers/VelocitySparkController.h"
 
 #include "Modules/Lights.h"
 #include "Modules/Mode.h"
@@ -15,11 +17,11 @@
 #include "Modules/Height.h"
 #include "Modules/Constants.h"
 
-#define USINGSPARKMAXDRIVE 0
+#define USINGSPARKMAXDRIVE 1
 #define USINGVICTORDRIVE 0 // 1 for Comp Bot 
-#define ONROBORIONAVX 1 // 0 for Comp Bot
+#define ONROBORIONAVX 0 // 0 for Comp Bot
 #define TESTBOT (0.45)
-#define DIFFSWERVE 0
+
 
 #define TESTELEVATOR 21
 #define ELEVATOR 11
@@ -55,7 +57,29 @@ PowerDistributionPanel* Robot::pdp = nullptr;
 
 
 //======= Motor Definition =======//
+#if DIFFSWERVE
+VelocityMultiController* Robot::driveTrainFrontLeftDrive = nullptr;
+VelocityMultiController* Robot::driveTrainFrontLeftSteer = nullptr;
 
+VelocityMultiController* Robot::driveTrainFrontRightDrive = nullptr;
+VelocityMultiController* Robot::driveTrainFrontRightSteer = nullptr;
+
+VelocityMultiController* Robot::driveTrainRearLeftDrive = nullptr;
+VelocityMultiController* Robot::driveTrainRearLeftSteer = nullptr;
+
+VelocityMultiController* Robot::driveTrainRearRightDrive = nullptr;
+VelocityMultiController* Robot::driveTrainRearRightSteer = nullptr;
+
+SwerveModuleInterface* Robot::frontLeftModule = nullptr;
+SwerveModuleInterface* Robot::frontRightModule = nullptr;
+SwerveModuleInterface* Robot::rearLeftModule = nullptr;
+SwerveModuleInterface* Robot::rearRightModule  = nullptr;
+
+AnalogInput* Robot::frontRightPot = nullptr;
+AnalogInput* Robot::frontLeftPot = nullptr;
+AnalogInput* Robot::rearRightPot = nullptr;
+AnalogInput* Robot::rearLeftPot = nullptr;
+#else
 MultiController* Robot::driveTrainFrontLeftDrive = nullptr;
 PositionMultiController* Robot::driveTrainFrontLeftSteer = nullptr;
 
@@ -72,6 +96,10 @@ SwerveModuleInterface* Robot::frontLeftModule = nullptr;
 SwerveModuleInterface* Robot::frontRightModule = nullptr;
 SwerveModuleInterface* Robot::rearLeftModule = nullptr;
 SwerveModuleInterface* Robot::rearRightModule  = nullptr;
+#endif
+
+
+
 
 PositionMultiController* Robot::armMotor = nullptr;
 MultiController* Robot::clampMotor = nullptr;
@@ -91,6 +119,17 @@ double Robot::yCenterOffset = 0;
 
 
 void Robot::DeviceInitialization(){
+   #if DIFFSWERVE
+      driveTrainFrontLeftSteer = new VelocitySparkController(FLS);
+      driveTrainFrontRightSteer = new VelocitySparkController(FRS);
+      driveTrainRearLeftSteer = new VelocitySparkController(RLS);
+      driveTrainRearRightSteer = new VelocitySparkController(RRS);
+      driveTrainFrontLeftDrive = new VelocitySparkController(FLD);
+      driveTrainFrontRightDrive = new VelocitySparkController(FRD);
+      driveTrainRearLeftDrive = new VelocitySparkController(RLD);
+      driveTrainRearRightDrive = new VelocitySparkController(RRD);
+
+   #else
    //======= Front Left Steer =======//
       driveTrainFrontLeftSteer = new SteerTalonController(FLS);
 
@@ -146,6 +185,7 @@ void Robot::DeviceInitialization(){
       driveTrainRearRightDrive = new TalonController(RRD);
    #endif
    #endif
+   #endif
 
 //======= Subsystem Motor Initialization =======//
    armMotor = new PositionSparkController(ARM);
@@ -179,10 +219,15 @@ void Robot::DeviceInitialization(){
 
 //======== Swerve Module Initialization =========//
 #if DIFFSWERVE
-   frontLeftModule = new DiffSwerveModule(driveTrainFrontLeftDrive, driveTrainFrontLeftSteer, Constants::FL_POS_NAME);
-   frontRightodule = new DiffSwerveModule(driveTrainFrontRightDrive, driveTrainFrontRightSteer, Constants::FR_POS_NAME);
-   rearLeftModule = new DiffSwerveModule(driveTrainRearLeftDrive, driveTrainRearLeftSteer, Constants::RL_POS_NAME);
-   rearRightModule = new DiffSwerveModule(driveTrainRearRightDrive, driveTrainRearRightSteer, Constants::RR_POS_NAME);
+   frontLeftPot = new AnalogInput(0);
+   frontRightPot = new AnalogInput(1);
+   rearLeftPot = new AnalogInput(2);
+   rearRightPot = new AnalogInput(3);
+
+   frontLeftModule = new DiffSwerveModule(driveTrainFrontLeftDrive, driveTrainFrontLeftSteer, Constants::FL_POS_NAME, frontLeftPot);
+   frontRightModule = new DiffSwerveModule(driveTrainFrontRightDrive, driveTrainFrontRightSteer, Constants::FR_POS_NAME, frontRightPot);
+   rearLeftModule = new DiffSwerveModule(driveTrainRearLeftDrive, driveTrainRearLeftSteer, Constants::RL_POS_NAME, rearLeftPot);
+   rearRightModule = new DiffSwerveModule(driveTrainRearRightDrive, driveTrainRearRightSteer, Constants::RR_POS_NAME, rearRightPot);
 #else
    frontLeftModule = new SwerveModule(driveTrainFrontLeftDrive, driveTrainFrontLeftSteer, Constants::FL_POS_NAME);
    frontRightModule = new SwerveModule(driveTrainFrontRightDrive, driveTrainFrontRightSteer, Constants::FR_POS_NAME);

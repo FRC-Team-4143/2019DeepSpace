@@ -1,4 +1,5 @@
 #pragma once
+#define DIFFSWERVE 1
 
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
@@ -38,9 +39,30 @@ class Robot : public frc::TimedRobot {
   static VisionBridgeSub* visionBridge;
   static PowerDistributionPanel* pdp;
 
-
 //======= Drive Train =======//
+#if DIFFSWERVE
+  static VelocityMultiController* driveTrainFrontLeftDrive;
+  static VelocityMultiController* driveTrainFrontLeftSteer;
 
+  static VelocityMultiController* driveTrainFrontRightDrive;
+  static VelocityMultiController* driveTrainFrontRightSteer;
+
+  static VelocityMultiController* driveTrainRearLeftDrive;
+  static VelocityMultiController* driveTrainRearLeftSteer;
+
+  static VelocityMultiController* driveTrainRearRightDrive;
+  static VelocityMultiController* driveTrainRearRightSteer;
+
+  static SwerveModuleInterface* frontLeftModule;
+  static SwerveModuleInterface* frontRightModule;
+  static SwerveModuleInterface *rearLeftModule;
+  static SwerveModuleInterface* rearRightModule;
+
+  static AnalogInput* frontLeftPot;
+  static AnalogInput* frontRightPot;
+  static AnalogInput* rearLeftPot;
+  static AnalogInput* rearRightPot;
+#else
   static MultiController* driveTrainFrontLeftDrive;
   static PositionMultiController* driveTrainFrontLeftSteer;
 
@@ -57,6 +79,7 @@ class Robot : public frc::TimedRobot {
   static SwerveModuleInterface* frontRightModule;
   static SwerveModuleInterface *rearLeftModule;
   static SwerveModuleInterface* rearRightModule;
+#endif
 
 //======= Susystem Motors and Sensors =======//
   static PositionMultiController* armMotor;
