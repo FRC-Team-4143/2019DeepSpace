@@ -31,17 +31,19 @@
 #define FRONTCLIMBER 15
 #define REARCLIMBER 16
 
+/*
 #define FLD 1
-#define FLS 5
+#define FLS 2
 
-#define FRD 2
-#define FRS 6
+#define FRD 3
+#define FRS 4
 
-#define RLD 3
-#define RLS 7
+#define RLD 5
+#define RLS 6
 
-#define RRD 4
+#define RRD 7
 #define RRS 8
+*/
 
 //======= System Definition =======//
 OI* Robot::oi = nullptr;
@@ -79,6 +81,7 @@ AnalogInput* Robot::frontRightPot = nullptr;
 AnalogInput* Robot::frontLeftPot = nullptr;
 AnalogInput* Robot::rearRightPot = nullptr;
 AnalogInput* Robot::rearLeftPot = nullptr;
+
 #else
 MultiController* Robot::driveTrainFrontLeftDrive = nullptr;
 PositionMultiController* Robot::driveTrainFrontLeftSteer = nullptr;
@@ -97,9 +100,6 @@ SwerveModuleInterface* Robot::frontRightModule = nullptr;
 SwerveModuleInterface* Robot::rearLeftModule = nullptr;
 SwerveModuleInterface* Robot::rearRightModule  = nullptr;
 #endif
-
-
-
 
 PositionMultiController* Robot::armMotor = nullptr;
 MultiController* Robot::clampMotor = nullptr;
@@ -120,15 +120,24 @@ double Robot::yCenterOffset = 0;
 
 void Robot::DeviceInitialization(){
    #if DIFFSWERVE
-      driveTrainFrontLeftSteer = new VelocitySparkController(FLS);
-      driveTrainFrontRightSteer = new VelocitySparkController(FRS);
-      driveTrainRearLeftSteer = new VelocitySparkController(RLS);
-      driveTrainRearRightSteer = new VelocitySparkController(RRS);
-      driveTrainFrontLeftDrive = new VelocitySparkController(FLD);
-      driveTrainFrontRightDrive = new VelocitySparkController(FRD);
-      driveTrainRearLeftDrive = new VelocitySparkController(RLD);
-      driveTrainRearRightDrive = new VelocitySparkController(RRD);
 
+ /*     driveTrainFrontLeftSteer = new VelocitySparkController(&sparkmax1);
+      driveTrainFrontRightSteer = new VelocitySparkController(&sparkmax2);
+      driveTrainRearLeftSteer = new VelocitySparkController(&sparkmax3);
+      driveTrainRearRightSteer = new VelocitySparkController(&sparkmax4);
+      driveTrainFrontLeftDrive = new VelocitySparkController(&sparkmax5);
+      driveTrainFrontRightDrive = new VelocitySparkController(&sparkmax6);
+      driveTrainRearLeftDrive = new VelocitySparkController(&sparkmax7);
+      driveTrainRearRightDrive = new VelocitySparkController(&sparkmax8); */
+
+      driveTrainFrontLeftSteer = new VelocitySparkController(1);
+      driveTrainFrontLeftDrive = new VelocitySparkController(2);
+      driveTrainFrontRightSteer = new VelocitySparkController(3);
+      driveTrainFrontRightDrive = new VelocitySparkController(4);
+      driveTrainRearLeftSteer = new VelocitySparkController(5);
+      driveTrainRearLeftDrive = new VelocitySparkController(6);
+      driveTrainRearRightSteer = new VelocitySparkController(7);
+      driveTrainRearRightDrive = new VelocitySparkController(8); 
    #else
    //======= Front Left Steer =======//
       driveTrainFrontLeftSteer = new SteerTalonController(FLS);
@@ -188,34 +197,40 @@ void Robot::DeviceInitialization(){
    #endif
 
 //======= Subsystem Motor Initialization =======//
-   armMotor = new PositionSparkController(ARM);
-   clampMotor = new TalonController(CLAMP);
-   frontClimberMotor = new PositionSparkController(FRONTCLIMBER);
-   rearClimberMotor = new PositionSparkController(REARCLIMBER);
-   elevatorMotor = new PositionSparkController(ELEVATOR); 
-   rollerMotor = new TalonController(ROLLER);
+   //armMotor = new PositionSparkController(ARM);
+   //clampMotor = new TalonController(CLAMP);
+   //frontClimberMotor = new PositionSparkController(FRONTCLIMBER);
+   //rearClimberMotor = new PositionSparkController(REARCLIMBER);
+   //elevatorMotor = new PositionSparkController(ELEVATOR); 
+   //rollerMotor = new TalonController(ROLLER);
    //testElevator = new TalonController(TESTELEVATOR);
 
    frontServo = new Servo(0);
    rearServo = new Servo(1);
+   LOG("DeviceInit Navx");
 
 //======= Sensor and Camera Initialization =======//
 #if ONROBORIONAVX
-   navx = new AHRS(I2C::Port::kMXP);
+   //navx = new AHRS(I2C::Port::kMXP);
 #else
    navx = new AHRS(I2C::Port::kOnboard); //kOnboard ?
 #endif
 
 //======= System Initialization =======//
-   arm = new Arm();
-   clamp = new Clamp();
-   climber = new Climber();
-   driveTrain = new DriveTrain();
-   elevator = new Elevator();
+   //arm = new Arm();
+   //LOG("DeviceInit Arm");
+   //clamp = new Clamp();
+   //LOG("DeviceInit Clamp");
+   //climber = new Climber();
+   //LOG("DeviceInit Climber");
+   //elevator = new Elevator();
+   //LOG("DeviceInit Elevator");
    gyroSub = new GyroSub();
-   roller = new Roller();
-   visionBridge = new VisionBridgeSub();
+   //roller = new Roller();
+   //visionBridge = new VisionBridgeSub();
    oi = new OI();
+
+   LOG("DeviceInit Analog");
 
 //======== Swerve Module Initialization =========//
 #if DIFFSWERVE
@@ -234,6 +249,9 @@ void Robot::DeviceInitialization(){
    rearLeftModule = new SwerveModule(driveTrainRearLeftDrive, driveTrainRearLeftSteer, Constants::RL_POS_NAME);
    rearRightModule = new SwerveModule(driveTrainRearRightDrive, driveTrainRearRightSteer, Constants::RR_POS_NAME);
 #endif
+   driveTrain = new DriveTrain();
+   LOG("DeviceInit DriveTrain");
+   LOG("DeviceInit end");
 }
 
 void Robot::AddHeights(){
@@ -256,15 +274,19 @@ void Robot::AddHeights(){
 void Robot::RobotInit() {
    DeviceInitialization();
    SmartDashboard::PutNumber("Yaw Offset", 0);
-   AddHeights();
+   //AddHeights();
    driveTrain->LoadWheelOffsets();
-   Lights::Init();
-   ::Mode::SetLED();
+   //Lights::Init();
+   //::Mode::SetLED();
+   LOG("RobotInit end");
 }
    
 void Robot::RobotPeriodic() {
-   auto yawOff = SmartDashboard::GetNumber("Yaw Offset", 0);
-   SmartDashboard::PutNumber("Yaw", Robot::navx->GetYaw() + yawOff);
+   //LOG("robotperiodic start");
+   if (navx != nullptr) {
+      auto yawOff = SmartDashboard::GetNumber("Yaw Offset", 0);
+      SmartDashboard::PutNumber("Yaw", Robot::navx->GetYaw() + yawOff);
+   }
 
 	if (frc::RobotController::GetUserButton() == 1 && counter == 0) {
 		Robot::driveTrain->SetWheelOffsets();
@@ -280,8 +302,25 @@ void Robot::RobotPeriodic() {
    yCenterOffset = SmartDashboard::GetNumber("Y Center Offset", 0);
    SmartDashboard::PutNumber("X Center Offset", xCenterOffset);
    SmartDashboard::PutNumber("Y Center Offset", yCenterOffset);
+
+   SmartDashboard::PutNumber("fl position", frontLeftModule->GetSteerPosition());
+   SmartDashboard::PutNumber("fr position", frontRightModule->GetSteerPosition());
+   SmartDashboard::PutNumber("rl position", rearLeftModule->GetSteerPosition());
+   SmartDashboard::PutNumber("rr position", rearRightModule->GetSteerPosition());
  
-   Robot::driveTrain->SetWheelbase(22.5, 20);
+ 
+   SmartDashboard::PutNumber("fl setpoint", frontLeftModule->GetSetpoint());
+   SmartDashboard::PutNumber("fr setpoint", frontRightModule->GetSetpoint());
+   SmartDashboard::PutNumber("rl setpoint", rearLeftModule->GetSetpoint());
+   SmartDashboard::PutNumber("rr setpoint", rearRightModule->GetSetpoint());
+
+   SmartDashboard::PutNumber("fl power", frontLeftModule->GetPower());
+   SmartDashboard::PutNumber("fr power", frontRightModule->GetPower());
+   SmartDashboard::PutNumber("rl power", rearLeftModule->GetPower());
+   SmartDashboard::PutNumber("rr power", rearRightModule->GetPower());
+
+
+   Robot::driveTrain->SetWheelbase(14, 14);
 
    if (elevatorMotor != nullptr) {
       SmartDashboard::PutNumber("Elevator Encoder Position", elevatorMotor->GetEncoderPosition());

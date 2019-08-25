@@ -54,6 +54,7 @@ void SwerveModule::LoadWheelOffset() {
 // ================================================================
 
 void SwerveModule::SetDriveSpeed(float speed) {
+	LOG("SetDriveSpeed");
 	_lastPow = speed;
 	_drive->SetPercentPower(speed * _inverse);
 }

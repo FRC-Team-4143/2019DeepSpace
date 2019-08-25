@@ -17,7 +17,7 @@ DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
   rearLeftModule = Robot::rearLeftModule;
   rearRightModule = Robot::rearRightModule;
 
-  SetWheelbase(22.5, 20);
+  SetWheelbase(14, 14);
 	yaw = 0;
 	joystickAngle = 0;
 	fieldCentricMode = false;
@@ -26,7 +26,8 @@ DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
 // ================================================================
 
 void DriveTrain::InitDefaultCommand() {
-  SetDefaultCommand(new FieldCentric());
+  //SetDefaultCommand(new FieldCentric());
+  SetDefaultCommand(new CrabDrive());
 }
 
 // ================================================================
@@ -83,6 +84,7 @@ void DriveTrain::LoadWheelOffsets(){
 // ================================================================
 
 void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
+	//LOG("DriveTrain::Crab");
 
   if (operatorControl && x == 0.0 && y == 0.0 && twist == 0.0) {
 	

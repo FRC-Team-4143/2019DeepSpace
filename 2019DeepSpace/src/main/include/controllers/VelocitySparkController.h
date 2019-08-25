@@ -4,7 +4,7 @@
 
 class VelocitySparkController : public VelocityMultiController  {
 public:
-    VelocitySparkController(rev::CANSparkMax* motor);
+    //VelocitySparkController(rev::CANSparkMax* motor);
     VelocitySparkController(int canId);
     virtual void SetPercentPower(double value) override;
     virtual double GetEncoderPosition() override;
@@ -16,6 +16,7 @@ private:
     double kMinVel;
     double kMaxAcc;
     double kAllErr;
-    rev::CANSparkMax* _motor;
-    //rev::CANPIDController _pidController;
+    rev::CANSparkMax _motor;
+    rev::CANPIDController _pidController;
+    rev::CANEncoder _encoder;
 };

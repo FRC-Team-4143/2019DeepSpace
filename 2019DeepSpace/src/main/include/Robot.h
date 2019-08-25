@@ -62,6 +62,16 @@ class Robot : public frc::TimedRobot {
   static AnalogInput* frontRightPot;
   static AnalogInput* rearLeftPot;
   static AnalogInput* rearRightPot;
+
+ /* rev::CANSparkMax sparkmax1{1, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax sparkmax2{2, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax sparkmax3{3, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax sparkmax4{4, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax sparkmax5{5, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax sparkmax6{6, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax sparkmax7{7, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax sparkmax8{8, rev::CANSparkMax::MotorType::kBrushless}; */
+ 
 #else
   static MultiController* driveTrainFrontLeftDrive;
   static PositionMultiController* driveTrainFrontLeftSteer;

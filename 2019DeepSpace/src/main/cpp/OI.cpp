@@ -25,36 +25,36 @@ OI::OI() {
 
   driverjoystick = new Joystick(0);
 
-  acquireGamePiece = new AcquireGamePiece();
-  crabDrive = new CrabDrive();
-  ejectGamePiece = new EjectGamePiece();
-  nextTargetPosition = new NextTargetPosition();
-  previousTargetPosition = new PreviousTargetPosition();
-  setEndGame = new SetEndGame();
-  toggleGameMode = new ToggleGameMode();
-  armUpCommand = new ArmUpCommand();
-  armDownCommand = new ArmDownCommand();
-  hatchLineUp = new HatchLineUp();
-  turtle = new Turtle();
-  pickUpPrep = new PickUpPrep();
+  //acquireGamePiece = new AcquireGamePiece();
+  //crabDrive = new CrabDrive();
+  //ejectGamePiece = new EjectGamePiece();
+  //nextTargetPosition = new NextTargetPosition();
+  //previousTargetPosition = new PreviousTargetPosition();
+  //setEndGame = new SetEndGame();
+  //toggleGameMode = new ToggleGameMode();
+  //armUpCommand = new ArmUpCommand();
+  //armDownCommand = new ArmDownCommand();
+  //hatchLineUp = new HatchLineUp();
+  //turtle = new Turtle();
+  //pickUpPrep = new PickUpPrep();
 
 
   SmartDashboard::PutData("Set WheelOffsets", new SetWheelOffsets());
-  SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
-  SmartDashboard::PutData("Manual ElevatorControl", new ElevatorManualControl());
-  SmartDashboard::PutData("Vision LineUp", new HatchLineUp());
-  SmartDashboard::PutData("Hatch Prep", new SandstormHatch());
+  //SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
+  //SmartDashboard::PutData("Manual ElevatorControl", new ElevatorManualControl());
+  //SmartDashboard::PutData("Vision LineUp", new HatchLineUp());
+  //SmartDashboard::PutData("Hatch Prep", new SandstormHatch());
   
   
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(acquireGamePiece);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LEFT))->ToggleWhenPressed(crabDrive);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhenPressed(nextTargetPosition);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(previousTargetPosition);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhenPressed(pickUpPrep);
-  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LB))->WhileHeld(turtle);
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(toggleGameMode);
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(acquireGamePiece);
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LEFT))->ToggleWhenPressed(crabDrive);
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhenPressed(nextTargetPosition);
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(previousTargetPosition);
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhenPressed(pickUpPrep);
+  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LB))->WhileHeld(turtle);
 }
 
 // ==========================================================================
