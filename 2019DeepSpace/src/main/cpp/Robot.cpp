@@ -130,14 +130,14 @@ void Robot::DeviceInitialization(){
       driveTrainRearLeftDrive = new VelocitySparkController(&sparkmax7);
       driveTrainRearRightDrive = new VelocitySparkController(&sparkmax8); */
 
-      driveTrainFrontLeftSteer = new VelocitySparkController(1);
-      driveTrainFrontLeftDrive = new VelocitySparkController(2);
+      driveTrainFrontLeftSteer = new VelocitySparkController(5);
+      driveTrainFrontLeftDrive = new VelocitySparkController(6);
       driveTrainFrontRightSteer = new VelocitySparkController(3);
       driveTrainFrontRightDrive = new VelocitySparkController(4);
-      driveTrainRearLeftSteer = new VelocitySparkController(5);
-      driveTrainRearLeftDrive = new VelocitySparkController(6);
-      driveTrainRearRightSteer = new VelocitySparkController(7);
-      driveTrainRearRightDrive = new VelocitySparkController(8); 
+      driveTrainRearLeftSteer = new VelocitySparkController(7);
+      driveTrainRearLeftDrive = new VelocitySparkController(8);
+      driveTrainRearRightSteer = new VelocitySparkController(1);
+      driveTrainRearRightDrive = new VelocitySparkController(2); 
    #else
    //======= Front Left Steer =======//
       driveTrainFrontLeftSteer = new SteerTalonController(FLS);
@@ -234,10 +234,10 @@ void Robot::DeviceInitialization(){
 
 //======== Swerve Module Initialization =========//
 #if DIFFSWERVE
-   frontLeftPot = new AnalogInput(0);
+   frontLeftPot = new AnalogInput(2);
    frontRightPot = new AnalogInput(1);
-   rearLeftPot = new AnalogInput(2);
-   rearRightPot = new AnalogInput(3);
+   rearLeftPot = new AnalogInput(3);
+   rearRightPot = new AnalogInput(0);
 
    frontLeftModule = new DiffSwerveModule(driveTrainFrontLeftDrive, driveTrainFrontLeftSteer, Constants::FL_POS_NAME, frontLeftPot);
    frontRightModule = new DiffSwerveModule(driveTrainFrontRightDrive, driveTrainFrontRightSteer, Constants::FR_POS_NAME, frontRightPot);

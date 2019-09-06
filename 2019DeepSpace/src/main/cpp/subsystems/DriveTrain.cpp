@@ -159,15 +159,15 @@ auto rightTrigger = Robot::oi->GetRightTrigger();
 		yaw = 0;
 		joystickAngle = 0;
 
-		if(Mode::IsHatchMode()){
-			if(fieldCentricMode){
-				SetWheelbase(0, 0, 20, 0); //center of hatch panel		
-			}else{
-				SetWheelbase(0, 0, 10, 0); // center of camera
-			}
-		}else{
+		//if(Mode::IsHatchMode()){
+		//	if(fieldCentricMode){
+		//		SetWheelbase(0, 0, 20, 0); //center of hatch panel		
+		//	}else{
+		//		SetWheelbase(0, 0, 10, 0); // center of camera
+		//	}
+		//}else{
 			SetWheelbase(0, 0, 0, 0); // center of robot
-		}
+		//}
 	}
 
 	if(Robot::oi->GetButtonRight()){

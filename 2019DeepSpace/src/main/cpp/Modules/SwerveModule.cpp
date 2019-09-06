@@ -67,9 +67,6 @@ double SwerveModule::SetSteerDrive(double x, double y, double twist, bool operat
 	//auto signX = (_x >= 0) ? 1 : -1;
 	//auto signY = (_y >= 0) ? 1 : -1;
 
-	//auto BP = x + twist * signY * std::fabs(_x) / radius;
-	//auto CP = y - twist * signX * std::fabs(_y) / radius;
-
 	auto BP = x + twist * (_x) / _radius;
 	auto CP = y - twist * (_y) / _radius;
 
@@ -92,7 +89,6 @@ double SwerveModule::SetSteerDrive(double x, double y, double twist, bool operat
 		power = -power;
 	}
 	if (signX == -1) power = -power;
-	//SetDriveSpeed(power);
 */
 	return power;
 }

@@ -26,7 +26,7 @@ OI::OI() {
   driverjoystick = new Joystick(0);
 
   //acquireGamePiece = new AcquireGamePiece();
-  //crabDrive = new CrabDrive();
+  crabDrive = new CrabDrive();
   //ejectGamePiece = new EjectGamePiece();
   //nextTargetPosition = new NextTargetPosition();
   //previousTargetPosition = new PreviousTargetPosition();
@@ -40,7 +40,7 @@ OI::OI() {
 
 
   SmartDashboard::PutData("Set WheelOffsets", new SetWheelOffsets());
-  //SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
+  SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
   //SmartDashboard::PutData("Manual ElevatorControl", new ElevatorManualControl());
   //SmartDashboard::PutData("Vision LineUp", new HatchLineUp());
   //SmartDashboard::PutData("Hatch Prep", new SandstormHatch());

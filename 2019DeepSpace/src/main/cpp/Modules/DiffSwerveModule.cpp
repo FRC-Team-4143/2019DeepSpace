@@ -44,8 +44,7 @@ void DiffSwerveModule::SetWheelOffset() {
 // ================================================================
 
 void DiffSwerveModule::SetOffset(float off) {
-	//_offset = off;
-	_offset = 0;
+	_offset = off;
 }
 
 // ================================================================
@@ -69,7 +68,7 @@ void DiffSwerveModule::SetDriveSpeed(float speed) {
 	//if(turn > EncoderConstants::HALF_TURN) turn -= EncoderConstants::FULL_TURN; 
     //if(turn < -EncoderConstants::HALF_TURN) turn += EncoderConstants::FULL_TURN;
 
-	if(fabs(turn) < .2) 
+	if(fabs(turn) < .02) 
 		turn = 0;
 	else
 	    turn *= 1.0/2.5*1000;  // simple gain on steering error  - TODO: improve
@@ -87,9 +86,6 @@ double DiffSwerveModule::SetSteerDrive(double x, double y, double twist, bool op
 	//auto signX = (_x >= 0) ? 1 : -1;
 	//auto signY = (_y >= 0) ? 1 : -1;
 
-	//auto BP = x + twist * signY * std::fabs(_x) / radius;
-	//auto CP = y - twist * signX * std::fabs(_y) / radius;
-
 	auto BP = x + twist * (_x) / _radius;
 	auto CP = y - twist * (_y) / _radius;
 
@@ -99,6 +95,7 @@ double DiffSwerveModule::SetSteerDrive(double x, double y, double twist, bool op
 		setpoint = (EncoderConstants::HALF_TURN + EncoderConstants::HALF_TURN / pi * atan2(BP, CP));
 	}
 
+	setpoint = -setpoint;
 	SetSteerSetpoint(setpoint + _offset);
 
 	auto power = sqrt(pow(BP, 2) + pow(CP, 2));
@@ -111,7 +108,6 @@ double DiffSwerveModule::SetSteerDrive(double x, double y, double twist, bool op
 		power = -power;
 	}
 	if (signX == -1) power = -power;
-	//SetDriveSpeed(power);
 */
 	return power;
 }
@@ -141,7 +137,7 @@ void DiffSwerveModule::SetSteerSetpoint(float setpoint) {
     // this prevents motors from having to reverse
 	// if they are already rotating
 	// they may take a longer rotation but will keep spinning the same way
-	if(_lastPow > .3) {  // always do this for now while testing
+	if(_lastPow > .3) {  // maybe should read speed instead of last power
 		optionincr = 2;
 		if(_inverse == -1)
 			firstoption = 1;
