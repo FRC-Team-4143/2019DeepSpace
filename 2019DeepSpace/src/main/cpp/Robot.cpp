@@ -56,6 +56,7 @@ GyroSub* Robot::gyroSub = nullptr;
 Roller* Robot::roller = nullptr;
 VisionBridgeSub* Robot::visionBridge = nullptr;
 PowerDistributionPanel* Robot::pdp = nullptr;
+Compressor* Robot::comp = nullptr;
 
 
 //======= Motor Definition =======//
@@ -114,11 +115,20 @@ Servo* Robot::rearServo = nullptr;
 
 AHRS* Robot::navx = nullptr;
 
+Solenoid* Robot::outsol = nullptr;
+Solenoid* Robot::insol = nullptr;
+
 double Robot::xCenterOffset = 0;
 double Robot::yCenterOffset = 0;
 
 
 void Robot::DeviceInitialization(){
+   CameraServer::GetInstance()->StartAutomaticCapture();
+   comp = new Compressor(0);
+
+   insol = new Solenoid(0);
+   outsol = new Solenoid(1);
+
    #if DIFFSWERVE
 
  /*     driveTrainFrontLeftSteer = new VelocitySparkController(&sparkmax1);
@@ -198,7 +208,7 @@ void Robot::DeviceInitialization(){
 
 //======= Subsystem Motor Initialization =======//
    //armMotor = new PositionSparkController(ARM);
-   //clampMotor = new TalonController(CLAMP);
+   clampMotor = new TalonController(CLAMP);
    //frontClimberMotor = new PositionSparkController(FRONTCLIMBER);
    //rearClimberMotor = new PositionSparkController(REARCLIMBER);
    //elevatorMotor = new PositionSparkController(ELEVATOR); 
@@ -219,8 +229,8 @@ void Robot::DeviceInitialization(){
 //======= System Initialization =======//
    //arm = new Arm();
    //LOG("DeviceInit Arm");
-   //clamp = new Clamp();
-   //LOG("DeviceInit Clamp");
+   clamp = new Clamp();
+   LOG("DeviceInit Clamp");
    //climber = new Climber();
    //LOG("DeviceInit Climber");
    //elevator = new Elevator();
@@ -288,6 +298,27 @@ void Robot::RobotPeriodic() {
       SmartDashboard::PutNumber("Yaw", Robot::navx->GetYaw() + yawOff);
    }
 
+   if(oi->GetButtonY()){
+      LOG("sol out");
+      insol->Set(false);
+      outsol->Set(true);
+   }else if(oi->GetButtonA()){
+      LOG("sol in");
+      outsol->Set(false);
+      insol->Set(true);
+   }
+
+   if(oi->GetButtonX() || oi->GetLeftBumper())
+      clampMotor->SetPercentPower(-.3);
+   else if(oi->GetButtonB() || oi->GetRightBumper())
+      clampMotor->SetPercentPower(.3);
+   else
+   {
+      clampMotor->SetPercentPower(0);
+   }
+   
+
+
 	if (frc::RobotController::GetUserButton() == 1 && counter == 0) {
 		Robot::driveTrain->SetWheelOffsets();
 		counter = 100;
@@ -347,6 +378,8 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+      comp->SetClosedLoopControl(true);
+
 
 }
 
@@ -355,6 +388,8 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
+      comp->SetClosedLoopControl(true);
+
 }
 
 void Robot::TeleopPeriodic() {

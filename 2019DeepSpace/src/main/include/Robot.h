@@ -38,6 +38,7 @@ class Robot : public frc::TimedRobot {
   static Roller* roller;
   static VisionBridgeSub* visionBridge;
   static PowerDistributionPanel* pdp;
+  static Compressor* comp;
 
 //======= Drive Train =======//
 #if DIFFSWERVE
@@ -62,6 +63,9 @@ class Robot : public frc::TimedRobot {
   static AnalogInput* frontRightPot;
   static AnalogInput* rearLeftPot;
   static AnalogInput* rearRightPot;
+
+  static Solenoid* outsol;
+  static Solenoid* insol;
 
  /* rev::CANSparkMax sparkmax1{1, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax sparkmax2{2, rev::CANSparkMax::MotorType::kBrushless};

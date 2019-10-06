@@ -50,7 +50,7 @@ OI::OI() {
   //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_START))->WhenPressed(setEndGame);
   //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_B))->WhileHeld(ejectGamePiece);
   //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_X))->WhileHeld(acquireGamePiece);
-  //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LEFT))->ToggleWhenPressed(crabDrive);
+  (new JoystickButton(driverjoystick, JOYSTICK_BUTTON_LEFT))->ToggleWhenPressed(crabDrive);
   //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_Y))->WhenPressed(nextTargetPosition);
   //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_A))->WhenPressed(previousTargetPosition);
   //(new JoystickButton(driverjoystick, JOYSTICK_BUTTON_RB))->WhenPressed(pickUpPrep);

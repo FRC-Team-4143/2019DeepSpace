@@ -21,6 +21,6 @@ const double Constants::RL_POS_DEFAULT = 0.0;
 const double Constants::RR_POS_DEFAULT = 0.0;
 const double Constants::ARM_POSITION_DEFAULT = 0;
 
-const float Constants::DEAD_ZONE = .06;
+const float Constants::DEAD_ZONE = .05;
 
 // ==========================================================================

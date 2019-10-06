@@ -27,7 +27,7 @@ DriveTrain::DriveTrain() : frc::Subsystem("DriveTrain") {
 
 void DriveTrain::InitDefaultCommand() {
   //SetDefaultCommand(new FieldCentric());
-  SetDefaultCommand(new CrabDrive());
+	SetDefaultCommand(new CrabDrive());
 }
 
 // ================================================================
@@ -85,8 +85,9 @@ void DriveTrain::LoadWheelOffsets(){
 
 void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 	//LOG("DriveTrain::Crab");
+	//return;   //remove this to enable drivetrain
 
-  if (operatorControl && x == 0.0 && y == 0.0 && twist == 0.0) {
+  if (operatorControl && x == 0.0 && y == 0.0 && twist == 0.0 && false) {
 	
 	if(Mode::IsEndGame()){
 		y = .05;
@@ -109,20 +110,30 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl){
 	lasttwist = twist;
   }
 
-	if (operatorControl && !Robot::oi->GetLeftBumper()) { // Increase spin speed
-		twist *= 0.65;
+	x *= .25;
+	y *= .25;
+	twist *= .25;
+
+	//if (operatorControl && !Robot::oi->GetLeftBumper()) { // Increase spin speed
+	//	twist *= 0.65;
 		// scale for operator control
-		x *= 1;
-		y *= 1;
-		float avg = (abs(x) + abs(y)) / 2;
-		float scale = 1 - avg / 2;
-		twist *= scale; // TWISTSCALE;
-	}
+	//	x *= 1;
+	//	y *= 1;
+	//	float avg = (abs(x) + abs(y)) / 2;
+	//	float scale = 1 - avg / 2;
+	//	twist *= scale; // TWISTSCALE;
+	//}
 
 auto leftTrigger = Robot::oi->GetLeftTrigger();
 auto rightTrigger = Robot::oi->GetRightTrigger(); 
 
-	if(leftTrigger > 0 || rightTrigger > 0){ // Spin from corner
+if(leftTrigger > 0 || rightTrigger > 0) { // turbo mode
+	x *= 2.;
+	y *= 2.;
+}
+
+/*	
+	if(false && leftTrigger > 0 || rightTrigger > 0){ // Spin from corner
 
 		 x = 0;
 		 y = 0;
@@ -169,13 +180,14 @@ auto rightTrigger = Robot::oi->GetRightTrigger();
 			SetWheelbase(0, 0, 0, 0); // center of robot
 		//}
 	}
+	*/
 
-	if(Robot::oi->GetButtonRight()){
-		y = 0;
-		x = 0;
-		twist = GyroRotate();
-		twist = std::min(0.18, std::max(-0.18, twist * 0.025));
-	}
+	//if(Robot::oi->GetButtonRight()){
+	//	y = 0;
+	//	x = 0;
+	//	twist = GyroRotate();
+	//	twist = std::min(0.18, std::max(-0.18, twist * 0.025));
+	//}
 
 	double speeds[4]; 
 
